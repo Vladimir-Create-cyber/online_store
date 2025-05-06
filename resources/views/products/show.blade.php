@@ -5,7 +5,7 @@
     <div class="product-details">
         <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
         <p>{{ $product->description }}</p>
-        <p>Цена: {{ $product->price }} руб.</p>
+        <p>Цена: {{ $product->price }} грн.</p>
         {{-- Здесь можно добавить кнопку для добавления в корзину --}}
     </div>
 

@@ -8,7 +8,7 @@
                 <a href="{{ route('product.show', $product->slug) }}">
                     <img src="{{ asset('storage/'.$product->image) }}" alt="{{ $product->name }}">
                     <h2>{{ $product->name }}</h2>
-                    <p>{{ $product->price }} руб.</p>
+                    <p>{{ $product->price }} грн.</p>
                 </a>
             </div>
         @endforeach
