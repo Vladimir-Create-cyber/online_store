@@ -7,5 +7,54 @@
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+header {
+    background-color: #f1f7f3;
+    padding: 10px 20px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav a {
+    color: #121111;
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+nav form {
+    display: flex;
+    margin-left: 500px; /* Відсунути форму вправо */
+}
+
+nav input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px 0 0 4px;
+}
+
+nav button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+}
+
+nav button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+.cart{
+    margin-left: 700px;
 }
