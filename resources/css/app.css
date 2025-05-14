@@ -1,10 +1,5 @@
 @import 'tailwindcss';
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
-
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol', 'Noto Color Emoji';
@@ -19,6 +14,7 @@ header {
 nav {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* Исправлено для равномерного распределения */
 }
 
 nav a {
@@ -33,7 +29,8 @@ nav a:hover {
 
 nav form {
     display: flex;
-    margin-left: 500px; /* Відсунути форму вправо */
+    flex-grow: 1; /* Исправлено: форма занимает свободное место */
+    justify-content: center; /* Центрируем */
 }
 
 nav input[type="text"] {
@@ -55,6 +52,6 @@ nav button[type="submit"]:hover {
     background-color: #218838;
 }
 
-.cart{
-    margin-left: 700px;
+.cart {
+    margin-left: auto; /* Исправлено: корзина автоматически прижимается вправо */
 }

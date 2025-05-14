@@ -1,44 +1,45 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 
-
-// Главная страница – каталог товаров
+// Главная страница — каталог товаров
 Route::get('/', [ProductController::class, 'index'])->name('home');
 
 // Детальная страница товара
 Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
 
-// Поиск
+// Поиск товаров
 Route::get('/search', [ProductController::class, 'search'])->name('product.search');
 
-// Корзина (можно использовать ресурсный контроллер)
-Route::resource('cart', CartController::class);
+// Корзина — кастомные маршруты
+Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.index');
+Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart/remove/{productId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+// Оформление заказа доступно только авторизованным пользователям
+Route::post('/cart/checkout', [CartController::class, 'checkout'])
+    ->middleware('auth')
+    ->name('cart.checkout');
 
-// Заказы (только авторизованным пользователям)
+// Заказы (только для авторизованных пользователей)
 Route::middleware('auth')->group(function () {
     Route::resource('orders', OrderController::class);
 });
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+// Аутентификация
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.perform');
 
-Route::get('/', function () {
-    return view('products.index');
-});
+Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [AuthController::class, 'register'])->name('register.perform');
 
-Route::get('/', [ProductController::class, 'index'])->name('home');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-
-Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.index');
-Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
-Route::get('/cart/remove/{productId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
-Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
-
-
-
+// Личный кабинет (только для авторизованных пользователей)
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware('auth')
+    ->name('dashboard');
