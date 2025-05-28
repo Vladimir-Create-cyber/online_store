@@ -1,6 +1,6 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-<header class="bg-white shadow">
+<header>
     <div class="w-full max-w-screen-xl mx-auto px-4 py-4">
         <nav class="flex justify-between items-center">
             <!-- Левая часть: Главная и Корзина -->
@@ -8,14 +8,14 @@
                 <a href="{{ route('home') }}" class="text-xl font-bold text-gray-800 hover:text-blue-600 transition-colors">
                     Главная
                 </a>
-                <a href="{{ route('cart.index') }}" class="cart text-gray-800 hover:text-blue-600 transition-colors ml-auto">
+                <a href="{{ route('cart.index') }}" class="text-xl font-bold text-gray-800 hover:text-blue-600 transition-colors">
                     Корзина
                 </a>
             </div>
 
             <!-- Средняя часть: Поиск -->
             <div class="flex flex-grow justify-center mx-4">
-                <form action="{{ route('product.search') }}" method="GET" class="flex">
+                <form action="{{ route('product.search') }}" method="GET" class="flex w-full max-w-lg">
                     <input type="text"
                            name="query"
                            placeholder="Поиск товаров..."
@@ -28,21 +28,21 @@
             </div>
 
             <!-- Правая часть: Аутентификация -->
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-6">
                 @guest
-                    <a href="{{ route('login') }}" class="text-gray-800 hover:text-blue-600 transition-colors">
+                    <a href="{{ route('login') }}" class="text-xl font-bold text-gray-800 hover:text-blue-600 transition-colors">
                         Вход
                     </a>
-                    <a href="{{ route('register') }}" class="text-gray-800 hover:text-blue-600 transition-colors">
+                    <a href="{{ route('register') }}" class="text-xl font-bold text-gray-800 hover:text-blue-600 transition-colors">
                         Регистрация
                     </a>
                 @else
-                    <a href="{{ route('dashboard') }}" class="text-gray-800 hover:text-blue-600 transition-colors">
+                    <a href="{{ route('dashboard') }}" class="text-xl font-bold text-gray-800 hover:text-blue-600 transition-colors">
                         Личный кабинет
                     </a>
                     <form action="{{ route('logout') }}" method="POST" class="inline">
                         @csrf
-                        <button type="submit" class="text-gray-800 hover:text-blue-600 transition-colors">
+                        <button type="submit" class="text-xl font-bold text-gray-800 hover:text-blue-600 transition-colors">
                             Выход
                         </button>
                     </form>

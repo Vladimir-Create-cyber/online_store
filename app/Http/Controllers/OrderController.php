@@ -13,26 +13,28 @@ class OrderController extends Controller
 {
     public function store(Request $request)
     {
-        // Проверяем, авторизован ли пользователь
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'Для оформления заказа необходимо войти в систему.');
         }
 
-        $user = Auth::user();
+        $request->validate([
+            'address' => 'required|string|max:255'
+        ]);
 
-        // Проверяем, есть ли товары в корзине
-        $cartItems = CartItem::where('user_id', $user->id)->with('product')->get();
+        $user = Auth::user();
+        $cartItems = CartItem::where('user_id', $user->id)->with(['product'])->get();
 
         if ($cartItems->isEmpty()) {
             return redirect()->route('cart.index')->with('error', 'Корзина пуста.');
         }
 
-        // Рассчитываем итоговую сумму заказа
+        if ($cartItems->contains(fn($item) => !$item->product)) {
+            return redirect()->route('cart.index')->with('error', 'Некоторые товары больше не доступны.');
+        }
+
         $calculatedTotal = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
 
-        // Используем транзакцию для надежного сохранения данных
         DB::transaction(function () use ($user, $request, $calculatedTotal, $cartItems) {
-            // Создаём заказ
             $order = Order::create([
                 'user_id'          => $user->id,
                 'total'            => $calculatedTotal,
@@ -40,7 +42,6 @@ class OrderController extends Controller
                 'status'           => 'pending',
             ]);
 
-            // Формируем массив данных для массовой вставки
             $orderItems = $cartItems->map(fn($cartItem) => [
                 'order_id'   => $order->id,
                 'product_id' => $cartItem->product_id,
@@ -51,19 +52,13 @@ class OrderController extends Controller
             ])->toArray();
 
             OrderItem::insert($orderItems);
-
-            // Очищаем корзину после оформления заказа
             CartItem::where('user_id', $user->id)->delete();
-
-            // Отправляем уведомление (если оно настроено)
             \App\Jobs\SendOrderNotification::dispatch($order);
         });
 
-        return redirect()->route('orders.show', Order::latest()->first()->id)
-            ->with('success', 'Заказ успешно оформлен!');
+        return redirect()->route('orders.show', $order->id)->with('success', 'Заказ успешно оформлен!');
     }
 
-    // Метод для отображения подробностей заказа
     public function show($orderId)
     {
         $order = Order::with('orderItems.product')->findOrFail($orderId);

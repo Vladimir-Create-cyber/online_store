@@ -9,21 +9,29 @@ use App\Models\OrderItem;
 
 class CartController extends Controller
 {
-    // Показываем содержимое корзины
     public function viewCart()
     {
-        $cart = session()->get('cart', []);
-        return view('cart.index', compact('cart'));
+        if (!session()->has('cart')) {
+            session()->put('cart', []);
+        }
+
+        return view('cart.index', ['cart' => session()->get('cart')]);
     }
 
-    // Добавляем товар в корзину
     public function addToCart(Request $request, $productId)
     {
-        $product = Product::findOrFail($productId);
+        try {
+            $product = Product::findOrFail($productId);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Товар не найден!');
+        }
 
         $cart = session()->get('cart', []);
 
         if (isset($cart[$productId])) {
+            if ($cart[$productId]['quantity'] >= $product->stock) {
+                return redirect()->back()->with('error', 'На складе недостаточно товара!');
+            }
             $cart[$productId]['quantity']++;
         } else {
             $cart[$productId] = [
@@ -35,26 +43,25 @@ class CartController extends Controller
         }
 
         session()->put('cart', $cart);
-
         return redirect()->back()->with('success', 'Товар добавлен в корзину!');
     }
 
-    // Удаляем товар из корзины
     public function removeFromCart($productId)
     {
         $cart = session()->get('cart', []);
-
         if (isset($cart[$productId])) {
             unset($cart[$productId]);
             session()->put('cart', $cart);
         }
-
         return redirect()->back()->with('success', 'Товар удалён из корзины!');
     }
 
-    // Оформление заказа
     public function checkout()
     {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Вы должны войти, чтобы оформить заказ!');
+        }
+
         $cart = session()->get('cart', []);
 
         if (!$cart) {
@@ -77,7 +84,6 @@ class CartController extends Controller
         }
 
         session()->forget('cart');
-
         return redirect()->route('orders.show', $order->id)->with('success', 'Заказ оформлен!');
     }
 }

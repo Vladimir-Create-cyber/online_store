@@ -12,21 +12,25 @@
     @endif
 
     <div class="cart-items">
-        @foreach($cart as $id => $item)
+        @forelse($cart as $id => $item)
             <div class="cart-item">
                 <img src="{{ asset('storage/' . $item['image']) }}" alt="{{ $item['name'] }}">
                 <h3>{{ $item['name'] }}</h3>
-                <p>Цена: {{ $item['price'] }} руб.</p>
+                <p class="price">Цена: <strong>{{ number_format($item['price'], 2) }} руб.</strong></p>
                 <p>Количество: {{ $item['quantity'] }}</p>
                 <form action="{{ route('cart.remove', $id) }}" method="get">
-                    <button type="submit">Удалить</button>
+                    <button type="submit" class="btn-remove">Удалить</button>
                 </form>
             </div>
-        @endforeach
+        @empty
+            <p class="empty-cart">Ваша корзина пуста.</p>
+        @endforelse
     </div>
 
-    <form action="{{ route('cart.checkout') }}" method="post">
-        @csrf
-        <button type="submit">Оформить заказ</button>
-    </form>
+    @if($cart)
+        <form action="{{ route('cart.checkout') }}" method="post">
+            @csrf
+            <button type="submit" class="btn-checkout">Оформить заказ</button>
+        </form>
+    @endif
 @endsection
