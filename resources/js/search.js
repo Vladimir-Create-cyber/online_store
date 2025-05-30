@@ -1,14 +1,16 @@
+// resources/js/search.js
+
 /**
  * Search Form Enhancement Module
  *
  * @module SearchForm
- * @description Добавляет интерактивные поведение для поисковых форм:
- * - Визуальные эффекты при фокусе/потере фокуса
+ * @description Управляет поведением поисковой формы:
  * - Динамическое переключение иконки поиск/очистка
- * - Обработка очистки поля поиска
- * - Поддержка touch-устройств
+ * - Визуальные эффекты при взаимодействии
+ * - Очистка поля по клику на иконку
+ * - Корректная отправка формы даже с пустым запросом
  *
- * @version 1.1.0
+ * @version 2.0.0
  * @license MIT
  */
 
@@ -20,9 +22,6 @@
  * @example
  * // Автоматическая инициализация при загрузке DOM
  * document.addEventListener('DOMContentLoaded', initSearchForm);
- *
- * // Или ручная инициализация для динамически добавленных форм
- * initSearchForm();
  */
 export function initSearchForm() {
     const searchForms = document.querySelectorAll('.search-form form');
@@ -34,102 +33,111 @@ export function initSearchForm() {
         /** @type {HTMLElement} */
         const icon = form.querySelector('.search-icon');
 
-        // Выходим если нет обязательных элементов
+        // Проверка необходимых элементов
         if (!input || !icon) {
             console.warn('Search form elements not found', form);
             return;
         }
 
         /**
-         * Переключает класс focused для формы
-         * @param {boolean} isFocused - Флаг состояния фокуса
+         * Обновляет состояние иконки в зависимости от содержимого поля
+         * @function updateIconState
+         * @private
          */
-        const toggleFocusState = (isFocused) => {
-            form.classList.toggle('focused', isFocused);
+        const updateIconState = () => {
+            const hasValue = input.value.length > 0;
+
+            if (hasValue) {
+                // Активируем режим очистки
+                icon.textContent = '✕';
+                icon.classList.add('clear-active');
+                icon.setAttribute('aria-label', 'Очистить поиск');
+            } else {
+                // Возвращаем режим поиска
+                icon.textContent = '🔍';
+                icon.classList.remove('clear-active');
+                icon.setAttribute('aria-label', 'Поиск');
+            }
         };
 
         /**
-         * Очищает поле ввода и возвращает состояние по умолчанию
+         * Очищает поле ввода и возвращает фокус
+         * @function clearSearchInput
+         * @private
          */
         const clearSearchInput = () => {
             input.value = '';
             input.focus();
             updateIconState();
 
-            // Имитируем пользовательский ввод для live-поиска
+            // Генерируем событие для обновления состояния
             const inputEvent = new Event('input', { bubbles: true });
             input.dispatchEvent(inputEvent);
         };
 
         /**
-         * Обновляет состояние иконки в зависимости от содержимого поля
+         * Обрабатывает клик по иконке
+         * @function handleIconClick
+         * @private
+         * @param {Event} e - Событие клика
          */
-        const updateIconState = () => {
-            const hasValue = input.value.length > 0;
+        const handleIconClick = (e) => {
+            // Предотвращаем всплытие, чтобы не триггерить форму
+            e.stopPropagation();
 
-            if (hasValue) {
-                // Режим очистки
-                icon.textContent = '✕';
-                icon.style.cursor = 'pointer';
-                icon.setAttribute('aria-label', 'Очистить поиск');
-                icon.addEventListener('click', clearSearchInput);
-            } else {
-                // Режим поиска
-                icon.textContent = '🔍';
-                icon.style.cursor = 'default';
-                icon.setAttribute('aria-label', 'Поиск');
-                icon.removeEventListener('click', clearSearchInput);
+            if (input.value.length > 0) {
+                clearSearchInput();
             }
         };
 
-        // ========== Настройка обработчиков событий ========== //
-
-        // Фокус/потеря фокуса
-        input.addEventListener('focus', () => toggleFocusState(true));
-        input.addEventListener('blur', () => toggleFocusState(false));
-
-        // Touch-устройства
-        input.addEventListener('touchstart', () => toggleFocusState(true), {
-            passive: true
-        });
-
-        // Изменение содержимого
-        input.addEventListener('input', updateIconState);
-
-        // Инициализация начального состояния
-        updateIconState();
-
-        // ========== Очистка ========== //
-
         /**
-         * Удаляет все обработчики событий
+         * Обрабатывает отправку формы
+         * @function handleFormSubmit
+         * @private
+         * @param {Event} e - Событие отправки
          */
-        const cleanup = () => {
-            input.removeEventListener('focus', () => toggleFocusState(true));
-            input.removeEventListener('blur', () => toggleFocusState(false));
-            input.removeEventListener('touchstart', () => toggleFocusState(true));
-            input.removeEventListener('input', updateIconState);
-            icon.removeEventListener('click', clearSearchInput);
+        const handleFormSubmit = (e) => {
+            // Для пустого запроса изменяем действие формы
+            if (input.value.trim() === '') {
+                e.preventDefault();
+
+                // Получаем базовый URL для всех продуктов
+                const baseUrl = form.getAttribute('data-base-url') || '/products';
+
+                // Перенаправляем на страницу всех продуктов
+                window.location.href = baseUrl;
+            }
         };
 
-        // Автоматическая очистка при удалении формы из DOM (для SPA)
+        // Инициализация состояния иконки
+        updateIconState();
+
+        // Настройка обработчиков событий
+        input.addEventListener('input', updateIconState);
+        icon.addEventListener('click', handleIconClick);
+        form.addEventListener('submit', handleFormSubmit);
+
+        // Очистка при демонтаже (для SPA)
+        const cleanup = () => {
+            input.removeEventListener('input', updateIconState);
+            icon.removeEventListener('click', handleIconClick);
+            form.removeEventListener('submit', handleFormSubmit);
+        };
+
+        // Автоматическая очистка при удалении формы
         if (typeof MutationObserver !== 'undefined') {
-            const observer = new MutationObserver((mutations, obs) => {
+            const observer = new MutationObserver(() => {
                 if (!document.body.contains(form)) {
                     cleanup();
-                    obs.disconnect();
+                    observer.disconnect();
                 }
             });
-
-            observer.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
+            observer.observe(document.body, { childList: true, subtree: true });
         }
     });
 }
 
-// Автоматическая инициализация при полной загрузке DOM
+// Автоматическая инициализация при загрузке DOM
 if (document.readyState !== 'loading') {
     initSearchForm();
 } else {

@@ -1,10 +1,15 @@
 import './bootstrap';
 import { initSearchForm } from './search';
 
-// Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', () => {
+// Инициализация компонентов
+initSearchForm();
+
+// Для Livewire (если используется)
+document.addEventListener('livewire:load', () => {
     initSearchForm();
 });
 
-// Для динамически загружаемого контента (если нужно)
-window.initSearchForm = initSearchForm;
+// Для Turbo Drive (если используется)
+document.addEventListener('turbo:render', () => {
+    initSearchForm();
+});

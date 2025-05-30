@@ -63,7 +63,7 @@ header {
     position: relative;
 }
 
-.header-left a:after {
+.header-left a::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -79,11 +79,11 @@ header {
     color: #3b82f6;
 }
 
-.header-left a:hover:after {
+.header-left a:hover::after {
     width: 70%;
 }
 
-/* ====================== ИСПРАВЛЕННЫЕ СТИЛИ ПОИСКА ====================== */
+/* ====================== Стили поиска (ПОЛНОСТЬЮ ПЕРЕРАБОТАНЫ) ====================== */
 .search-form {
     max-width: 600px;
     width: 100%;
@@ -92,11 +92,12 @@ header {
 
 .search-form form {
     display: flex;
+    position: relative;
 }
 
 .search-form input[type="text"] {
     width: 100%;
-    padding: 12px 20px 12px 45px; /* Увеличен левый отступ */
+    padding: 12px 20px 12px 45px;
     border: 1px solid #cbd5e1;
     border-radius: 50px;
     outline: none;
@@ -110,15 +111,17 @@ header {
     box-shadow: 0 2px 12px rgba(59, 130, 246, 0.2);
 }
 
-/* Иконка лупы внутри формы */
 .search-icon {
     position: absolute;
     left: 18px;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 10;
+    z-index: 15; /* Выше кнопки */
     color: #64748b;
-    pointer-events: none;
+    transition: all 0.2s ease;
+    pointer-events: none; /* По умолчанию клики не принимает */
+    font-size: 1rem;
+    user-select: none;
 }
 
 .search-form button {
@@ -137,11 +140,32 @@ header {
     display: flex;
     align-items: center;
     gap: 6px;
+    z-index: 10;
 }
 
 .search-form button:hover {
     transform: translateY(-50%) scale(1.03);
     box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+}
+
+/* Стили для активного крестика */
+.search-icon.clear-active {
+    pointer-events: auto; /* Разрешаем клики */
+    cursor: pointer;
+    color: #ef4444;
+    animation: clearAppear 0.3s ease-out;
+}
+
+/* Эффекты при наведении на крестик */
+.search-icon.clear-active:hover {
+    color: #dc2626;
+    transform: translateY(-50%) scale(1.25);
+}
+
+/* Анимация появления крестика */
+@keyframes clearAppear {
+    0% { transform: translateY(-50%) scale(0.8); opacity: 0; }
+    100% { transform: translateY(-50%) scale(1); opacity: 1; }
 }
 
 /* ====================== Стили авторизации ====================== */
@@ -189,74 +213,6 @@ header {
     transform: translateY(-2px);
 }
 
-/* ====================== Адаптивность ====================== */
-@media (max-width: 1024px) {
-    .product-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .header-nav {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
-        gap: 15px;
-    }
-
-    .header-left,
-    .search-form,
-    .header-right {
-        grid-column: 1;
-        justify-content: center;
-    }
-
-    .search-form {
-        order: 3;
-        margin-top: 10px;
-    }
-
-    .product-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .page-title {
-        font-size: 2.2rem;
-    }
-
-    body {
-        padding-top: 140px;
-    }
-
-    .search-icon {
-        left: 15px;
-    }
-}
-
-@media (max-width: 480px) {
-    .header-left {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .product-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .page-title {
-        font-size: 1.8rem;
-    }
-
-    .auth-btn {
-        padding: 8px 15px;
-        font-size: 0.85rem;
-    }
-
-    .search-form button {
-        padding: 8px 15px;
-        font-size: 0.85rem;
-    }
-}
-
 /* ====================== Стили контента ====================== */
 .page-title {
     text-align: center;
@@ -268,7 +224,7 @@ header {
     padding-bottom: 15px;
 }
 
-.page-title:after {
+.page-title::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -302,7 +258,7 @@ header {
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
 }
 
-.product-card:before {
+.product-card::before {
     content: '';
     position: absolute;
     top: 0;
@@ -387,32 +343,30 @@ header {
     box-shadow: 0 6px 8px rgba(5, 150, 105, 0.3);
 }
 
-/* Контейнер пагинации */
+/* ====================== Пагинация ====================== */
 .pagination {
     width: 100%;
     display: flex;
-    justify-content: center; /* Центрируем по горизонтали */
+    justify-content: center;
     margin: 3rem 0;
 }
 
-/* Список пагинации */
 .pagination ul {
     display: flex;
     list-style: none;
     padding: 0;
     gap: 8px;
-    margin: 0 auto; /* Автоматические отступы по бокам для центрирования */
-    justify-content: center; /* Дублируем центрирование для IE11 */
-    flex-wrap: wrap; /* Разрешаем перенос на маленьких экранах */
+    margin: 0 auto;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-/* Элементы пагинации */
 .pagination li a,
 .pagination li span {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 36px; /* Фиксированная минимальная ширина */
+    min-width: 36px;
     height: 36px;
     padding: 0 8px;
     border-radius: 6px;
@@ -421,13 +375,11 @@ header {
     transition: all 0.2s ease;
 }
 
-/* Ссылки */
 .pagination li a {
     background-color: #e2e8f0;
     color: #334155;
 }
 
-/* Активная страница */
 .pagination li.active span {
     background: #3b82f6;
     color: white;
@@ -435,13 +387,64 @@ header {
     box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
 }
 
-/* Состояние наведения */
 .pagination li a:hover {
     background: #cbd5e1;
     transform: translateY(-2px);
 }
 
-/* Адаптивность */
+/* ====================== Футер ====================== */
+footer {
+    text-align: center;
+    padding: 30px 20px;
+    background: #0f172a;
+    color: #cbd5e1;
+    margin-top: 80px;
+    border-top: 4px solid #3b82f6;
+}
+
+/* ====================== Адаптивность ====================== */
+@media (max-width: 1024px) {
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .header-nav {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 15px;
+    }
+
+    .header-left,
+    .search-form,
+    .header-right {
+        grid-column: 1;
+        justify-content: center;
+    }
+
+    .search-form {
+        order: 3;
+        margin-top: 10px;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .page-title {
+        font-size: 2.2rem;
+    }
+
+    body {
+        padding-top: 140px;
+    }
+
+    .search-icon {
+        left: 15px;
+    }
+}
+
 @media (max-width: 640px) {
     .pagination ul {
         gap: 6px;
@@ -455,46 +458,27 @@ header {
     }
 }
 
-footer {
-    text-align: center;
-    padding: 30px 20px;
-    background: #0f172a;
-    color: #cbd5e1;
-    margin-top: 80px;
-    border-top: 4px solid #3b82f6;
-}
-/* Стили для focused состояния */
-.search-form form.focused {
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
-}
+@media (max-width: 480px) {
+    .header-left {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 
-/* Анимация иконки */
-.search-icon {
-    transition: transform 0.2s ease, color 0.2s ease;
-}
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
 
-.search-form form.focused .search-icon {
-    transform: scale(1.1);
-    color: #3b82f6;
-}
+    .page-title {
+        font-size: 1.8rem;
+    }
 
-/* Курсор для интерактивных элементов */
-.search-icon[aria-label="Очистить поиск"] {
-    cursor: pointer;
-}
-.search-icon {
-    transition: transform 0.2s ease, color 0.2s ease;
-    pointer-events: auto; /* Важно для обработки кликов */
-}
+    .auth-btn {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+    }
 
-.search-form form.focused {
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
-}
-
-.search-icon[aria-label="Очистить поиск"] {
-    color: #ef4444;
-}
-
-.search-icon[aria-label="Очистить поиск"]:hover {
-    transform: scale(1.1);
+    .search-form button {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+    }
 }

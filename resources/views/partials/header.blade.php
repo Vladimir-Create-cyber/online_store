@@ -10,9 +10,13 @@
 
         <!-- Средняя часть: Поиск с ИСПРАВЛЕННОЙ иконкой -->
         <div class="search-form">
-            <form action="{{ route('product.search') }}" method="GET">
-                <span class="search-icon">🔍</span>
-                <input type="text" name="query" placeholder="Поиск товаров..." >
+            <form
+                action="{{ route('product.search') }}"
+                method="GET"
+                data-base-url="{{ route('products.index') }}"
+            >
+                <span class="search-icon" aria-label="Поиск">🔍</span>
+                <input type="text" name="query" placeholder="Поиск товаров...">
                 <button type="submit">Найти</button>
             </form>
         </div>
