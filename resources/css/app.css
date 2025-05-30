@@ -387,30 +387,72 @@ header {
     box-shadow: 0 6px 8px rgba(5, 150, 105, 0.3);
 }
 
+/* Контейнер пагинации */
 .pagination {
+    width: 100%;
     display: flex;
-    justify-content: center;
-    margin-top: 50px;
-    gap: 10px;
+    justify-content: center; /* Центрируем по горизонтали */
+    margin: 3rem 0;
 }
 
-.pagination button {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
+/* Список пагинации */
+.pagination ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    gap: 8px;
+    margin: 0 auto; /* Автоматические отступы по бокам для центрирования */
+    justify-content: center; /* Дублируем центрирование для IE11 */
+    flex-wrap: wrap; /* Разрешаем перенос на маленьких экранах */
+}
+
+/* Элементы пагинации */
+.pagination li a,
+.pagination li span {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 600;
-    background: #e2e8f0;
-    transition: all 0.3s;
+    min-width: 36px; /* Фиксированная минимальная ширина */
+    height: 36px;
+    padding: 0 8px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
 }
 
-.pagination button:hover,
-.pagination button.active {
+/* Ссылки */
+.pagination li a {
+    background-color: #e2e8f0;
+    color: #334155;
+}
+
+/* Активная страница */
+.pagination li.active span {
     background: #3b82f6;
     color: white;
-    transform: translateY(-3px);
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
+
+/* Состояние наведения */
+.pagination li a:hover {
+    background: #cbd5e1;
+    transform: translateY(-2px);
+}
+
+/* Адаптивность */
+@media (max-width: 640px) {
+    .pagination ul {
+        gap: 6px;
+    }
+
+    .pagination li a,
+    .pagination li span {
+        min-width: 32px;
+        height: 32px;
+        font-size: 0.875rem;
+    }
 }
 
 footer {
