@@ -2,33 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
-/* =========================
-   Глобальный контейнер для основного контента
-   ========================= */
-.container {
-    max-width: 1200px;
-    margin: 100px auto 0; /* отступ сверху для того, чтобы фиксированный header не перекрывал контент */
-    padding: 20px;
+/* ====================== Глобальные стили ====================== */
+body {
+    background-color: #f8fafc;
+    color: #1e293b;
+    font-family: 'Inter', -apple-system, sans-serif;
+    padding-top: 80px;
 }
 
-/* =========================
-   Очаровательный и расширенный Header
-   ========================= */
+/* ====================== Контейнер контента ====================== */
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ====================== Стили хедера ====================== */
 header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-    background: linear-gradient(90deg, #f1f7f3, #e9ecef);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 16px 40px; /* увеличенные отступы делают header просторным */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 12px 5%;
 }
 
-/* Блоки для левой и правой частей header */
+.header-nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
 .header-left,
 .header-right {
     display: flex;
@@ -36,175 +52,407 @@ header {
     gap: 20px;
 }
 
-/* Ссылки в header (левый и правый блоки) */
-.header-left a,
-.header-right a {
+.header-left a {
     text-decoration: none;
-    color: #333;
-    font-size: 1.125rem;
+    color: #334155;
+    font-size: 1.1rem;
     font-weight: 600;
     padding: 8px 12px;
-    transition: background-color 0.3s, color 0.3s;
+    border-radius: 8px;
+    transition: all 0.3s;
+    position: relative;
 }
 
-.header-left a:hover,
-.header-right a:hover {
-    background-color: rgba(0, 123, 255, 0.1);
-    color: #007bff;
-    border-radius: 4px;
+.header-left a:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: #3b82f6;
+    transition: all 0.3s;
+    transform: translateX(-50%);
 }
 
-/* Форма поиска в центре */
+.header-left a:hover {
+    color: #3b82f6;
+}
+
+.header-left a:hover:after {
+    width: 70%;
+}
+
+/* ====================== ИСПРАВЛЕННЫЕ СТИЛИ ПОИСКА ====================== */
 .search-form {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 20px;
+    max-width: 600px;
+    width: 100%;
+    position: relative;
 }
 
 .search-form form {
     display: flex;
-    width: 100%;
-    max-width: 500px;  /* расширяем форму поиска */
 }
 
 .search-form input[type="text"] {
     width: 100%;
-    padding: 10px 14px;
-    border: 1px solid #ccc;
-    border-right: none;
-    border-radius: 4px 0 0 4px;
+    padding: 12px 20px 12px 45px; /* Увеличен левый отступ */
+    border: 1px solid #cbd5e1;
+    border-radius: 50px;
     outline: none;
     font-size: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+}
+
+.search-form input[type="text"]:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 2px 12px rgba(59, 130, 246, 0.2);
+}
+
+/* Иконка лупы внутри формы */
+.search-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    color: #64748b;
+    pointer-events: none;
 }
 
 .search-form button {
-    padding: 10px 16px;
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    color: white;
     border: none;
-    background-color: #3b82f6;
-    color: #fff;
-    font-size: 1rem;
-    border-radius: 0 4px 4px 0;
+    border-radius: 50px;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .search-form button:hover {
-    background-color: #2563eb;
+    transform: translateY(-50%) scale(1.03);
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
 }
 
-/* =========================
-   Заголовок страницы
-   ========================= */
+/* ====================== Стили авторизации ====================== */
+.header-right {
+    justify-content: flex-end;
+}
+
+.auth-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.95rem;
+}
+
+.btn-login {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.btn-register {
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    color: white;
+    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
+    margin-left: 10px;
+}
+
+.btn-account {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.btn-logout {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    font-family: inherit;
+}
+
+.auth-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* ====================== Адаптивность ====================== */
+@media (max-width: 1024px) {
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .header-nav {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 15px;
+    }
+
+    .header-left,
+    .search-form,
+    .header-right {
+        grid-column: 1;
+        justify-content: center;
+    }
+
+    .search-form {
+        order: 3;
+        margin-top: 10px;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .page-title {
+        font-size: 2.2rem;
+    }
+
+    body {
+        padding-top: 140px;
+    }
+
+    .search-icon {
+        left: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-left {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-title {
+        font-size: 1.8rem;
+    }
+
+    .auth-btn {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+    }
+
+    .search-form button {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+    }
+}
+
+/* ====================== Стили контента ====================== */
 .page-title {
     text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+    font-size: 2.8rem;
+    margin-bottom: 40px;
+    font-weight: 700;
+    color: #0f172a;
+    position: relative;
+    padding-bottom: 15px;
 }
 
-/* =========================
-   Сетка карточек товаров
-   ========================= */
+.page-title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #3b82f6, #10b981);
+    border-radius: 2px;
+}
+
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 3%; /* гибкий процентный отступ между карточками */
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 28px;
 }
 
-/* =========================
-   Карточка товара
-   ========================= */
 .product-card {
-    background-color: #333;
-    padding: 10px;
-    border-radius: 5px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
     text-align: center;
-    margin-bottom: 20px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    position: relative;
+    padding-bottom: 15px;
 }
 
-.product-card img {
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.product-card:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3b82f6, #10b981);
+}
+
+.product-image {
     width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 5px;
-    margin-bottom: 10px;
+    height: 180px;
+    object-fit: contain;
+    padding: 15px;
+    transition: transform 0.4s;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
 }
 
 .product-name {
-    font-size: 1.125rem;
-    margin-bottom: 10px;
-    color: #fff;
+    font-size: 1.15rem;
+    margin: 10px 15px;
+    color: #1e293b;
+    font-weight: 600;
 }
 
 .product-description {
-    font-size: 0.875rem;
-    margin-bottom: 10px;
-    color: #ccc;
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0 15px 15px;
+    line-height: 1.5;
+    min-height: 40px;
 }
 
 .product-price {
-    font-size: 1.125rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #0f172a;
 }
 
-/* =========================
-   Контейнер для кнопок внутри карточки товара
-   ========================= */
 .product-links {
     display: flex;
-    justify-content: space-between;
-    gap: 5%;
+    padding: 0 15px;
+    gap: 12px;
 }
 
-/* Стили кнопок: каждая занимает около 45% ширины */
 .btn-details,
 .btn-cart {
-    display: inline-block;
-    width: 45%;
-    padding: 10px 0;
-    font-size: 0.875rem;
-    font-weight: bold;
-    border-radius: 5px;
-    text-align: center;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: background-color 0.3s;
+    flex: 1;
+    padding: 12px 0;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 
 .btn-details {
-    background-color: #3b82f6;
-    color: #fff;
+    background: #e0f2fe;
+    color: #0369a1;
 }
 
 .btn-details:hover {
-    background-color: #2563eb;
+    background: #bae6fd;
+    transform: translateY(-2px);
 }
 
 .btn-cart {
-    background-color: #10b981;
-    color: #fff;
-    border: none;
-    cursor: pointer;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    box-shadow: 0 4px 6px rgba(5, 150, 105, 0.2);
 }
 
 .btn-cart:hover {
-    background-color: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(5, 150, 105, 0.3);
 }
 
-/* =========================
-   Пагинация и Footer
-   ========================= */
 .pagination {
-    text-align: center;
-    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    gap: 10px;
+}
+
+.pagination button {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    background: #e2e8f0;
+    transition: all 0.3s;
+}
+
+.pagination button:hover,
+.pagination button.active {
+    background: #3b82f6;
+    color: white;
+    transform: translateY(-3px);
 }
 
 footer {
     text-align: center;
-    padding: 10px;
-    background-color: #f1f7f3;
-    color: #000;
+    padding: 30px 20px;
+    background: #0f172a;
+    color: #cbd5e1;
+    margin-top: 80px;
+    border-top: 4px solid #3b82f6;
+}
+/* Стили для focused состояния */
+.search-form form.focused {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+/* Анимация иконки */
+.search-icon {
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.search-form form.focused .search-icon {
+    transform: scale(1.1);
+    color: #3b82f6;
+}
+
+/* Курсор для интерактивных элементов */
+.search-icon[aria-label="Очистить поиск"] {
+    cursor: pointer;
+}
+.search-icon {
+    transition: transform 0.2s ease, color 0.2s ease;
+    pointer-events: auto; /* Важно для обработки кликов */
+}
+
+.search-form form.focused {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.search-icon[aria-label="Очистить поиск"] {
+    color: #ef4444;
+}
+
+.search-icon[aria-label="Очистить поиск"]:hover {
+    transform: scale(1.1);
 }
