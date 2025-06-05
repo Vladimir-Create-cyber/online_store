@@ -14,6 +14,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar',
         'phone',
         'address',
         'role_id',
@@ -42,5 +43,18 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    // УДАЛЯЕМ все кастомные методы для уведомлений
+    // Они не нужны, так как мы используем прямые запросы
+
+    // Добавляем метод для получения количества непрочитанных уведомлений
+    // без использования отношений ORM
+    public function getUnreadNotificationsCountAttribute()
+    {
+        // Прямой запрос к базе данных
+        return \App\Models\Notification::where('user_id', $this->id)
+            ->where('is_read', false)
+            ->count();
     }
 }

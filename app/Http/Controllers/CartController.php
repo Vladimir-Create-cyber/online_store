@@ -6,16 +6,36 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Notification; // Добавили импорт модели
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+    // Новая реализация метода для получения количества непрочитанных уведомлений
+    private function getUnreadCount()
+    {
+        if (!Auth::check()) {
+            return 0;
+        }
+
+        // Прямой запрос к базе данных
+        return Notification::where('user_id', Auth::id())
+            ->where('is_read', false)
+            ->count();
+    }
+
     public function viewCart()
     {
         if (!session()->has('cart')) {
             session()->put('cart', []);
         }
 
-        return view('cart.index', ['cart' => session()->get('cart')]);
+        $unreadCount = $this->getUnreadCount();
+
+        return view('cart.index', [
+            'cart' => session()->get('cart'),
+            'unreadCount' => $unreadCount
+        ]);
     }
 
     public function addToCart(Request $request, $productId)

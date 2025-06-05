@@ -64,7 +64,7 @@
             </button>
 
             <div class="auth-links">
-                <<a href="#">Забыли пароль?</a>
+                <a href="#">Забыли пароль?</a>
                 <a href="{{ route('register') }}">Ещё нет аккаунта? Зарегистрируйтесь</a>
             </div>
         </form>

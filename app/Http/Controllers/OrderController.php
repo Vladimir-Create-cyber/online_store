@@ -8,9 +8,32 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\CartItem;
+use App\Models\Notification; // Добавили импорт модели
 
 class OrderController extends Controller
 {
+    // Новая реализация метода для получения количества непрочитанных уведомлений
+    private function getUnreadCount()
+    {
+        if (!Auth::check()) {
+            return 0;
+        }
+
+        // Прямой запрос к базе данных
+        return Notification::where('user_id', Auth::id())
+            ->where('is_read', false)
+            ->count();
+    }
+
+    public function index()
+    {
+        // Загружаем все заказы текущего пользователя
+        $orders = Order::where('user_id', Auth::id())->latest()->get();
+        $unreadCount = $this->getUnreadCount();
+
+        return view('orders.index', compact('orders', 'unreadCount'));
+    }
+
     public function store(Request $request)
     {
         if (!Auth::check()) {
@@ -34,7 +57,7 @@ class OrderController extends Controller
 
         $calculatedTotal = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
 
-        DB::transaction(function () use ($user, $request, $calculatedTotal, $cartItems) {
+        $order = DB::transaction(function () use ($user, $request, $calculatedTotal, $cartItems) {
             $order = Order::create([
                 'user_id'          => $user->id,
                 'total'            => $calculatedTotal,
@@ -54,6 +77,8 @@ class OrderController extends Controller
             OrderItem::insert($orderItems);
             CartItem::where('user_id', $user->id)->delete();
             \App\Jobs\SendOrderNotification::dispatch($order);
+
+            return $order;
         });
 
         return redirect()->route('orders.show', $order->id)->with('success', 'Заказ успешно оформлен!');
@@ -62,6 +87,13 @@ class OrderController extends Controller
     public function show($orderId)
     {
         $order = Order::with('orderItems.product')->findOrFail($orderId);
-        return view('orders.show', compact('order'));
+        $unreadCount = $this->getUnreadCount();
+
+        // Проверяем, принадлежит ли заказ текущему пользователю
+        if ($order->user_id !== Auth::id()) {
+            return redirect()->route('orders.index')->with('error', 'Вы не можете просматривать этот заказ.');
+        }
+
+        return view('orders.show', compact('order', 'unreadCount'));
     }
 }

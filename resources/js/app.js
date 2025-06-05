@@ -1,21 +1,25 @@
 import './bootstrap';
 import { initSearchForm } from './search';
 import { initPasswordToggle } from './password-toggle';
+import { initProfile } from './profile';
 
-// Инициализация компонентов при обычной загрузке
+// Инициализация компонентов
 document.addEventListener('DOMContentLoaded', () => {
     initSearchForm();
-    initPasswordToggle(); // Добавлено
+    initPasswordToggle();
+    initProfile(); // Инициализация профиля
 });
 
-// Для Livewire (если используется)
+// Для Livewire
 document.addEventListener('livewire:load', () => {
     initSearchForm();
-    initPasswordToggle(); // Добавлено
+    initPasswordToggle();
+    initProfile();
 });
 
-// Для Turbo Drive (если используется)
+// Для Turbo Drive
 document.addEventListener('turbo:render', () => {
     initSearchForm();
-    initPasswordToggle(); // Добавлено
+    initPasswordToggle();
+    initProfile();
 });

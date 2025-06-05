@@ -7,13 +7,28 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Notification; // Добавили импорт модели
 
 class AuthController extends Controller
 {
+    // Новая реализация метода для получения количества непрочитанных уведомлений
+    private function getUnreadCount()
+    {
+        if (!Auth::check()) {
+            return 0;
+        }
+
+        // Прямой запрос к базе данных
+        return Notification::where('user_id', Auth::id())
+            ->where('is_read', false)
+            ->count();
+    }
+
     // Форма входа (GET)
     public function showLoginForm()
     {
-        return view('auth.login');
+        $unreadCount = $this->getUnreadCount();
+        return view('auth.login', compact('unreadCount'));
     }
 
     // Обработка входа (POST)
@@ -42,7 +57,8 @@ class AuthController extends Controller
     // Форма регистрации (GET)
     public function showRegisterForm()
     {
-        return view('auth.register');
+        $unreadCount = $this->getUnreadCount();
+        return view('auth.register', compact('unreadCount'));
     }
 
     // Обработка регистрации (POST)

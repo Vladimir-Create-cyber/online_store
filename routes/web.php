@@ -7,10 +7,11 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\NotificationController;
 
-// Главная страница — каталог товаров (доступна как по 'home')
+// Главная страница — каталог товаров
 Route::get('/', [ProductController::class, 'index'])->name('home');
-// Дополнительный маршрут для каталога товаров (если в шаблонах вызывается 'products.index')
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
 // Детальная страница товара
@@ -19,33 +20,32 @@ Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product
 // Поиск товаров
 Route::get('/search', [ProductController::class, 'search'])->name('product.search');
 
-// Корзина — кастомные маршруты
+// Корзина
 Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.index');
 Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart/remove/{productId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
-// Оформление заказа доступно только авторизованным пользователям
-Route::post('/cart/checkout', [CartController::class, 'checkout'])
-    ->middleware('auth')
-    ->name('cart.checkout');
+Route::post('/cart/checkout', [CartController::class, 'checkout'])->middleware('auth')->name('cart.checkout');
 
-// Заказы (только для авторизованных пользователей)
-Route::middleware('auth')->group(function () {
-    Route::resource('orders', OrderController::class);
+// Заказы
+Route::middleware(['auth'])->group(function () {
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 });
 
 // Аутентификация
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.perform');
-
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register.perform');
-
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Личный кабинет (только для авторизованных пользователей)
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware('auth')
-    ->name('dashboard');
+// Личный кабинет
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
+});
 
-Route::post('/payment/process', [PaymentController::class, 'process']);
+// Оплата
 Route::post('/payment/process', [PaymentController::class, 'processPayment'])->name('payment.process');
