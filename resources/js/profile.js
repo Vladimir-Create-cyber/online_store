@@ -1,5 +1,3 @@
-// resources/js/profile.js
-
 export function initProfile() {
     initAvatarEditor();
 }

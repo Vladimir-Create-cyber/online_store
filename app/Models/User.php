@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Traits\HandlesUnreadNotifications; // Добавляем трейт
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HandlesUnreadNotifications; // Используем трейт
 
     protected $fillable = [
         'name',
@@ -17,7 +20,7 @@ class User extends Authenticatable
         'avatar',
         'phone',
         'address',
-        'role_id',
+        'role_id', // Убедитесь, что это поле существует в таблице users
     ];
 
     protected $hidden = [
@@ -30,31 +33,76 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function orders()
+    protected $appends = ['unread_notifications_count', 'avatar_url']; // Добавили avatar_url
+
+    // Отношение с заказами
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
 
-    public function reviews()
+    // Отношение с отзывами
+    public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
     }
 
-    public function roles()
+    // Отношение с ролями
+    public function roles(): BelongsToMany
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class)->withTimestamps();
     }
 
-    // УДАЛЯЕМ все кастомные методы для уведомлений
-    // Они не нужны, так как мы используем прямые запросы
-
-    // Добавляем метод для получения количества непрочитанных уведомлений
-    // без использования отношений ORM
-    public function getUnreadNotificationsCountAttribute()
+    // Проверка роли пользователя
+    public function hasRole($role): bool
     {
-        // Прямой запрос к базе данных
-        return \App\Models\Notification::where('user_id', $this->id)
-            ->where('is_read', false)
-            ->count();
+        // Проверяем, передана ли строка или массив ролей
+        if (is_string($role)) {
+            return $this->roles->contains('name', $role);
+        }
+
+        // Если передана коллекция или массив ролей
+        if (is_iterable($role)) {
+            foreach ($role as $r) {
+                if ($this->roles->contains('name', $r)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        return false;
+    }
+
+    // Виртуальный атрибут для количества непрочитанных уведомлений
+    public function getUnreadNotificationsCountAttribute(): int
+    {
+        return $this->getUnreadCount(); // Используем метод из трейта
+    }
+
+    // Проверка администратора
+    public function isAdmin(): bool
+    {
+        return $this->hasRole('admin');
+    }
+
+    // Получение аватара с fallback
+    public function getAvatarUrlAttribute(): string
+    {
+        if ($this->avatar) {
+            // Проверяем, является ли avatar URL или путем хранения
+            if (filter_var($this->avatar, FILTER_VALIDATE_URL)) {
+                return $this->avatar;
+            }
+            return asset('storage/' . ltrim($this->avatar, '/'));
+        }
+
+        return asset('images/default-avatar.png');
+    }
+
+    // Добавим метод для проверки наличия аватара
+    public function hasAvatar(): bool
+    {
+        return !empty($this->avatar);
     }
 }

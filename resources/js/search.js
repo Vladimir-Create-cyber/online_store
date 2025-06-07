@@ -1,5 +1,3 @@
-// resources/js/search.js
-
 /**
  * Search Form Enhancement Module
  *

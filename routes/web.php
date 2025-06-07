@@ -26,9 +26,9 @@ Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name
 Route::get('/cart/remove/{productId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 Route::post('/cart/checkout', [CartController::class, 'checkout'])->middleware('auth')->name('cart.checkout');
 
-// Заказы
+// Заказы (ИСПРАВЛЕННЫЙ РАЗДЕЛ)
 Route::middleware(['auth'])->group(function () {
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index'); // Было name('orders')
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 });
 
