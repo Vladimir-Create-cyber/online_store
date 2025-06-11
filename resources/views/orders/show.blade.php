@@ -46,7 +46,7 @@
                     <div class="info-value">{{ $order->created_at->format('d.m.Y H:i') }}</div>
 
                     <div class="info-label">Общая сумма:</div>
-                    <div class="info-value">{{ number_format($order->total, 0, '', ' ') }} ₽</div>
+                    <div class="info-value">{{ number_format($order->total, 0, '', ' ') }} грн.</div>
 
                     <div class="info-label">Способ оплаты:</div>
                     <div class="info-value">{{ $order->payment_method ?? 'Не указано' }}</div>
@@ -110,8 +110,8 @@
                             @endif
                         </div>
                         <div class="item-quantity">x{{ $item->quantity }}</div>
-                        <div class="item-price">{{ number_format($item->price, 0, '', ' ') }} ₽</div>
-                        <div class="item-total">{{ number_format($item->price * $item->quantity, 0, '', ' ') }} ₽</div>
+                        <div class="item-price">{{ number_format($item->price, 0, '', ' ') }} грн.</div>
+                        <div class="item-total">{{ number_format($item->price * $item->quantity, 0, '', ' ') }} грн.</div>
                     </div>
                 @endforeach
             </div>

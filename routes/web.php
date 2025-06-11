@@ -49,3 +49,19 @@ Route::middleware(['auth'])->group(function () {
 
 // Оплата
 Route::post('/payment/process', [PaymentController::class, 'processPayment'])->name('payment.process');
+
+
+// Админ-маршруты
+Route::prefix('admin')->group(function () {
+    // Аутентификация
+    Route::get('/login', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('/login', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'login'])->name('admin.login.submit');
+    Route::post('/logout', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'logout'])->name('admin.logout');
+
+    // Защищенные маршруты
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('/dashboard', function () {
+            return view('admin.dashboard');
+        })->name('admin.dashboard');
+    });
+});

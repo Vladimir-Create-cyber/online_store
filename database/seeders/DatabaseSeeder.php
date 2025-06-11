@@ -16,8 +16,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call(CategorySeeder::class); // Викликаємо сідер категорій першим
         $this->call(ProductSeeder::class);
+        $this->call([AdminSeeder::class ]);
 
-        User::factory()->create([
+            User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);

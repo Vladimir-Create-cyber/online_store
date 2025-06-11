@@ -23,7 +23,7 @@
                         <tr>
                             <td data-label="ID">#{{ $order->id }}</td>
                             <td data-label="Дата">{{ $order->created_at->format('d.m.Y H:i') }}</td>
-                            <td data-label="Сумма">{{ number_format($order->total, 0, '', ' ') }} ₽</td>
+                            <td data-label="Сумма">{{ number_format($order->total, 0, '', ' ') }} грн.</td>
                             <td data-label="Статус">
                                     <span class="status-badge status-{{ $order->status }}">
                                         @switch($order->status)

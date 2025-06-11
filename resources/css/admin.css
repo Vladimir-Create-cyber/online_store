@@ -1,0 +1,369 @@
+/* ================= ADMIN STYLES ================= */
+:root {
+    --sidebar-width: 250px;
+    --header-height: 70px;
+    --primary: #3b82f6;
+    --primary-dark: #2563eb;
+    --secondary: #10b981;
+    --dark: #1e293b;
+    --light: #f8fafc;
+    --gray: #64748b;
+    --danger: #ef4444;
+    --success: #10b981;
+    --warning: #f59e0b;
+}
+
+/* ======= ОСНОВНАЯ СТРУКТУРА ======= */
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f1f5f9;
+}
+
+/* ======= САЙДБАР ======= */
+.admin-sidebar {
+    width: var(--sidebar-width);
+    background: var(--dark);
+    color: white;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    transition: width 0.3s;
+    z-index: 1000;
+}
+
+.admin-brand {
+    padding: 20px;
+    border-bottom: 1px solid #334155;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+}
+
+.admin-brand i {
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+.admin-menu {
+    padding: 15px 0;
+}
+
+.menu-item {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.menu-item:hover,
+.menu-item.active {
+    background: #334155;
+    color: white;
+    border-left: 4px solid var(--primary);
+}
+
+.menu-item i {
+    width: 24px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+/* ======= КОНТЕНТНАЯ ОБЛАСТЬ ======= */
+.admin-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: margin-left 0.3s;
+}
+
+.admin-header {
+    height: var(--header-height);
+    background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 900;
+}
+
+.admin-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 25px;
+}
+
+.admin-main {
+    flex: 1;
+    padding: 30px;
+    background: #f8fafc;
+}
+
+/* ======= ИНФОРМАЦИЯ АДМИНИСТРАТОРА ======= */
+.admin-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.admin-avatar {
+    position: relative;
+    width: 40px;
+    height: 40px;
+}
+
+.admin-avatar-img, .avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
+    box-shadow: 0 2px 10px rgba(59, 130, 246, 0.2);
+    transition: all 0.3s ease;
+}
+
+.avatar-placeholder {
+    background: linear-gradient(135deg, var(--primary), #8b5cf6);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.admin-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-name {
+    font-weight: 600;
+    color: var(--dark);
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.admin-role {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 2px;
+    white-space: nowrap;
+}
+
+.admin-avatar::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    background: var(--success);
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+/* ======= ФОРМА ВЫХОДА ======= */
+.logout-form {
+    display: flex;
+    align-items: center;
+}
+
+.logout-btn {
+    background: transparent;
+    border: none;
+    color: var(--gray);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.logout-btn:hover {
+    background: #fee2e2;
+    color: var(--danger);
+}
+
+.logout-btn i {
+    transition: transform 0.3s;
+}
+
+.logout-btn:hover i {
+    transform: translateX(3px);
+}
+
+.logout-text {
+    margin-left: 8px;
+    font-size: 0.95rem;
+}
+
+/* ======= ДАШБОРД И СТАТИСТИКА ======= */
+.dashboard-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.dashboard-header h1 {
+    font-size: 1.8rem;
+    color: var(--dark);
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin: 25px 0;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    border-left: 4px solid var(--primary);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.stat-icon.bg-blue { background: #dbeafe; color: var(--primary); }
+.stat-icon.bg-green { background: #dcfce7; color: var(--success); }
+.stat-icon.bg-purple { background: #ede9fe; color: #8b5cf6; }
+.stat-icon.bg-amber { background: #fef3c7; color: var(--warning); }
+
+.stat-info {
+    flex: 1;
+}
+
+.stat-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.2;
+}
+
+.stat-label {
+    color: var(--gray);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* ======= АДАПТИВНОСТЬ ======= */
+@media (max-width: 1024px) {
+    .admin-main {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-sidebar {
+        width: 70px;
+    }
+
+    .admin-content {
+        margin-left: 70px;
+    }
+
+    .admin-brand span,
+    .menu-item span,
+    .logout-text,
+    .admin-role {
+        display: none;
+    }
+
+    .menu-item {
+        justify-content: center;
+        padding: 15px 10px;
+    }
+
+    .menu-item.active {
+        border-left: none;
+        border-bottom: 4px solid var(--primary);
+    }
+
+    .admin-header-content {
+        padding: 0 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-name {
+        display: none;
+    }
+
+    .stat-card {
+        padding: 15px;
+    }
+
+    .stat-value {
+        font-size: 1.4rem;
+    }
+
+    .admin-main {
+        padding: 15px;
+    }
+}
+
+/* ======= АНИМАЦИИ И ЭФФЕКТЫ ======= */
+.admin-body {
+    transition: opacity 0.5s ease;
+}
+
+.menu-item {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.menu-item.active {
+    transform: translateX(3px);
+}
+
+.admin-avatar:hover .avatar-placeholder,
+.admin-avatar:hover .admin-avatar-img {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* ======= ФОРМА ВХОДА АДМИНИСТРАТОРА ======= */
+.admin-auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    padding: 20px;
+}
+
+/* ... остальные стили для формы входа ... */
