@@ -3,28 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\Notification; // Добавили импорт модели
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    // Новая реализация метода для получения количества непрочитанных уведомлений
-    private function getUnreadCount()
+    /**
+     * Получить количество непрочитанных уведомлений пользователя.
+     *
+     * @return int
+     */
+    private function getUnreadCount(): int
     {
         if (!Auth::check()) {
             return 0;
         }
 
-        // Прямой запрос к базе данных
         return Notification::where('user_id', Auth::id())
             ->where('is_read', false)
             ->count();
     }
 
+    /**
+     * Отображение каталога товаров на главной странице.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
-        $products = Product::paginate(10);
+        $products = Product::with(['images', 'mainImage']) // Загрузка изображений
+        ->orderBy('created_at', 'desc') // Сортировка: сначала новинки
+        ->paginate(12);
+
         $unreadCount = $this->getUnreadCount();
 
         if ($products->isEmpty()) {
@@ -34,28 +45,43 @@ class ProductController extends Controller
         return view('products.index', compact('products', 'unreadCount'));
     }
 
-    public function show($slug)
+    /**
+     * Отображение страницы одного товара по его slug.
+     *
+     * @param string $slug
+     * @return \Illuminate\View\View
+     */
+    public function show(string $slug)
     {
-        $product = Product::where('slug', $slug)->first();
-        $unreadCount = $this->getUnreadCount();
+        $product = Product::with('images')->where('slug', $slug)->firstOrFail();
 
-        if (!$product) {
-            return redirect()->route('products.index')->with('error', 'Товар не найден');
-        }
+        $unreadCount = $this->getUnreadCount();
 
         return view('products.show', compact('product', 'unreadCount'));
     }
 
+    /**
+     * Поиск товаров по названию.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
     public function search(Request $request)
     {
         $query = trim($request->input('query'));
         $unreadCount = $this->getUnreadCount();
 
         if (empty($query)) {
-            return redirect()->route('products.index')->with('error', 'Введите запрос для поиска');
+            return redirect()
+                ->route('products.index')
+                ->with('error', 'Введите запрос для поиска');
         }
 
-        $products = Product::whereRaw('LOWER(name) LIKE ?', ["%".strtolower($query)."%"])->paginate(10);
+        $products = Product::with(['images', 'mainImage'])
+            ->whereRaw('LOWER(name) LIKE ?', ["%" . strtolower($query) . "%"])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
         return view('products.search', compact('products', 'query', 'unreadCount'));
     }
 }

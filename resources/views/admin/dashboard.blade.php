@@ -2,39 +2,47 @@
 
 @section('content')
     <div class="dashboard-container">
-        <div class="dashboard-header">
-            <h1>Панель управления</h1>
-            <div class="dashboard-stats">
+        <!-- Заголовок панели управления -->
+        <div class="dashboard-header mb-5">
+            <h1 class="dashboard-title">Панель управления</h1>
+        </div>
+
+        <!-- Статистика -->
+        <div class="dashboard-stats mb-6">
+            <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon bg-blue-100 text-blue-600">
-                        <i class="fas fa-shopping-cart"></i>
+                    <div class="stat-icon bg-blue-100">
+                        <i class="fas fa-shopping-cart text-blue-600"></i>
                     </div>
                     <div class="stat-info">
                         <span class="stat-value">1,248</span>
                         <span class="stat-label">Заказов</span>
                     </div>
                 </div>
+
                 <div class="stat-card">
-                    <div class="stat-icon bg-green-100 text-green-600">
-                        <i class="fas fa-users"></i>
+                    <div class="stat-icon bg-green-100">
+                        <i class="fas fa-users text-green-600"></i>
                     </div>
                     <div class="stat-info">
                         <span class="stat-value">5,421</span>
                         <span class="stat-label">Пользователей</span>
                     </div>
                 </div>
+
                 <div class="stat-card">
-                    <div class="stat-icon bg-purple-100 text-purple-600">
-                        <i class="fas fa-box"></i>
+                    <div class="stat-icon bg-purple-100">
+                        <i class="fas fa-box text-purple-600"></i>
                     </div>
                     <div class="stat-info">
                         <span class="stat-value">1,024</span>
                         <span class="stat-label">Товаров</span>
                     </div>
                 </div>
+
                 <div class="stat-card">
-                    <div class="stat-icon bg-amber-100 text-amber-600">
-                        <i class="fas fa-wallet"></i>
+                    <div class="stat-icon bg-amber-100">
+                        <i class="fas fa-wallet text-amber-600"></i>
                     </div>
                     <div class="stat-info">
                         <span class="stat-value">$42,890</span>
@@ -44,17 +52,25 @@
             </div>
         </div>
 
+        <!-- Основной контент -->
         <div class="dashboard-content">
-            <div class="dashboard-section">
-                <h2><i class="fas fa-chart-line mr-2"></i> Статистика продаж</h2>
+            <!-- График продаж -->
+            <div class="dashboard-section mb-6">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line mr-2"></i> Статистика продаж</h2>
+                </div>
                 <div class="chart-container">
                     <canvas id="salesChart"></canvas>
                 </div>
             </div>
 
+            <!-- Нижняя часть с заказами и товарами -->
             <div class="dashboard-grid">
+                <!-- Последние заказы -->
                 <div class="dashboard-section">
-                    <h2><i class="fas fa-clock mr-2"></i> Последние заказы</h2>
+                    <div class="section-header">
+                        <h2><i class="fas fa-clock mr-2"></i> Последние заказы</h2>
+                    </div>
                     <div class="order-list">
                         <div class="order-item">
                             <div class="order-info">
@@ -66,6 +82,7 @@
                                 <span class="order-status badge-success">Доставлен</span>
                             </div>
                         </div>
+
                         <div class="order-item">
                             <div class="order-info">
                                 <span class="order-id">#ORD-00788</span>
@@ -76,6 +93,7 @@
                                 <span class="order-status badge-warning">В обработке</span>
                             </div>
                         </div>
+
                         <div class="order-item">
                             <div class="order-info">
                                 <span class="order-id">#ORD-00787</span>
@@ -89,8 +107,11 @@
                     </div>
                 </div>
 
+                <!-- Популярные товары -->
                 <div class="dashboard-section">
-                    <h2><i class="fas fa-star mr-2"></i> Популярные товары</h2>
+                    <div class="section-header">
+                        <h2><i class="fas fa-star mr-2"></i> Популярные товары</h2>
+                    </div>
                     <div class="product-list">
                         <div class="product-item">
                             <div class="product-image">
@@ -101,6 +122,7 @@
                                 <span class="product-sales">128 продаж</span>
                             </div>
                         </div>
+
                         <div class="product-item">
                             <div class="product-image">
                                 <img src="https://via.placeholder.com/60" alt="Product">
@@ -110,6 +132,7 @@
                                 <span class="product-sales">98 продаж</span>
                             </div>
                         </div>
+
                         <div class="product-item">
                             <div class="product-image">
                                 <img src="https://via.placeholder.com/60" alt="Product">
@@ -130,7 +153,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Данные для графика
             const salesData = {
                 labels: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн'],
                 datasets: [{
@@ -144,7 +166,6 @@
                 }]
             };
 
-            // Настройки графика
             const config = {
                 type: 'line',
                 data: salesData,
@@ -152,9 +173,7 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: {
-                            display: false
-                        },
+                        legend: { display: false },
                         tooltip: {
                             backgroundColor: 'rgba(15, 23, 42, 0.9)',
                             padding: 12,
@@ -165,24 +184,16 @@
                     scales: {
                         y: {
                             beginAtZero: true,
-                            grid: {
-                                color: 'rgba(226, 232, 240, 0.5)'
-                            }
+                            grid: { color: 'rgba(226, 232, 240, 0.5)' }
                         },
                         x: {
-                            grid: {
-                                display: false
-                            }
+                            grid: { display: false }
                         }
                     }
                 }
             };
 
-            // Создаем график
-            const salesChart = new Chart(
-                document.getElementById('salesChart'),
-                config
-            );
+            new Chart(document.getElementById('salesChart'), config);
         });
     </script>
 @endsection

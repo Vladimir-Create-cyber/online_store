@@ -4,6 +4,8 @@
 
 @section('content')
     <div class="order-detail-container">
+
+        {{-- Кнопка "Назад" и заголовок --}}
         <div class="order-header">
             <a href="{{ route('orders.index') }}" class="back-link">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 20 20" fill="currentColor">
@@ -12,28 +14,22 @@
                 Назад к заказам
             </a>
             <h1>Детали заказа #{{ $order->id }}</h1>
+
+            {{-- Статус заказа --}}
             <div class="order-status-badge status-{{ $order->status }}">
                 @switch($order->status)
-                    @case('pending')
-                        Ожидание оплаты
-                        @break
-                    @case('processing')
-                        В обработке
-                        @break
-                    @case('completed')
-                        Завершён
-                        @break
-                    @case('cancelled')
-                        Отменён
-                        @break
-                    @default
-                        {{ $order->status }}
+                    @case('pending') Ожидание оплаты @break
+                    @case('processing') В обработке @break
+                    @case('completed') Завершён @break
+                    @case('cancelled') Отменён @break
+                    @default {{ $order->status }}
                 @endswitch
             </div>
         </div>
 
+        {{-- Информация о заказе и доставке --}}
         <div class="order-detail-grid">
-            <!-- Основная информация о заказе -->
+            {{-- Блок: информация о заказе --}}
             <div class="order-info-card">
                 <h2 class="info-card-title">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 20 20" fill="currentColor">
@@ -56,7 +52,7 @@
                 </div>
             </div>
 
-            <!-- Адрес доставки -->
+            {{-- Блок: адрес доставки --}}
             <div class="order-info-card">
                 <h2 class="info-card-title">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 20 20" fill="currentColor">
@@ -84,7 +80,7 @@
             </div>
         </div>
 
-        <!-- Товары в заказе -->
+        {{-- Товары в заказе --}}
         <div class="order-items-card">
             <h2 class="info-card-title">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 20 20" fill="currentColor">
@@ -96,19 +92,25 @@
             <div class="order-items-list">
                 @foreach($order->orderItems as $item)
                     <div class="order-item">
+                        {{-- Изображение товара --}}
                         <div class="item-image">
                             @if($item->product)
-                                <img src="{{ $item->product->thumbnail_url }}" alt="{{ $item->product_name }}">
+                                <img src="{{ $item->product->image_url }}"
+                                     alt="{{ $item->product_name }}"
+                                     style="width: 100px; height: 100px; object-fit: cover; border: 1px solid #ddd;">
                             @else
-                                <div class="image-placeholder"></div>
+                                <div class="image-placeholder" style="width: 100px; height: 100px; background: #f2f2f2;"></div>
                             @endif
                         </div>
+
+                        {{-- Информация о товаре --}}
                         <div class="item-details">
                             <h3 class="item-name">{{ $item->product_name }}</h3>
                             @if($item->variant)
                                 <p class="item-variant">{{ $item->variant->name }}</p>
                             @endif
                         </div>
+
                         <div class="item-quantity">x{{ $item->quantity }}</div>
                         <div class="item-price">{{ number_format($item->price, 0, '', ' ') }} грн.</div>
                         <div class="item-total">{{ number_format($item->price * $item->quantity, 0, '', ' ') }} грн.</div>
@@ -117,11 +119,18 @@
             </div>
         </div>
 
-        <!-- Действия (например, оплата или отмена заказа) -->
-        @if($order->status == 'pending')
+        {{-- Кнопки действия для заказов в статусе "pending" --}}
+        @if($order->status === 'pending')
             <div class="order-actions">
                 <button class="btn-pay">Оплатить заказ</button>
-                <button class="btn-cancel">Отменить заказ</button>
+
+                {{-- Форма отмены заказа --}}
+                <form method="POST" action="{{ route('orders.cancel', $order->id) }}" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="btn-cancel" onclick="return confirm('Вы уверены, что хотите отменить заказ?');">
+                        Отменить заказ
+                    </button>
+                </form>
             </div>
         @endif
     </div>

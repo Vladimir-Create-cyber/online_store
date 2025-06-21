@@ -9,30 +9,31 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 
-// Главная страница — каталог товаров
+/*
+|--------------------------------------------------------------------------
+| Публичные маршруты
+|--------------------------------------------------------------------------
+*/
+
+// Главная, каталог, поиск
 Route::get('/', [ProductController::class, 'index'])->name('home');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-
-// Детальная страница товара
 Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
-
-// Поиск товаров
 Route::get('/search', [ProductController::class, 'search'])->name('product.search');
 
 // Корзина
 Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.index');
 Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart/remove/{productId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
-Route::post('/cart/checkout', [CartController::class, 'checkout'])->middleware('auth')->name('cart.checkout');
+Route::post('/cart/checkout', [CartController::class, 'checkout'])
+    ->middleware('auth')
+    ->name('cart.checkout');
 
-// Заказы (ИСПРАВЛЕННЫЙ РАЗДЕЛ)
-Route::middleware(['auth'])->group(function () {
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index'); // Было name('orders')
-    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-});
-
-// Аутентификация
+// Аутентификация пользователей
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.perform');
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
@@ -40,28 +41,65 @@ Route::post('/register', [AuthController::class, 'register'])->name('register.pe
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Личный кабинет
-Route::middleware(['auth'])->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
+    // Уведомления
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
+
+    // Заказы
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel'); // ✅ Отмена заказа
 });
 
 // Оплата
 Route::post('/payment/process', [PaymentController::class, 'processPayment'])->name('payment.process');
 
+/*
+|--------------------------------------------------------------------------
+| Админ-панель
+|--------------------------------------------------------------------------
+*/
 
-// Админ-маршруты
-Route::prefix('admin')->group(function () {
-    // Аутентификация
-    Route::get('/login', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/login', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'login'])->name('admin.login.submit');
-    Route::post('/logout', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'logout'])->name('admin.logout');
+Route::prefix('admin')->name('admin.')->group(function () {
 
-    // Защищенные маршруты
+    // Аутентификация администратора
+    Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AdminLoginController::class, 'login'])->name('login.submit');
+    Route::post('/logout', [AdminLoginController::class, 'logout'])->name('logout');
+
+    // Только для авторизованных админов
     Route::middleware('auth:admin')->group(function () {
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        })->name('admin.dashboard');
+
+        // Главная панель
+        Route::get('/', fn() => view('admin.dashboard'))->name('index');
+        Route::get('/dashboard', fn() => view('admin.dashboard'))->name('dashboard');
+
+        // Управление товарами
+        Route::prefix('products')->name('products.')->group(function () {
+            Route::get('/', [AdminProductController::class, 'index'])->name('index');
+            Route::get('/create', [AdminProductController::class, 'create'])->name('create');
+            Route::post('/', [AdminProductController::class, 'store'])->name('store');
+            Route::get('/{product}/edit', [AdminProductController::class, 'edit'])->name('edit');
+            Route::put('/{product}', [AdminProductController::class, 'update'])->name('update');
+            Route::delete('/{product}', [AdminProductController::class, 'destroy'])->name('destroy');
+
+            // Удаление изображений
+            Route::delete('/{product}/remove-image', [AdminProductController::class, 'removeImage'])->name('removeImage'); // Главное изображение
+            Route::delete('/images/{image}', [AdminProductController::class, 'deleteImage'])->name('deleteImage');       // ✅ Одно дополнительное изображение
+        });
+
+        // Управление категориями
+        Route::prefix('categories')->name('categories.')->group(function () {
+            Route::get('/', [AdminCategoryController::class, 'index'])->name('index');
+            Route::get('/create', [AdminCategoryController::class, 'create'])->name('create');
+            Route::post('/', [AdminCategoryController::class, 'store'])->name('store');
+            Route::get('/{category}/edit', [AdminCategoryController::class, 'edit'])->name('edit');
+            Route::put('/{category}', [AdminCategoryController::class, 'update'])->name('update');
+            Route::delete('/{category}', [AdminCategoryController::class, 'destroy'])->name('destroy');
+        });
     });
 });
