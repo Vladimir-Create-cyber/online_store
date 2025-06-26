@@ -40,15 +40,23 @@
                         <span>Категории</span>
                     </a>
 
+                    <a href="{{ route('admin.orders.index') }}" class="menu-item {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Заказы</span>
+                    </a>
+
+                    <a href="{{ route('admin.shipping_methods.index') }}" class="menu-item {{ request()->routeIs('admin.shipping_methods.*') ? 'active' : '' }}">
+                        <i class="fas fa-truck"></i>
+                        <span>Способы доставки</span>
+                    </a>
+
+
                     <!-- Заглушки для будущих разделов -->
                     <a href="#" class="menu-item disabled">
                         <i class="fas fa-users"></i>
                         <span>Пользователи</span>
                     </a>
-                    <a href="#" class="menu-item disabled">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>Заказы</span>
-                    </a>
+
                     <a href="#" class="menu-item disabled">
                         <i class="fas fa-chart-bar"></i>
                         <span>Аналитика</span>

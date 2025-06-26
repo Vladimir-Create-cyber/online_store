@@ -62,20 +62,20 @@
                 </h2>
                 <div class="info-grid">
                     <div class="info-label">Имя:</div>
-                    <div class="info-value">{{ $order->shipping_address->full_name ?? 'Не указано' }}</div>
+                    <div class="info-value">{{ $order->shippingAddress->full_name ?? 'Не указано' }}</div>
 
                     <div class="info-label">Телефон:</div>
-                    <div class="info-value">{{ $order->shipping_address->phone ?? 'Не указано' }}</div>
+                    <div class="info-value">{{ $order->shippingAddress->phone ?? 'Не указано' }}</div>
 
                     <div class="info-label">Адрес:</div>
                     <div class="info-value">
-                        {{ $order->shipping_address->address ?? 'Не указано' }},
-                        {{ $order->shipping_address->city ?? '' }},
-                        {{ $order->shipping_address->country ?? '' }}
+                        {{ $order->shippingAddress->address ?? 'Не указано' }},
+                        {{ $order->shippingAddress->city ?? '' }},
+                        {{ $order->shippingAddress->country ?? '' }}
                     </div>
 
                     <div class="info-label">Почтовый индекс:</div>
-                    <div class="info-value">{{ $order->shipping_address->postal_code ?? 'Не указано' }}</div>
+                    <div class="info-value">{{ $order->shippingAddress->postal_code ?? 'Не указано' }}</div>
                 </div>
             </div>
         </div>
@@ -92,7 +92,6 @@
             <div class="order-items-list">
                 @foreach($order->orderItems as $item)
                     <div class="order-item">
-                        {{-- Изображение товара --}}
                         <div class="item-image">
                             @if($item->product)
                                 <img src="{{ $item->product->image_url }}"
@@ -103,7 +102,6 @@
                             @endif
                         </div>
 
-                        {{-- Информация о товаре --}}
                         <div class="item-details">
                             <h3 class="item-name">{{ $item->product_name }}</h3>
                             @if($item->variant)
@@ -119,12 +117,10 @@
             </div>
         </div>
 
-        {{-- Кнопки действия для заказов в статусе "pending" --}}
         @if($order->status === 'pending')
             <div class="order-actions">
                 <button class="btn-pay">Оплатить заказ</button>
 
-                {{-- Форма отмены заказа --}}
                 <form method="POST" action="{{ route('orders.cancel', $order->id) }}" style="display: inline;">
                     @csrf
                     <button type="submit" class="btn-cancel" onclick="return confirm('Вы уверены, что хотите отменить заказ?');">

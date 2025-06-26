@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ProductController; // ✅ Убедись, что используешь Admin\ProductController
+use App\Http\Controllers\Admin\ProductController;
 
 // 🔓 Маршруты доступные без аутентификации
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('admin.login');

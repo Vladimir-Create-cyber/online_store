@@ -11,13 +11,18 @@ class Order extends Model
 {
     protected $fillable = [
         'user_id',
+        'full_name',
+        'phone',
+        'address',
+        'city',
+        'country',
+        'postal_code',
         'total',
         'status',
-        'shipping_address',
         'shipping_cost',
         'subtotal',
         'payment_method',
-        'shipping_method'
+        'shipping_method',
     ];
 
     protected $casts = [
@@ -68,4 +73,10 @@ class Order extends Model
     {
         return $this->created_at->format('d.m.Y H:i');
     }
+
+    public function billingAddress(): HasOne
+    {
+        return $this->hasOne(OrderAddress::class)->where('type', 'billing');
+    }
+
 }

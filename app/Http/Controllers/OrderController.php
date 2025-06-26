@@ -17,7 +17,7 @@ class OrderController extends Controller
     use HandlesUnreadNotifications;
 
     /**
-     * Показ списка заказов пользователя.
+     * Вывод списка заказов текущего пользователя.
      */
     public function index()
     {
@@ -37,7 +37,7 @@ class OrderController extends Controller
     }
 
     /**
-     * Оформление нового заказа из корзины.
+     * Создание нового заказа из корзины.
      */
     public function store(Request $request)
     {
@@ -45,63 +45,87 @@ class OrderController extends Controller
             return redirect()->route('login')->with('error', 'Для оформления заказа необходимо войти.');
         }
 
+        // Валидация формы заказа
         $validated = $request->validate([
-            'address' => 'required|string|max:255',
+            'full_name'       => 'required|string|max:255',
+            'phone'           => 'required|string|max:20',
+            'address'         => 'required|string|max:255',
+            'city'            => 'required|string|max:100',
+            'country'         => 'nullable|string|max:100',
+            'postal_code'     => 'required|string|max:20',
+            'shipping_method' => 'required|string|max:100',
+            'payment_method'  => 'required|string|max:100',
         ]);
 
         $user = Auth::user();
+
+        // Получаем все товары в корзине пользователя
         $cartItems = CartItem::with('product')->where('user_id', $user->id)->get();
 
         if ($cartItems->isEmpty()) {
             return redirect()->route('cart.index')->with('error', 'Корзина пуста.');
         }
 
-        // Проверка доступности
+        // Проверка наличия и достаточного количества товара
         $unavailable = $cartItems->filter(fn($item) => !$item->product || $item->product->stock < $item->quantity);
         if ($unavailable->isNotEmpty()) {
             return redirect()->route('cart.index')->with('error', 'Некоторые товары недоступны.');
         }
 
+        // Расчёт общей суммы заказа
         $total = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
 
         try {
+            // Транзакция сохранения заказа
             $order = DB::transaction(function () use ($user, $validated, $total, $cartItems) {
+                // Создание записи заказа
                 $order = Order::create([
                     'user_id'          => $user->id,
                     'total'            => $total,
+                    'full_name'        => $validated['full_name'],
+                    'phone'            => $validated['phone'],
                     'shipping_address' => $validated['address'],
+                    'city'             => $validated['city'],
+                    'country'          => $validated['country'],
+                    'postal_code'      => $validated['postal_code'],
+                    'shipping_method'  => $validated['shipping_method'],
+                    'payment_method'   => $validated['payment_method'],
                     'status'           => 'pending',
                 ]);
 
-                foreach ($cartItems as $cartItem) {
+                // Сохранение товаров заказа
+                foreach ($cartItems as $item) {
                     OrderItem::create([
                         'order_id'   => $order->id,
-                        'product_id' => $cartItem->product_id,
-                        'quantity'   => $cartItem->quantity,
-                        'price'      => $cartItem->product->price,
+                        'product_id' => $item->product_id,
+                        'quantity'   => $item->quantity,
+                        'price'      => $item->product->price,
                     ]);
 
-                    $cartItem->product->decrement('stock', $cartItem->quantity);
+                    $item->product->decrement('stock', $item->quantity);
                 }
 
+                // Очистка корзины
                 CartItem::where('user_id', $user->id)->delete();
 
+                // Отправка уведомления (если включена)
                 if (class_exists(\App\Jobs\SendOrderNotification::class)) {
                     \App\Jobs\SendOrderNotification::dispatch($order);
                 }
 
                 return $order;
             });
+
+            return redirect()->route('orders.show', $order->id)
+                ->with('success', 'Заказ успешно оформлен!');
         } catch (\Throwable $e) {
             \Log::error('Ошибка при оформлении заказа: ' . $e->getMessage());
             return back()->with('error', 'Ошибка при оформлении заказа. Попробуйте позже.');
         }
-
-        return redirect()->route('orders.show', $order->id)->with('success', 'Заказ успешно оформлен!');
     }
 
     /**
-     * Просмотр деталей конкретного заказа.
+     * Просмотр одного заказа.
      */
     public function show($orderId)
     {
@@ -122,35 +146,36 @@ class OrderController extends Controller
     }
 
     /**
-     * Отмена заказа пользователем (если заказ в статусе ожидания).
+     * Отмена заказа пользователем.
      */
     public function cancel($orderId)
     {
         try {
+            // Проверка: заказ должен быть создан этим пользователем и быть в ожидании
             $order = Order::where('id', $orderId)
                 ->where('user_id', Auth::id())
                 ->where('status', 'pending')
                 ->firstOrFail();
 
             DB::transaction(function () use ($order) {
-                // Возврат товара на склад
                 foreach ($order->orderItems as $item) {
                     if ($item->product) {
                         $item->product->increment('stock', $item->quantity);
                     }
                 }
 
-                // Обновление статуса заказа
-                $order->status = 'cancelled';
-                $order->save();
+                $order->update([
+                    'status' => 'cancelled',
+                ]);
             });
 
-            return back()->with('success', 'Заказ успешно отменён.');
+            return redirect()->route('orders.index')->with('success', 'Заказ успешно отменён и товары возвращены на склад.');
         } catch (ModelNotFoundException) {
-            return redirect()->route('orders.index')->with('error', 'Невозможно отменить заказ.');
+            return redirect()->route('orders.index')->with('error', 'Заказ не найден или уже обработан.');
         } catch (\Throwable $e) {
             \Log::error('Ошибка при отмене заказа: ' . $e->getMessage());
-            return back()->with('error', 'Произошла ошибка. Попробуйте позже.');
+            return redirect()->back()->with('error', 'Произошла ошибка при отмене заказа. Попробуйте позже.');
         }
     }
+
 }

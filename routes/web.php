@@ -11,7 +11,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
+use App\Http\Controllers\Admin\ShippingMethodController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,9 +31,16 @@ Route::get('/search', [ProductController::class, 'search'])->name('product.searc
 Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.index');
 Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart/remove/{productId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
-Route::post('/cart/checkout', [CartController::class, 'checkout'])
+
+// Переход от корзины к форме оформления
+Route::post('/cart/checkout', [CartController::class, 'showCheckoutForm'])
     ->middleware('auth')
     ->name('cart.checkout');
+
+// Завершение оформления заказа и сохранение
+Route::post('/cart/complete', [CartController::class, 'completeOrder'])
+    ->middleware('auth')
+    ->name('cart.complete');
 
 // Аутентификация пользователей
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -52,7 +61,7 @@ Route::middleware('auth')->group(function () {
     // Заказы
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-    Route::post('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel'); // ✅ Отмена заказа
+    Route::post('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
 });
 
 // Оплата
@@ -86,10 +95,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/{product}/edit', [AdminProductController::class, 'edit'])->name('edit');
             Route::put('/{product}', [AdminProductController::class, 'update'])->name('update');
             Route::delete('/{product}', [AdminProductController::class, 'destroy'])->name('destroy');
-
-            // Удаление изображений
-            Route::delete('/{product}/remove-image', [AdminProductController::class, 'removeImage'])->name('removeImage'); // Главное изображение
-            Route::delete('/images/{image}', [AdminProductController::class, 'deleteImage'])->name('deleteImage');       // ✅ Одно дополнительное изображение
+            Route::delete('/{product}/remove-image', [AdminProductController::class, 'removeImage'])->name('removeImage');
+            Route::delete('/images/{image}', [AdminProductController::class, 'deleteImage'])->name('deleteImage');
         });
 
         // Управление категориями
@@ -101,5 +108,24 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::put('/{category}', [AdminCategoryController::class, 'update'])->name('update');
             Route::delete('/{category}', [AdminCategoryController::class, 'destroy'])->name('destroy');
         });
+
+        // Управление заказами
+        Route::prefix('orders')->name('orders.')->group(function () {
+            Route::get('/', [AdminOrderController::class, 'index'])->name('index');
+            Route::get('/{order}', [AdminOrderController::class, 'show'])->name('show');
+            Route::put('/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('updateStatus');
+        });
+
+        // Управление способами доставки
+        Route::prefix('shipping_methods')->name('shipping_methods.')->group(function () {
+            Route::get('/', [ShippingMethodController::class, 'index'])->name('index');
+            Route::get('/create', [ShippingMethodController::class, 'create'])->name('create');
+            Route::post('/', [ShippingMethodController::class, 'store'])->name('store');
+            Route::get('/{shipping_method}/edit', [ShippingMethodController::class, 'edit'])->name('edit');
+            Route::put('/{shipping_method}', [ShippingMethodController::class, 'update'])->name('update');
+            Route::delete('/{shipping_method}', [ShippingMethodController::class, 'destroy'])->name('destroy');
+        });
+
     });
 });
+

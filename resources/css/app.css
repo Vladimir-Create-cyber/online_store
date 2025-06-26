@@ -4244,3 +4244,223 @@ footer {
         padding: 15px;
     }
 }
+/* ===== CART CHECKOUT STYLES ===== */
+:root {
+    /* Цветовая схема */
+    --primary: #4361ee;
+    --primary-dark: #3a56d4;
+    --secondary: #f72585;
+    --accent: #4cc9f0;
+    --success: #2ec4b6;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --gray: #6c757d;
+    --light-gray: #e9ecef;
+    --border: #dee2e6;
+
+    /* Тени */
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+
+    /* Переходы */
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.premium-checkout {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+}
+
+.checkout-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.checkout-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    border-radius: 2px;
+}
+
+.checkout-alert {
+    background: rgba(247, 37, 133, 0.1);
+    border-left: 4px solid var(--secondary);
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    border-radius: 0 8px 8px 0;
+    animation: slideIn 0.4s ease-out;
+}
+
+.checkout-alert ul {
+    padding-left: 1.5rem;
+    margin: 0;
+}
+
+.checkout-alert li {
+    color: var(--secondary);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.checkout-alert li:last-child {
+    margin-bottom: 0;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.checkout-form {
+    margin-top: 2rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.75rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.form-group label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+}
+
+.form-group label span {
+    color: var(--secondary);
+    margin-left: 4px;
+}
+
+.form-group input,
+.form-group select {
+    padding: 1rem 1.25rem;
+    border: 2px solid var(--light-gray);
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: var(--transition);
+    background: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.15);
+}
+
+.form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1.25rem center;
+    background-size: 1rem;
+}
+
+.checkout-actions {
+    margin-top: 2.5rem;
+    text-align: center;
+}
+
+.submit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    padding: 1.15rem 2.5rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 6px 16px rgba(67, 97, 238, 0.3);
+}
+
+.submit-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: white;
+    transition: var(--transition);
+}
+
+.submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+}
+
+.submit-btn:hover svg {
+    transform: translateX(4px);
+}
+
+.submit-btn:active {
+    transform: translateY(-1px);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .premium-checkout {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .checkout-title {
+        font-size: 1.8rem;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .submit-btn {
+        width: 100%;
+        padding: 1.1rem;
+    }
+
+    .checkout-title {
+        font-size: 1.6rem;
+        padding-bottom: 0.8rem;
+    }
+
+    .checkout-title::after {
+        width: 80px;
+        height: 3px;
+    }
+}
