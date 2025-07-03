@@ -7,31 +7,43 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Notification; // Добавили импорт модели
+use App\Models\Notification;
 
 class AuthController extends Controller
 {
-    // Новая реализация метода для получения количества непрочитанных уведомлений
-    private function getUnreadCount()
+    /**
+     * Получить количество непрочитанных уведомлений для текущего пользователя.
+     *
+     * @return int Количество непрочитанных уведомлений.
+     */
+    private function getUnreadCount(): int
     {
         if (!Auth::check()) {
             return 0;
         }
 
-        // Прямой запрос к базе данных
         return Notification::where('user_id', Auth::id())
             ->where('is_read', false)
             ->count();
     }
 
-    // Форма входа (GET)
+    /**
+     * Показать форму входа в систему.
+     *
+     * @return \Illuminate\View\View
+     */
     public function showLoginForm()
     {
         $unreadCount = $this->getUnreadCount();
         return view('auth.login', compact('unreadCount'));
     }
 
-    // Обработка входа (POST)
+    /**
+     * Обработка отправки формы входа.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function login(Request $request)
     {
         // Валидация данных
@@ -42,58 +54,72 @@ class AuthController extends Controller
 
         // Попытка входа
         if (Auth::attempt($credentials)) {
-            // Обновляем сессию для защиты от фиксации сессии
+            // Обновляем сессию для защиты от фиксации
             $request->session()->regenerate();
 
             return redirect()->intended('/');
         }
 
-        // Если не удалось — возвращаем ошибку
+        // Ошибка аутентификации
         return back()->withErrors([
             'email' => 'Неверные данные для входа.',
         ])->withInput();
     }
 
-    // Форма регистрации (GET)
+    /**
+     * Показать форму регистрации пользователя.
+     *
+     * @return \Illuminate\View\View
+     */
     public function showRegisterForm()
     {
         $unreadCount = $this->getUnreadCount();
         return view('auth.register', compact('unreadCount'));
     }
 
-    // Обработка регистрации (POST)
+    /**
+     * Обработка регистрации нового пользователя.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function register(Request $request)
     {
-        // Валидация переданных данных
+        // Валидация входных данных
         $validator = Validator::make($request->all(), [
-            'name'                  => 'required|string|max:255',
-            'email'                 => 'required|email|unique:users,email|max:255',
-            'password'              => 'required|string|min:6|confirmed',
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:users,email|max:255',
+            'password' => 'required|string|min:6|confirmed',
         ]);
 
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
 
-        // Создаём нового пользователя
+        // Создание пользователя
         $user = User::create([
             'name'     => $request->input('name'),
             'email'    => $request->input('email'),
             'password' => Hash::make($request->input('password')),
         ]);
 
-        // Автоматический вход для нового пользователя
+        // Автоматический вход
         Auth::login($user);
 
         return redirect()->intended('/');
     }
 
-    // Выход (POST)
+    /**
+     * Выход пользователя из системы.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function logout(Request $request)
     {
         Auth::logout();
 
-        // Инвалидация сессии и регенерация CSRF-токена
+        // Инвалидация сессии и защита от CSRF
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

@@ -50,6 +50,12 @@
                         <span>Способы доставки</span>
                     </a>
 
+                    <a href="{{ route('admin.reviews.index') }}" class="menu-item {{ request()->routeIs('admin.reviews.*') ? 'active' : '' }}">
+                        <i class="fas fa-star"></i>
+                        <span>Отзывы</span>
+                    </a>
+
+
 
                     <!-- Заглушки для будущих разделов -->
                     <a href="#" class="menu-item disabled">

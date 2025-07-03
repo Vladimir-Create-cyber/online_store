@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Review;
 
 class ProductController extends Controller
 {
@@ -53,11 +54,27 @@ class ProductController extends Controller
      */
     public function show(string $slug)
     {
-        $product = Product::with('images')->where('slug', $slug)->firstOrFail();
+        $product = Product::with(['images', 'category', 'reviews.user' => function ($q) {
+            $q->select('id', 'name'); // подгружаем только имя пользователя
+        }])->where('slug', $slug)->firstOrFail();
+
+        $reviews = $product->reviews()
+            ->where('is_approved', true)
+            ->latest()
+            ->paginate(5);
+
+        $averageRating = $product->reviews()
+            ->where('is_approved', true)
+            ->avg('rating');
 
         $unreadCount = $this->getUnreadCount();
 
-        return view('products.show', compact('product', 'unreadCount'));
+        return view('products.show', compact(
+            'product',
+            'unreadCount',
+            'reviews',
+            'averageRating'
+        ));
     }
 
     /**

@@ -46,33 +46,37 @@ class CartController extends Controller
      */
     public function addToCart(Request $request, $productId)
     {
-        try {
-            $product = Product::findOrFail($productId);
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Товар не найден!');
+        // Валидация quantity
+        $validated = $request->validate([
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        $quantity = $validated['quantity'];
+
+        // Поиск товара
+        $product = Product::findOrFail($productId);
+
+        if ($quantity > $product->stock) {
+            return redirect()->back()->with('error', 'На складе недостаточно товара!');
         }
 
         $cart = session()->get('cart', []);
 
-        if (isset($cart[$productId])) {
-            if ($cart[$productId]['quantity'] >= $product->stock) {
-                return redirect()->back()->with('error', 'На складе недостаточно товара!');
-            }
-            $cart[$productId]['quantity']++;
-        } else {
-            $cart[$productId] = [
-                'product_id' => $productId,
-                'name' => $product->name,
-                'price' => $product->price,
-                'image' => $product->image,
-                'quantity' => 1,
-            ];
-        }
+        // Заменяем количество, а не прибавляем
+        $cart[$productId] = [
+            'product_id' => $productId,
+            'name' => $product->name,
+            'price' => $product->price,
+            'image' => $product->image,
+            'quantity' => $quantity,
+        ];
 
         session()->put('cart', $cart);
 
         return redirect()->back()->with('success', 'Товар добавлен в корзину!');
     }
+
+
 
     /**
      * Удаление товара из корзины.
@@ -108,20 +112,21 @@ class CartController extends Controller
         ]);
     }
 
+
     /**
      * Шаг 2: Завершение оформления заказа и сохранение данных.
      */
     public function completeOrder(Request $request)
     {
         $validated = $request->validate([
-            'full_name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
-            'address' => 'required|string|max:255',
-            'city' => 'required|string|max:100',
-            'country' => 'nullable|string|max:100',
-            'postal_code' => 'required|string|max:20',
-            'shipping_method_code' => 'required|string|exists:shipping_methods,code',
-            'payment_method' => 'required|string',
+            'full_name'          => 'required|string|max:255',
+            'phone'              => 'required|string|max:20',
+            'address'            => 'required|string|max:255',
+            'city'               => 'required|string|max:100',
+            'country'            => 'nullable|string|max:100',
+            'postal_code'        => 'required|string|max:20',
+            'shipping_method_id' => 'required|exists:shipping_methods,id',
+            'payment_method'     => 'required|string',
         ]);
 
         $cart = session('cart', []);
@@ -130,30 +135,25 @@ class CartController extends Controller
             return redirect()->route('cart.index')->with('error', 'Корзина пуста!');
         }
 
-        foreach ($cart as $productId => $item) {
-            $product = Product::find($productId);
+        // Получаем объект способа доставки
+        $shippingMethod = ShippingMethod::find($validated['shipping_method_id']);
 
-            if (!$product) {
-                return redirect()->route('cart.index')->with('error', "Товар #$productId не найден.");
-            }
-
-            if ($product->stock < $item['quantity']) {
-                return redirect()->route('cart.index')->with('error', "Недостаточно товара: {$product->name} (доступно {$product->stock}, в корзине {$item['quantity']})");
-            }
+        if (!$shippingMethod || !$shippingMethod->is_active) {
+            return redirect()->back()->withErrors(['shipping_method_id' => 'Выбран недопустимый способ доставки.']);
         }
 
         $order = Order::create([
-            'user_id' => Auth::id(),
-            'full_name' => $validated['full_name'],
-            'phone' => $validated['phone'],
-            'address' => $validated['address'],
-            'city' => $validated['city'],
-            'country' => $validated['country'],
-            'postal_code' => $validated['postal_code'],
-            'shipping_method' => $validated['shipping_method_code'],
-            'payment_method' => $validated['payment_method'],
-            'total' => collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']),
-            'status' => 'pending',
+            'user_id'         => Auth::id(),
+            'full_name'       => $validated['full_name'],
+            'phone'           => $validated['phone'],
+            'address'         => $validated['address'],
+            'city'            => $validated['city'],
+            'country'         => $validated['country'],
+            'postal_code'     => $validated['postal_code'],
+            'shipping_method' => $shippingMethod->name, // можно сохранить ID, если поле — integer
+            'payment_method'  => $validated['payment_method'],
+            'total'           => 0,
+            'status'          => 'pending',
         ]);
 
         OrderAddress::create([
@@ -167,20 +167,52 @@ class CartController extends Controller
             'postal_code' => $validated['postal_code'],
         ]);
 
+        $total = 0;
+        $messages = [];
+
         foreach ($cart as $productId => $item) {
+            $product = Product::find($productId);
+
+            if (!$product) {
+                $messages[] = "Товар #{$productId} не найден и был пропущен.";
+                continue;
+            }
+
+            $orderedQty = $item['quantity'];
+            $availableQty = $product->stock;
+
+            if ($availableQty <= 0) {
+                $messages[] = "«{$product->name}» нет в наличии и не был добавлен в заказ.";
+                continue;
+            }
+
+            $finalQty = min($orderedQty, $availableQty);
+
+            if ($finalQty < $orderedQty) {
+                $messages[] = "«{$product->name}»: заказано {$orderedQty}, добавлено {$finalQty}.";
+            }
+
             OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $productId,
-                'quantity' => $item['quantity'],
-                'price' => $item['price'],
+                'order_id'  => $order->id,
+                'product_id'=> $productId,
+                'quantity'  => $finalQty,
+                'price'     => $item['price'],
             ]);
 
-            $product = Product::find($productId);
-            $product->decrement('stock', $item['quantity']);
+            $product->decrement('stock', $finalQty);
+            $total += $item['price'] * $finalQty;
         }
 
+        $order->update(['total' => $total]);
         session()->forget('cart');
 
-        return redirect()->route('orders.show', $order->id)->with('success', 'Ваш заказ успешно оформлен!');
+        $successMessage = 'Ваш заказ успешно оформлен!';
+        if ($messages) {
+            $successMessage .= ' Обратите внимание: ' . implode(' ', $messages);
+        }
+
+        return redirect()->route('orders.show', $order->id)->with('success', $successMessage);
     }
+
+
 }

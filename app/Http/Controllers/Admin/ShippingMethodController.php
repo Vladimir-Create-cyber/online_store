@@ -13,7 +13,7 @@ class ShippingMethodController extends Controller
      */
     public function index()
     {
-        $shippingMethods = \App\Models\ShippingMethod::all();
+        $shippingMethods = ShippingMethod::all();
         return view('admin.shipping_methods.index', compact('shippingMethods'));
     }
 

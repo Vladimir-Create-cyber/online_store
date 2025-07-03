@@ -57,8 +57,10 @@
 
                         <form action="{{ route('cart.add', $product->id) }}" method="POST">
                             @csrf
+                            <input type="hidden" name="quantity" value="1">
                             <button type="submit" class="btn-cart">В корзину</button>
                         </form>
+
                     </div>
                 </div>
             @endforeach

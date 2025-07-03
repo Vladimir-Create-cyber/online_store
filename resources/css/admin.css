@@ -3439,3 +3439,283 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: #fecaca;
     border-color: #991b1b;
 }
+/* ===== REVIEWS MANAGEMENT SYSTEM ===== */
+.reviews-container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--dark);
+    position: relative;
+    padding-left: 18px;
+}
+
+.section-title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5px;
+    height: 70%;
+    background: var(--primary);
+    border-radius: 3px;
+}
+
+/* Table */
+.table-responsive {
+    overflow-x: auto;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+    margin-bottom: 2rem;
+}
+
+.reviews-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 700px;
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.table-dark th {
+    background-color: var(--dark);
+    color: white;
+    padding: 18px 24px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-align: left;
+}
+
+.reviews-table td {
+    padding: 16px 24px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.reviews-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.reviews-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.reviews-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+.badge-success {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.badge-warning {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+/* Actions */
+.actions-group {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+
+.approve-btn {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.approve-btn:hover {
+    background: #bbf7d0;
+    transform: translateY(-2px);
+}
+
+.delete-btn {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.delete-btn:hover {
+    background: #fecaca;
+    transform: translateY(-2px);
+}
+
+/* Alerts */
+.alert {
+    padding: 1.2rem 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+}
+
+.alert-success {
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.alert-icon {
+    font-size: 1.4rem;
+}
+
+/* Empty state */
+.empty-state {
+    padding: 3rem;
+    text-align: center;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+    color: var(--gray);
+    font-size: 1.1rem;
+}
+
+/* Dark theme */
+[data-theme="dark"] .reviews-container {
+    background: var(--dark);
+}
+
+[data-theme="dark"] .section-title {
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .reviews-table,
+[data-theme="dark"] .alert,
+[data-theme="dark"] .empty-state {
+    background: var(--light);
+    border: 1px solid #2d3748;
+}
+
+[data-theme="dark"] .table-dark th {
+    background: #0f172a;
+}
+
+[data-theme="dark"] .reviews-table tbody tr:hover {
+    background-color: #1a243a;
+}
+
+[data-theme="dark"] .approve-btn {
+    background: #166534;
+    color: #dcfce7;
+}
+
+[data-theme="dark"] .approve-btn:hover {
+    background: #14532d;
+}
+
+[data-theme="dark"] .delete-btn {
+    background: #7f1d1d;
+    color: #fee2e2;
+}
+
+[data-theme="dark"] .delete-btn:hover {
+    background: #991b1b;
+}
+
+[data-theme="dark"] .badge-success {
+    background-color: #14532d;
+    color: #dcfce7;
+}
+
+[data-theme="dark"] .badge-warning {
+    background-color: #92400e;
+    color: #fef3c7;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.2rem;
+    }
+
+    .reviews-container {
+        padding: 1.5rem;
+    }
+
+    /* Table adaptation */
+    .reviews-table thead {
+        display: none;
+    }
+
+    .reviews-table tbody tr {
+        display: block;
+        margin-bottom: 20px;
+        border-radius: 14px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    .reviews-table td {
+        display: flex;
+        justify-content: space-between;
+        padding: 16px 20px !important;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .reviews-table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--gray);
+        width: 40%;
+    }
+
+    .reviews-table td:last-child {
+        justify-content: flex-start;
+        border-bottom: none !important;
+    }
+
+    .actions-group {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+    }
+
+    .btn-action {
+        width: 100%;
+        justify-content: center;
+    }
+}

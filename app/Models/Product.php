@@ -52,12 +52,42 @@ class Product extends Model
     }
 
     /**
-     * Отзывы на товар.
+     * Все отзывы.
      */
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
     }
+
+    /**
+     * Только одобренные отзывы.
+     */
+    public function approvedReviews(): HasMany
+    {
+        return $this->hasMany(Review::class)->where('is_approved', true);
+    }
+
+    /**
+     * Средний рейтинг.
+     */
+    public function averageRating(): float
+    {
+        return round($this->approvedReviews()->avg('rating') ?: 0, 1);
+    }
+
+    /**
+     * Кол-во одобренных отзывов.
+     */
+    public function reviewsCount(): int
+    {
+        return $this->approvedReviews()->count();
+    }
+
+    public function routeBinding()
+    {
+        return 'slug';
+    }
+
 
     /**
      * Лайки.
