@@ -60,6 +60,13 @@
 
         {{-- Кнопка “Оформить заказ” --}}
         @if(count($cart) > 0)
+            <div class="cart-total">
+                <p>
+                    <strong>Итого:</strong>
+                    {{ number_format($total, 2) }} грн
+                </p>
+            </div>
+
             <div class="cart-checkout">
                 <a href="{{ route('cart.checkout') }}" class="btn-checkout">
                     Оформить заказ

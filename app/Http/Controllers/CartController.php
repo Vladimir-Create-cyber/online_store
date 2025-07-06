@@ -35,9 +35,15 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
         $unreadCount = $this->getUnreadCount();
 
+        $total = 0;
+        foreach ($cart as $item) {
+            $total += $item['price'] * $item['quantity'];
+        }
+
         return view('cart.index', [
             'cart' => $cart,
             'unreadCount' => $unreadCount,
+            'total' => $total, // передаём сумму
         ]);
     }
 

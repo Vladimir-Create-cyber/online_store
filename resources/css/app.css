@@ -801,6 +801,13 @@ footer {
     transform: scale(1.05);
 }
 
+.cart-total {
+    text-align: left;
+    font-size: 1.25rem;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
 /* ====================== ФОРМЫ АУТЕНТИФИКАЦИИ ====================== */
 .auth-title {
     text-align: center;
