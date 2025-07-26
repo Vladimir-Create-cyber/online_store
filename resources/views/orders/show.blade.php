@@ -130,4 +130,85 @@
             </div>
         @endif
     </div>
+
+    @push('scripts')
+        <script async
+                src="https://pay.google.com/gp/p/js/pay.js"
+                onload="onGooglePayLoaded()"></script>
+
+        <script>
+            function onGooglePayLoaded() {
+                const paymentsClient = new google.payments.api.PaymentsClient({
+                    environment: '{{ env("GOOGLE_PAY_ENVIRONMENT", "TEST") }}'
+                });
+
+                const paymentDataRequest = {
+                    apiVersion: 2,
+                    apiVersionMinor: 0,
+                    allowedPaymentMethods: [{
+                        type: 'CARD',
+                        parameters: {
+                            allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                            allowedCardNetworks: ['VISA', 'MASTERCARD']
+                        },
+                        tokenizationSpecification: {
+                            type: 'PAYMENT_GATEWAY',
+                            parameters: {
+                                'gateway': 'stripe', // или ваш провайдер
+                                'stripe:publishableKey': '{{ env("STRIPE_PUBLISHABLE_KEY") }}',
+                                'stripe:version': '2020-08-27'
+                            }
+                        }
+                    }],
+                    merchantInfo: {
+                        merchantId: '{{ env("GOOGLE_PAY_MERCHANT_ID") }}',
+                        merchantName: 'Название вашего магазина'
+                    },
+                    transactionInfo: {
+                        totalPriceStatus: 'FINAL',
+                        totalPrice: '{{ number_format($order->total, 2, ".", "") }}',
+                        currencyCode: 'UAH',
+                        countryCode: 'UA'
+                    }
+                };
+
+                const button = document.querySelector('.btn-pay');
+
+                button.addEventListener('click', function () {
+                    paymentsClient.loadPaymentData(paymentDataRequest)
+                        .then(function(paymentData) {
+                            // Получаем payment token
+                            const paymentToken = paymentData.paymentMethodData.tokenizationData.token;
+
+                            // Отправляем на сервер
+                            fetch("{{ route('payment.process') }}", {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({
+                                    order_id: {{ $order->id }},
+                                    payment_token: paymentToken
+                                })
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if(data.success) {
+                                        alert('Оплата прошла успешно!');
+                                        window.location.reload();
+                                    } else {
+                                        alert('Ошибка при оплате: ' + data.message);
+                                    }
+                                })
+                                .catch(() => alert('Ошибка сети при оплате'));
+                        })
+                        .catch(err => {
+                            console.error('Google Pay error:', err.statusCode, err.statusMessage);
+                        });
+                });
+            }
+        </script>
+    @endpush
+
 @endsection

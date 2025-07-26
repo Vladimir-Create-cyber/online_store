@@ -20,7 +20,8 @@ class User extends Authenticatable
         'avatar',
         'phone',
         'address',
-        'role_id', // Убедитесь, что это поле существует в таблице users
+        'role_id',
+        'is_blocked',
     ];
 
     protected $hidden = [
@@ -50,7 +51,7 @@ class User extends Authenticatable
     // Отношение с ролями
     public function roles(): BelongsToMany
     {
-        return $this->belongsToMany(Role::class)->withTimestamps();
+        return $this->belongsToMany(Role::class);
     }
 
     // Проверка роли пользователя

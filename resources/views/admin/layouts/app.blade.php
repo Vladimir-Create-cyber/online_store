@@ -55,13 +55,15 @@
                         <span>Отзывы</span>
                     </a>
 
-
-
-                    <!-- Заглушки для будущих разделов -->
-                    <a href="#" class="menu-item disabled">
+                    <a href="{{ route('admin.users.index') }}" class="menu-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                         <i class="fas fa-users"></i>
                         <span>Пользователи</span>
                     </a>
+
+
+
+                    <!-- Заглушки для будущих разделов -->
+
 
                     <a href="#" class="menu-item disabled">
                         <i class="fas fa-chart-bar"></i>

@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         // Регистрация политики для заказов
-        Gate::policy(Order::class, OrderPolicy::class);
+//        Gate::policy(Order::class, OrderPolicy::class);
 
         // 👇 Регистрируем кастомный шаблон пагинации
         Paginator::defaultView('vendor.pagination.custom');

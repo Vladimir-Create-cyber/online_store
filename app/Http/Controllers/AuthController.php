@@ -52,11 +52,20 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        // Попытка входа
-        if (Auth::attempt($credentials)) {
-            // Обновляем сессию для защиты от фиксации
-            $request->session()->regenerate();
+        // Получаем пользователя по email
+        $user = \App\Models\User::where('email', $credentials['email'])->first();
 
+        // Проверяем, заблокирован ли
+        if ($user && $user->is_blocked) {
+            return back()->withErrors([
+                'email' => 'Ваш аккаунт заблокирован администрацией.',
+            ])->withInput();
+        }
+
+        // Попытка входа
+        if ($user && \Hash::check($credentials['password'], $user->password)) {
+            Auth::login($user);
+            $request->session()->regenerate();
             return redirect()->intended('/');
         }
 
@@ -65,6 +74,7 @@ class AuthController extends Controller
             'email' => 'Неверные данные для входа.',
         ])->withInput();
     }
+
 
     /**
      * Показать форму регистрации пользователя.

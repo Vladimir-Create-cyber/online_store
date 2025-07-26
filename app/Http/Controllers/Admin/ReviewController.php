@@ -13,7 +13,7 @@ class ReviewController extends Controller
      */
     public function index(Request $request)
     {
-        $status = $request->input('status'); // approved | pending | null
+        $status = $request->input('status'); // approved | pending
 
         $reviews = Review::with(['product', 'user'])
             ->when($status === 'approved', fn($q) => $q->where('is_approved', true))
@@ -50,7 +50,6 @@ class ReviewController extends Controller
         if ($request->ajax()) {
             return response()->json(['success' => true]);
         }
-
         return back()->with('success', 'Отзыв удалён.');
     }
 }

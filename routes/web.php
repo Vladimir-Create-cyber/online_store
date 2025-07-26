@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\ShippingMethodController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -144,6 +145,33 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/',                  [AdminReviewController::class, 'index'])->name('index');
             Route::put('/{review}/approve',  [AdminReviewController::class, 'approve'])->name('approve');
             Route::delete('/{review}',       [AdminReviewController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('users')->name('users.')->group(function () {
+            Route::get('/',               [AdminUserController::class, 'index'])->name('index');
+            Route::get('/create',         [AdminUserController::class, 'create'])->name('create');
+            Route::post('/',              [AdminUserController::class, 'store'])->name('store');
+            Route::get('/{user}',         [AdminUserController::class, 'show'])->name('show');
+            Route::get('/{user}/edit',    [AdminUserController::class, 'edit'])->name('edit');
+            Route::put('/{user}',         [AdminUserController::class, 'update'])->name('update');
+            Route::delete('/{user}',      [AdminUserController::class, 'destroy'])->name('destroy');
+            Route::patch('/{user}/toggle-block', [AdminUserController::class, 'toggleBlock'])->name('toggle-block');
+        });
+
+        Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+            Route::resource('users',AdminUserController::class)->only(['index', 'edit', 'update']);
+        });
+
+        Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+            Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+            Route::get('/users/create', [AdminUserController::class, 'create'])->name('users.create');
+            Route::post('/users', [AdminUserController::class, 'store'])->name('users.store');
+            Route::get('/users/{user}', [AdminUserController::class, 'show'])->name('users.show');
+            Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
+            Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
+            Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+            Route::patch('users/{user}/toggle-block', [AdminUserController::class, 'toggleBlock'])->name('users.toggle-block');
+
         });
     });
 });

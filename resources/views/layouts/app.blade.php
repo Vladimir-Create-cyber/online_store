@@ -14,26 +14,27 @@
     <!-- Дополнительные мета-теги -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
-<body>
-@include('partials.header')
+    <body>
+    @include('partials.header')
 
-<main class="container">
-    @hasSection('dashboard-sidebar')
-        <div class="dashboard-wrapper">
-            <aside class="dashboard-sidebar">
-                @yield('dashboard-sidebar')
-            </aside>
-            <div class="dashboard-main">
-                @yield('content')
+    <main class="container">
+        @hasSection('dashboard-sidebar')
+            <div class="dashboard-wrapper">
+                <aside class="dashboard-sidebar">
+                    @yield('dashboard-sidebar')
+                </aside>
+                <div class="dashboard-main">
+                    @yield('content')
+                </div>
             </div>
-        </div>
-    @else
-        @yield('content')
-    @endif
-</main>
+        @else
+            @yield('content')
+        @endif
+    </main>
 
-@include('partials.footer')
+    @include('partials.footer')
 
-<!-- Дополнительные скрипты можно добавить здесь -->
-</body>
+    <!-- Дополнительные скрипты можно добавить здесь -->
+    @stack('scripts')
+    </body>
 </html>
