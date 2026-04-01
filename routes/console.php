@@ -3,12 +3,33 @@
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use App\Models\Product;
+use Database\Seeders\ProductSeeder;
+use App\Services\ProductGalleryDownloader;
 use App\Models\Category;
 use App\Models\ShippingMethod;
 
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+
+Artisan::command('storage:ensure-product-images {--force : Перезаписать демо-изображения уникальными заглушками}', function () {
+    $force = (bool) $this->option('force');
+    (new ProductSeeder)->ensureMissingProductFiles($force);
+    $this->info('Готово: проверены файлы в storage/app/public и заглушка public/images/default-product.png.');
+})->purpose('Восстанавливает недостающие демо-файлы изображений товаров и fallback-картинку');
+
+Artisan::command('products:sync-demo-locales', function () {
+    (new ProductSeeder)->syncDemoProductLocales();
+    $this->info('Готово: для демо-товаров заполнены поля name_en/name_uk и описания EN/UK.');
+})->purpose('Заполняет локализованные поля для демо-товаров по списку из ProductSeeder');
+
+Artisan::command('products:fetch-gallery {--force : Перезаписать галерею, если уже есть фото}', function () {
+    $force = (bool) $this->option('force');
+    $this->info('Скачивание фото с Unsplash (лицензия: https://unsplash.com/license)…');
+    $stats = (new ProductGalleryDownloader)->downloadForDemoProducts($force);
+    $this->line("Товаров обработано: {$stats['products']}, файлов сохранено: {$stats['images_ok']}, ошибок: {$stats['images_failed']}, пропущено (нет товара или галерея уже есть): {$stats['skipped']}");
+    $this->info('Готово.');
+})->purpose('Загружает по 5 демо-фото на товар в storage и product_images');
 
 Artisan::command('localization:backfill {--dry-run : Только показать изменения без записи}', function () {
     $dryRun = (bool) $this->option('dry-run');

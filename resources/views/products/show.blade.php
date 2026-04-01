@@ -16,7 +16,7 @@
 
             <div class="product-images">
                 <div class="main-image-container">
-                    <img src="{{ asset('storage/' . $product->image) }}"
+                    <img src="{{ $product->image_url }}"
                          alt="{{ $product->name }}"
                          class="main-image"
                          id="mainProductImage">

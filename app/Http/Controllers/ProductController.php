@@ -30,7 +30,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $product->load(['images', 'category', 'reviews.user' => function ($q) {
+        $product->load(['images', 'mainImage', 'category', 'reviews.user' => function ($q) {
             $q->select('id', 'name');
         }]);
 

@@ -12,25 +12,11 @@
                     @endif
 
                     <a href="{{ route('product.show', $product->slug) }}">
-                        @if($product->image)
-                            <img
-                                src="{{ asset('storage/' . $product->image) }}"
-                                alt="{{ $product->name }}"
-                                class="product-image"
-                            >
-                        @elseif($product->images->isNotEmpty())
-                            <img
-                                src="{{ asset('storage/' . $product->images->first()->path) }}"
-                                alt="{{ $product->name }}"
-                                class="product-image"
-                            >
-                        @else
-                            <img
-                                src="{{ asset('images/placeholder.png') }}"
-                                alt="{{ $product->name }}"
-                                class="product-image"
-                            >
-                        @endif
+                        <img
+                            src="{{ $product->image_url }}"
+                            alt="{{ $product->name }}"
+                            class="product-image"
+                        >
                     </a>
 
                     <h2 class="product-name">{{ $product->name }}</h2>

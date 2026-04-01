@@ -131,7 +131,7 @@
                             <div class="product-item">
                                 <div class="product-image">
                                     @if($product->image)
-                                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
                                     @else
                                         <img src="{{ asset('images/placeholder.png') }}" alt="{{ $product->name }}">
                                     @endif
