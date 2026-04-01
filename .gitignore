@@ -21,3 +21,49 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+# --- Operating system files ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# --- Laravel runtime/cache ---
+/bootstrap/cache/*.php
+/storage/logs/*.log
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
+/storage/debugbar
+
+# Keep framework directories tracked
+/storage/framework/cache/data/.gitignore
+/storage/framework/sessions/.gitignore
+/storage/framework/testing/.gitignore
+/storage/framework/views/.gitignore
+/storage/logs/.gitignore
+
+# --- Local environment variants ---
+.env.local
+.env.*.local
+
+# --- Frontend tooling ---
+.npm
+.pnpm-store
+.yarn
+.yarn-cache
+.eslintcache
+dist
+coverage
+vite.config.ts.timestamp-*
+vite.config.js.timestamp-*
+
+# --- Test / quality tool outputs ---
+.php-cs-fixer.cache
+.phpstan.cache
+phpstan.neon.local
+.pest
+
+# --- Database local artifacts ---
+*.sqlite
+*.sqlite-journal

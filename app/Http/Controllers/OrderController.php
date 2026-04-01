@@ -84,7 +84,7 @@ class OrderController extends Controller
                     'total'            => $total,
                     'full_name'        => $validated['full_name'],
                     'phone'            => $validated['phone'],
-                    'shipping_address' => $validated['address'],
+                    'address'          => $validated['address'],
                     'city'             => $validated['city'],
                     'country'          => $validated['country'],
                     'postal_code'      => $validated['postal_code'],

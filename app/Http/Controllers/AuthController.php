@@ -7,26 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Notification;
 
 class AuthController extends Controller
 {
-    /**
-     * Получить количество непрочитанных уведомлений для текущего пользователя.
-     *
-     * @return int Количество непрочитанных уведомлений.
-     */
-    private function getUnreadCount(): int
-    {
-        if (!Auth::check()) {
-            return 0;
-        }
-
-        return Notification::where('user_id', Auth::id())
-            ->where('is_read', false)
-            ->count();
-    }
-
     /**
      * Показать форму входа в систему.
      *

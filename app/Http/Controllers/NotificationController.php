@@ -8,17 +8,6 @@ use App\Models\Notification;
 
 class NotificationController extends Controller
 {
-    private function getUnreadCount()
-    {
-        if (!Auth::check()) {
-            return 0;
-        }
-
-        return Notification::where('user_id', Auth::id())
-            ->where('is_read', false)
-            ->count();
-    }
-
     public function index()
     {
         if (!Auth::check()) {
@@ -27,12 +16,11 @@ class NotificationController extends Controller
 
         $notifications = Notification::where('user_id', Auth::id())->latest()->get();
 
-        // ИСПРАВЛЕНО ЗДЕСЬ:
         Notification::where('user_id', Auth::id())
             ->where('is_read', false)
-            ->update(['is_read' => true]); // Было: ['read_at' => now()]
+            ->update(['is_read' => true]);
 
-        $unreadCount = 0;
+        $unreadCount = $this->getUnreadCount();
 
         return view('notifications.index', compact('notifications', 'unreadCount'));
     }

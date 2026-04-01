@@ -32,6 +32,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'is_blocked' => 'boolean',
     ];
 
     protected $appends = ['unread_notifications_count', 'avatar_url']; // Добавили avatar_url

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use Stripe\StripeClient;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
@@ -19,6 +20,13 @@ class PaymentController extends Controller
      */
     public function processPayment(Request $request)
     {
+        if (!Auth::check()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Требуется авторизация.',
+            ], 401);
+        }
+
         // Валидация входящих данных
         $request->validate([
             'order_id' => 'required|exists:orders,id',
@@ -28,8 +36,22 @@ class PaymentController extends Controller
         // Получаем заказ
         $order = Order::findOrFail($request->order_id);
 
+        if ((int) $order->user_id !== (int) Auth::id()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Нельзя оплатить чужой заказ.',
+            ], 403);
+        }
+
+        if (!in_array($order->status, ['pending', 'processing'], true)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Этот заказ нельзя оплатить в текущем статусе.',
+            ], 422);
+        }
+
         // Инициализируем Stripe с секретным ключом
-        $stripe = new StripeClient(env('STRIPE_SECRET_KEY'));
+        $stripe = new StripeClient(config('services.stripe.secret'));
 
         try {
             // Создаём платежное намерение (Payment Intent) в Stripe

@@ -1,0 +1,17 @@
+# REAL SITE SPEED .htaccess
+# Visit http://speed.devs.mx for more info
+# ----------------------------------------
+
+FileETag none
+
+
+<IfModule mod_expires.c>
+	ExpiresActive On
+	ExpiresDefault "access plus 99 days"
+</IfModule>
+
+<ifmodule mod_deflate.c>
+	AddType application/x-font-woff .woff
+	AddType image/svg+xml .svg
+	AddOutputFilterByType DEFLATE text/text text/html text/plain text/xml text/css application/x-javascript application/javascript text/javascript image/svg+xml application/x-font-woff
+</ifmodule>

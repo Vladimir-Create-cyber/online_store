@@ -3,29 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Review;
 
 class ProductController extends Controller
 {
-    /**
-     * Получить количество непрочитанных уведомлений пользователя.
-     *
-     * @return int
-     */
-    private function getUnreadCount(): int
-    {
-        if (!Auth::check()) {
-            return 0;
-        }
-
-        return Notification::where('user_id', Auth::id())
-            ->where('is_read', false)
-            ->count();
-    }
-
     /**
      * Отображение каталога товаров на главной странице.
      *
@@ -47,16 +30,13 @@ class ProductController extends Controller
     }
 
     /**
-     * Отображение страницы одного товара по его slug.
-     *
-     * @param string $slug
-     * @return \Illuminate\View\View
+     * Отображение страницы одного товара.
      */
-    public function show(string $slug)
+    public function show(Product $product)
     {
-        $product = Product::with(['images', 'category', 'reviews.user' => function ($q) {
+        $product->load(['images', 'category', 'reviews.user' => function ($q) {
             $q->select('id', 'name'); // подгружаем только имя пользователя
-        }])->where('slug', $slug)->firstOrFail();
+        }]);
 
         $reviews = $product->reviews()
             ->where('is_approved', true)
@@ -95,7 +75,7 @@ class ProductController extends Controller
         }
 
         $products = Product::with(['images', 'mainImage'])
-            ->whereRaw('LOWER(name) LIKE ?', ["%" . strtolower($query) . "%"])
+            ->where('name', 'like', '%' . $query . '%')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 

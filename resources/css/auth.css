@@ -1,0 +1,59 @@
+.auth-page .auth-form,
+.admin-auth-container .auth-card {
+    --auth-input-left: 46px;
+    --auth-input-right: 52px;
+}
+
+.auth-page .auth-form .input-with-icon,
+.admin-auth-container .input-with-icon {
+    position: relative;
+}
+
+.auth-page .auth-form .input-with-icon .input-icon,
+.admin-auth-container .input-with-icon .input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: #64748b;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.auth-page .auth-form input.form-control.with-icon,
+.auth-page .auth-form input.form-control,
+.admin-auth-container input.form-control.with-icon,
+.admin-auth-container input.form-control {
+    width: 100%;
+    min-height: 44px;
+    line-height: 1.2;
+    padding: 12px 14px 12px var(--auth-input-left) !important;
+    box-sizing: border-box;
+}
+
+.auth-page .auth-form .input-with-icon.has-eye input.form-control,
+.admin-auth-container .input-with-icon.has-eye input.form-control {
+    padding-right: var(--auth-input-right) !important;
+}
+
+.auth-page .auth-form .password-toggle,
+.admin-auth-container .password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 4;
+}
+
+.auth-page .auth-form .password-toggle .eye-icon,
+.admin-auth-container .password-toggle .eye-icon {
+    width: 18px;
+    height: 18px;
+}

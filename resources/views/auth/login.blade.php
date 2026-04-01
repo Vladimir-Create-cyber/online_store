@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
+@push('styles')
+    @vite('resources/css/auth.css')
+@endpush
+
 @section('content')
-    <div class="container">
+    <div class="container auth-page">
         <h1 class="auth-title">Вход в систему</h1>
 
         <form action="{{ route('login.perform') }}" method="POST" class="auth-form">

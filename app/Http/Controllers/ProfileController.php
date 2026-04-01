@@ -4,23 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Notification; // Добавили импорт модели
 
 class ProfileController extends Controller
 {
-    // Новая реализация метода для получения количества непрочитанных уведомлений
-    private function getUnreadCount()
-    {
-        if (!Auth::check()) {
-            return 0;
-        }
-
-        // Прямой запрос к базе данных
-        return Notification::where('user_id', Auth::id())
-            ->where('is_read', false)
-            ->count();
-    }
-
     public function edit()
     {
         $user = Auth::user();

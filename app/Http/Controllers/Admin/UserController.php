@@ -15,19 +15,33 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        $sort = $request->get('sort', 'created_at');
+        $direction = $request->get('direction', 'desc');
+
         $users = User::with('roles')
             ->when($request->filled('role'), function ($query) use ($request) {
                 $query->whereHas('roles', function ($q) use ($request) {
-                    $q->where('role_id', $request->role);
+                    $q->where('roles.id', $request->role);
                 });
             })
-            ->orderByDesc('created_at'); // сортировка: новые сверху
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $search = $request->search;
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%")
+                        ->orWhere('phone', 'like', "%{$search}%"); // 👈 добавили поиск по телефону
+                });
+            })
+            ->orderBy($sort, $direction);
 
-        $users = $users->paginate(10);
+        $users = $users->paginate(10)->appends($request->query());
         $roles = Role::all();
 
         return view('admin.users.index', compact('users', 'roles'));
     }
+
+
+
 
 
     public function edit(User $user)
@@ -113,7 +127,7 @@ class UserController extends Controller
         $user->is_blocked = ! $user->is_blocked;
         $user->save();
 
-        if (! $user->is_blocked) {
+        if ($user->is_blocked) {
             LogoutUserSessionJob::dispatch($user->id);
         }
 

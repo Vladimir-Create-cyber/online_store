@@ -4,29 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderAddress;
-use App\Models\Notification;
 use App\Models\ShippingMethod;
 
 class CartController extends Controller
 {
-    /**
-     * Подсчёт количества непрочитанных уведомлений пользователя.
-     */
-    private function getUnreadCount(): int
-    {
-        if (!Auth::check()) {
-            return 0;
-        }
-
-        return Notification::where('user_id', Auth::id())
-            ->where('is_read', false)
-            ->count();
-    }
-
     /**
      * Отображение корзины с товарами.
      */
@@ -72,7 +58,7 @@ class CartController extends Controller
         $cart[$productId] = [
             'product_id' => $productId,
             'name' => $product->name,
-            'price' => $product->price,
+            'price' => $product->final_price,
             'image' => $product->image,
             'quantity' => $quantity,
         ];
@@ -111,10 +97,12 @@ class CartController extends Controller
         }
 
         $shippingMethods = ShippingMethod::where('is_active', true)->get();
+        $unreadCount = $this->getUnreadCount();
 
         return view('cart.checkout', [
             'cart' => $cart,
             'shippingMethods' => $shippingMethods,
+            'unreadCount' => $unreadCount,
         ]);
     }
 
@@ -148,68 +136,79 @@ class CartController extends Controller
             return redirect()->back()->withErrors(['shipping_method_id' => 'Выбран недопустимый способ доставки.']);
         }
 
-        $order = Order::create([
-            'user_id'         => Auth::id(),
-            'full_name'       => $validated['full_name'],
-            'phone'           => $validated['phone'],
-            'address'         => $validated['address'],
-            'city'            => $validated['city'],
-            'country'         => $validated['country'],
-            'postal_code'     => $validated['postal_code'],
-            'shipping_method' => $shippingMethod->name, // можно сохранить ID, если поле — integer
-            'payment_method'  => $validated['payment_method'],
-            'total'           => 0,
-            'status'          => 'pending',
-        ]);
-
-        OrderAddress::create([
-            'order_id'    => $order->id,
-            'type'        => 'shipping',
-            'full_name'   => $validated['full_name'],
-            'phone'       => $validated['phone'],
-            'address'     => $validated['address'],
-            'city'        => $validated['city'],
-            'country'     => $validated['country'],
-            'postal_code' => $validated['postal_code'],
-        ]);
-
+        $order = null;
         $total = 0;
         $messages = [];
 
-        foreach ($cart as $productId => $item) {
-            $product = Product::find($productId);
-
-            if (!$product) {
-                $messages[] = "Товар #{$productId} не найден и был пропущен.";
-                continue;
-            }
-
-            $orderedQty = $item['quantity'];
-            $availableQty = $product->stock;
-
-            if ($availableQty <= 0) {
-                $messages[] = "«{$product->name}» нет в наличии и не был добавлен в заказ.";
-                continue;
-            }
-
-            $finalQty = min($orderedQty, $availableQty);
-
-            if ($finalQty < $orderedQty) {
-                $messages[] = "«{$product->name}»: заказано {$orderedQty}, добавлено {$finalQty}.";
-            }
-
-            OrderItem::create([
-                'order_id'  => $order->id,
-                'product_id'=> $productId,
-                'quantity'  => $finalQty,
-                'price'     => $item['price'],
+        DB::transaction(function () use (&$order, &$total, &$messages, $validated, $shippingMethod, $cart) {
+            $order = Order::create([
+                'user_id'         => Auth::id(),
+                'full_name'       => $validated['full_name'],
+                'phone'           => $validated['phone'],
+                'address'         => $validated['address'],
+                'city'            => $validated['city'],
+                'country'         => $validated['country'],
+                'postal_code'     => $validated['postal_code'],
+                'shipping_method' => $shippingMethod->name,
+                'payment_method'  => $validated['payment_method'],
+                'total'           => 0,
+                'status'          => 'pending',
             ]);
 
-            $product->decrement('stock', $finalQty);
-            $total += $item['price'] * $finalQty;
-        }
+            OrderAddress::create([
+                'order_id'    => $order->id,
+                'type'        => 'shipping',
+                'full_name'   => $validated['full_name'],
+                'phone'       => $validated['phone'],
+                'address'     => $validated['address'],
+                'city'        => $validated['city'],
+                'country'     => $validated['country'],
+                'postal_code' => $validated['postal_code'],
+            ]);
 
-        $order->update(['total' => $total]);
+            $productIds = array_keys($cart);
+            $products = Product::whereIn('id', $productIds)
+                ->lockForUpdate()
+                ->get()
+                ->keyBy('id');
+
+            foreach ($cart as $productId => $item) {
+                $product = $products->get((int) $productId);
+
+                if (!$product) {
+                    $messages[] = "Товар #{$productId} не найден и был пропущен.";
+                    continue;
+                }
+
+                $orderedQty = (int) $item['quantity'];
+                $availableQty = (int) $product->stock;
+
+                if ($availableQty <= 0) {
+                    $messages[] = "«{$product->name}» нет в наличии и не был добавлен в заказ.";
+                    continue;
+                }
+
+                $finalQty = min($orderedQty, $availableQty);
+                if ($finalQty < $orderedQty) {
+                    $messages[] = "«{$product->name}»: заказано {$orderedQty}, добавлено {$finalQty}.";
+                }
+
+                $unitPrice = (float) $product->final_price;
+
+                OrderItem::create([
+                    'order_id'   => $order->id,
+                    'product_id' => $product->id,
+                    'quantity'   => $finalQty,
+                    'price'      => $unitPrice,
+                ]);
+
+                $product->decrement('stock', $finalQty);
+                $total += $unitPrice * $finalQty;
+            }
+
+            $order->update(['total' => $total]);
+        });
+
         session()->forget('cart');
 
         $successMessage = 'Ваш заказ успешно оформлен!';

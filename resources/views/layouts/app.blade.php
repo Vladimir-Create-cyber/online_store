@@ -7,6 +7,7 @@
 
     <!-- Подключение CSS/JS через Vite -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('styles')
 
     <!-- Favicon (добавьте если есть) -->
     <link rel="icon" href="{{ asset('favicon.ico') }}">
@@ -15,26 +16,26 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
     <body>
-    @include('partials.header')
+        @include('partials.header')
 
-    <main class="container">
-        @hasSection('dashboard-sidebar')
-            <div class="dashboard-wrapper">
-                <aside class="dashboard-sidebar">
-                    @yield('dashboard-sidebar')
-                </aside>
-                <div class="dashboard-main">
-                    @yield('content')
+        <main class="container">
+            @hasSection('dashboard-sidebar')
+                <div class="dashboard-wrapper">
+                    <aside class="dashboard-sidebar">
+                        @yield('dashboard-sidebar')
+                    </aside>
+                    <div class="dashboard-main">
+                        @yield('content')
+                    </div>
                 </div>
-            </div>
-        @else
-            @yield('content')
-        @endif
-    </main>
+            @else
+                @yield('content')
+            @endif
+        </main>
 
-    @include('partials.footer')
+        @include('partials.footer')
 
-    <!-- Дополнительные скрипты можно добавить здесь -->
-    @stack('scripts')
+        <!-- Дополнительные скрипты можно добавить здесь -->
+        @stack('scripts')
     </body>
 </html>

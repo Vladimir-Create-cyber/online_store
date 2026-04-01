@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Вход для администратора | {{ config('app.name') }}</title>
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/css/auth.css', 'resources/js/app.js'])
     </head>
     <body>
         <div class="admin-auth-container">
@@ -46,7 +46,7 @@
                     <!-- Password -->
                     <div class="form-group">
                         <label for="password" class="form-label">Пароль</label>
-                        <div class="input-with-icon">
+                        <div class="input-with-icon has-eye">
                             <svg class="input-icon" viewBox="0 0 24 24" fill="#64748b">
                                 <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
                             </svg>

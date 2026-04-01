@@ -1,5 +1,3 @@
-@vite(['resources/css/app.css', 'resources/js/app.js'])
-
 <header>
     <nav class="header-nav">
         <!-- Левая часть: Главная и Корзина -->

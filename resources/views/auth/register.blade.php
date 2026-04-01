@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
+@push('styles')
+    @vite('resources/css/auth.css')
+@endpush
+
 @section('content')
-    <div class="container">
+    <div class="container auth-page">
         <h1 class="auth-title">Регистрация</h1>
 
         <form action="{{ route('register.perform') }}" method="POST" class="auth-form registration-form">
@@ -44,7 +48,7 @@
             {{-- Для поля пароля --}}
             <div class="form-group">
                 <label for="password" class="form-label">Пароль</label>
-                <div class="input-with-icon">
+                <div class="input-with-icon has-eye">
                     <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
@@ -67,7 +71,7 @@
             {{-- Для подтверждения пароля --}}
             <div class="form-group">
                 <label for="password_confirmation" class="form-label">Подтверждение пароля</label>
-                <div class="input-with-icon">
+                <div class="input-with-icon has-eye">
                     <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M5 13l4 4L19 7"></path>
                     </svg>

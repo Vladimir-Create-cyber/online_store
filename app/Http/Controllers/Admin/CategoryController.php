@@ -56,7 +56,6 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
-        // Дополнительно: перед удалением проверь, не используются ли товары с этой категорией
         if ($category->products()->exists()) {
             return back()->with('error', 'Нельзя удалить категорию, к которой привязаны товары.');
         }

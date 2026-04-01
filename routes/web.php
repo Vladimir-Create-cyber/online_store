@@ -17,16 +17,17 @@ use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\ShippingMethodController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 
 /*
 |--------------------------------------------------------------------------
 | Публичные маршруты
 |--------------------------------------------------------------------------
 */
-Route::get('/',                [ProductController::class, 'index'])->name('home');
-Route::get('/products',        [ProductController::class, 'index'])->name('products.index');
-Route::get('/product/{slug}',  [ProductController::class, 'show'])->name('product.show');
-Route::get('/search',          [ProductController::class, 'search'])->name('product.search');
+Route::get('/',                 [ProductController::class, 'index'])->name('home');
+Route::get('/products',         [ProductController::class, 'index'])->name('products.index');
+Route::get('/product/{product}',[ProductController::class, 'show'])->name('product.show');
+Route::get('/search',           [ProductController::class, 'search'])->name('product.search');
 
 /*
 |--------------------------------------------------------------------------
@@ -87,13 +88,6 @@ Route::middleware('auth')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| Оплата
-|--------------------------------------------------------------------------
-*/
-Route::post('/payment/process', [PaymentController::class, 'processPayment'])->name('payment.process');
-
-/*
-|--------------------------------------------------------------------------
 | Админ-панель
 |--------------------------------------------------------------------------
 */
@@ -103,8 +97,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/logout',[AdminLoginController::class, 'logout'])->name('logout');
 
     Route::middleware('auth:admin')->group(function () {
-        Route::get('/',           fn() => view('admin.dashboard'))->name('index');
-        Route::get('/dashboard',  fn() => view('admin.dashboard'))->name('dashboard');
+        Route::get('/',           [AdminDashboardController::class, 'index'])->name('index');
+        Route::get('/dashboard',  [AdminDashboardController::class, 'index'])->name('dashboard');
 
         Route::prefix('products')->name('products.')->group(function () {
             Route::get('/',               [AdminProductController::class, 'index'])->name('index');
@@ -157,21 +151,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::delete('/{user}',      [AdminUserController::class, 'destroy'])->name('destroy');
             Route::patch('/{user}/toggle-block', [AdminUserController::class, 'toggleBlock'])->name('toggle-block');
         });
-
-        Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
-            Route::resource('users',AdminUserController::class)->only(['index', 'edit', 'update']);
-        });
-
-        Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
-            Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
-            Route::get('/users/create', [AdminUserController::class, 'create'])->name('users.create');
-            Route::post('/users', [AdminUserController::class, 'store'])->name('users.store');
-            Route::get('/users/{user}', [AdminUserController::class, 'show'])->name('users.show');
-            Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
-            Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
-            Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
-            Route::patch('users/{user}/toggle-block', [AdminUserController::class, 'toggleBlock'])->name('users.toggle-block');
-
-        });
     });
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('/payment/process', [PaymentController::class, 'processPayment'])->name('payment.process');
 });

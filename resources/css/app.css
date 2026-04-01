@@ -4561,13 +4561,13 @@ footer {
     gap: 1.75rem;
 }
 
-.form-group {
+.checkout-form .form-group {
     display: flex;
     flex-direction: column;
     position: relative;
 }
 
-.form-group label {
+.checkout-form .form-group label {
     font-size: 0.95rem;
     font-weight: 600;
     margin-bottom: 0.6rem;
@@ -4576,13 +4576,13 @@ footer {
     align-items: center;
 }
 
-.form-group label span {
+.checkout-form .form-group label span {
     color: var(--secondary);
     margin-left: 4px;
 }
 
-.form-group input,
-.form-group select {
+.checkout-form .form-group input,
+.checkout-form .form-group select {
     padding: 1rem 1.25rem;
     border: 2px solid var(--light-gray);
     border-radius: 10px;
@@ -4592,14 +4592,14 @@ footer {
     box-shadow: var(--shadow-sm);
 }
 
-.form-group input:focus,
-.form-group select:focus {
+.checkout-form .form-group input:focus,
+.checkout-form .form-group select:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.15);
 }
 
-.form-group select {
+.checkout-form .form-group select {
     appearance: none;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
@@ -4681,4 +4681,74 @@ footer {
         width: 80px;
         height: 3px;
     }
+}
+
+/* ====================== AUTH INPUT ICON FIX ====================== */
+.auth-form .input-with-icon {
+    position: relative;
+}
+
+.auth-form .input-icon {
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+}
+
+.auth-form .form-control {
+    min-height: 44px;
+    line-height: 1.2;
+    padding-left: 42px;
+}
+
+.auth-form .input-with-icon.has-eye .form-control {
+    padding-right: 52px;
+}
+
+.auth-form .password-toggle {
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-form .password-toggle .eye-icon {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+/* Более строгий фикс для форм авторизации (frontend + admin) */
+.auth-form .input-with-icon > .form-control,
+.auth-card .input-with-icon > .form-control {
+    padding-left: 46px !important;
+}
+
+.auth-form .input-with-icon.has-eye > .form-control,
+.auth-card .input-with-icon.has-eye > .form-control {
+    padding-right: 52px !important;
+}
+
+.auth-form .input-with-icon > .input-icon,
+.auth-card .input-with-icon > .input-icon {
+    left: 14px !important;
+    width: 18px !important;
+    height: 18px !important;
+}
+
+/* Жесткая фиксация отступов именно для полей с with-icon */
+.auth-form input.form-control.with-icon,
+.auth-card input.form-control.with-icon {
+    padding: 12px 14px 12px 46px !important;
+}
+
+.auth-form .input-with-icon.has-eye input.form-control.with-icon,
+.auth-card .input-with-icon.has-eye input.form-control.with-icon {
+    padding-right: 52px !important;
 }

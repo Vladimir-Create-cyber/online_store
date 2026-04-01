@@ -83,7 +83,7 @@ class Product extends Model
         return $this->approvedReviews()->count();
     }
 
-    public function routeBinding()
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }
