@@ -20,8 +20,28 @@
                             <label for="name">Название товара *</label>
                             <input type="text" id="name" name="name"
                                    class="form-control @error('name') is-invalid @enderror"
-                                   value="{{ old('name', $product->name) }}">
+                                   value="{{ old('name', $product->getRawOriginal('name')) }}">
                             @error('name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name_uk">Название товара (UA)</label>
+                            <input type="text" id="name_uk" name="name_uk"
+                                   class="form-control @error('name_uk') is-invalid @enderror"
+                                   value="{{ old('name_uk', $product->getRawOriginal('name_uk')) }}">
+                            @error('name_uk')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name_en">Название товара (EN)</label>
+                            <input type="text" id="name_en" name="name_en"
+                                   class="form-control @error('name_en') is-invalid @enderror"
+                                   value="{{ old('name_en', $product->getRawOriginal('name_en')) }}">
+                            @error('name_en')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -66,8 +86,28 @@
                             <label for="description">Описание *</label>
                             <textarea id="description" name="description"
                                       class="form-control @error('description') is-invalid @enderror"
-                                      rows="4">{{ old('description', $product->description) }}</textarea>
+                                      rows="4">{{ old('description', $product->getRawOriginal('description')) }}</textarea>
                             @error('description')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description_uk">Описание (UA)</label>
+                            <textarea id="description_uk" name="description_uk"
+                                      class="form-control @error('description_uk') is-invalid @enderror"
+                                      rows="4">{{ old('description_uk', $product->getRawOriginal('description_uk')) }}</textarea>
+                            @error('description_uk')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description_en">Описание (EN)</label>
+                            <textarea id="description_en" name="description_en"
+                                      class="form-control @error('description_en') is-invalid @enderror"
+                                      rows="4">{{ old('description_en', $product->getRawOriginal('description_en')) }}</textarea>
+                            @error('description_en')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

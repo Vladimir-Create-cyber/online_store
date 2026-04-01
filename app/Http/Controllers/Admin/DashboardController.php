@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class DashboardController extends Controller
 {
@@ -126,11 +127,36 @@ class DashboardController extends Controller
 
             $salesRaw = $sortDirection === 'desc' ? $rows->reverse()->values() : $rows;
         } else {
-            $salesRaw = $salesQuery
+            // Когда год не выбран, показываем по месяцам за все годы (YYYY-MM).
+            $rawByMonth = $salesQuery
                 ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as period_key, DATE_FORMAT(created_at, '%Y-%m') as period_label, SUM(total) as sum")
                 ->groupBy('period_key', 'period_label')
                 ->orderBy('period_key', $sortDirection)
                 ->get();
+
+            $rangeQuery = Order::where('status', 'completed');
+            $minDate = (clone $rangeQuery)->min('created_at');
+            $maxDate = (clone $rangeQuery)->max('created_at');
+
+            if ($minDate && $maxDate) {
+                $start = Carbon::parse($minDate)->startOfMonth();
+                $end = Carbon::parse($maxDate)->startOfMonth();
+                $indexed = $rawByMonth->keyBy('period_key');
+                $rows = collect();
+
+                for ($cursor = $start->copy(); $cursor->lte($end); $cursor->addMonth()) {
+                    $key = $cursor->format('Y-m');
+                    $rows->push([
+                        'period_key' => $key,
+                        'period_label' => $key,
+                        'sum' => (float) ($indexed->get($key)->sum ?? 0),
+                    ]);
+                }
+
+                $salesRaw = $sortDirection === 'desc' ? $rows->reverse()->values() : $rows;
+            } else {
+                $salesRaw = $rawByMonth;
+            }
         }
 
         $isFallbackDataUsed = false;

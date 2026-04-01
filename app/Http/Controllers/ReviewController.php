@@ -17,7 +17,7 @@ class ReviewController extends Controller
         $user = Auth::user();
 
         if ($product->reviews()->where('user_id', $user->id)->exists()) {
-            return back()->with('error', 'Вы уже оставили отзыв для этого товара.');
+            return back()->with('error', __('ui.review_already_exists'));
         }
 
         $validated = $request->validate([
@@ -32,6 +32,6 @@ class ReviewController extends Controller
             'is_approved' => false,
         ]);
 
-        return back()->with('success', 'Спасибо за отзыв! Он будет опубликован после проверки.');
+        return back()->with('success', __('ui.review_thanks_pending_approval'));
     }
 }

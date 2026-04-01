@@ -29,6 +29,19 @@ Route::get('/products',         [ProductController::class, 'index'])->name('prod
 Route::get('/product/{product}',[ProductController::class, 'show'])->name('product.show');
 Route::get('/search',           [ProductController::class, 'search'])->name('product.search');
 
+Route::get('/locale/{locale}', function (string $locale) {
+    $supportedLocales = array_keys(config('localization.supported_locales', ['ru' => 'Русский']));
+    $defaultLocale = config('localization.default_locale', 'ru');
+
+    if (! in_array($locale, $supportedLocales, true)) {
+        $locale = $defaultLocale;
+    }
+
+    session(['locale' => $locale]);
+
+    return back()->cookie('locale', $locale, 60 * 24 * 30);
+})->name('locale.switch');
+
 /*
 |--------------------------------------------------------------------------
 | Корзина

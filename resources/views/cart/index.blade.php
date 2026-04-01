@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Корзина')
+@section('title', __('ui.cart'))
 
 @section('content')
     <div class="cart-container">
-        <h1 class="cart-title">Корзина</h1>
+        <h1 class="cart-title">{{ __('ui.cart') }}</h1>
 
         @if(session('success'))
             <div class="cart-alert alert-success">
@@ -30,10 +30,10 @@
                     <div class="cart-item-content">
                         <h3>{{ $item['name'] }}</h3>
                         <p class="price">
-                            Цена:
-                            <strong>{{ number_format($item['price'], 2) }} грн</strong>
+                            {{ __('ui.price') }}:
+                            <strong>{{ number_format($item['price'], 2) }} {{ __('ui.currency_uah') }}</strong>
                         </p>
-                        <p>Количество:
+                        <p>{{ __('ui.quantity') }}:
                             <span class="quantity">{{ $item['quantity'] }}</span>
                         </p>
                     </div>
@@ -42,14 +42,14 @@
                         <form action="{{ route('cart.remove', $id) }}" method="POST">
                             @csrf
                             <button type="submit" class="btn-remove">
-                                Удалить
+                                {{ __('ui.delete') }}
                             </button>
                         </form>
                     </div>
                 </div>
             @empty
                 <div class="empty-cart">
-                    Ваша корзина пуста.
+                    {{ __('ui.cart_empty') }}
                 </div>
             @endforelse
         </div>
@@ -57,14 +57,14 @@
         @if(count($cart) > 0)
             <div class="cart-total">
                 <p>
-                    <strong>Итого:</strong>
-                    {{ number_format($total, 2) }} грн
+                    <strong>{{ __('ui.total') }}:</strong>
+                    {{ number_format($total, 2) }} {{ __('ui.currency_uah') }}
                 </p>
             </div>
 
             <div class="cart-checkout">
                 <a href="{{ route('cart.checkout') }}" class="btn-checkout">
-                    Оформить заказ
+                    {{ __('ui.checkout') }}
                 </a>
             </div>
         @endif

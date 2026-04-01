@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Оформление заказа')
+@section('title', __('ui.checkout_title'))
 
 @section('content')
     <div class="premium-checkout">
-        <h1 class="checkout-title">Оформление заказа</h1>
+        <h1 class="checkout-title">{{ __('ui.checkout_title') }}</h1>
 
         @if($errors->any())
             <div class="checkout-alert">
@@ -16,16 +16,16 @@
             </div>
         @endif
 
-        <h2>Ваш заказ</h2>
+        <h2>{{ __('ui.your_order') }}</h2>
         <ul>
             @foreach($cart as $item)
                 @php $product = \App\Models\Product::find($item['product_id']); @endphp
                 <li>
-                    {{ $item['name'] }} — {{ $item['quantity'] }} шт.
+                    {{ $item['name'] }} — {{ $item['quantity'] }} {{ __('ui.pieces_short') }}
                     @if($product && $product->stock >= $item['quantity'])
-                        <span class="text-green-600">В наличии.</span>
+                        <span class="text-green-600">{{ __('ui.in_stock') }}</span>
                     @else
-                        <span class="text-red-600">Нет в наличии.</span>
+                        <span class="text-red-600">{{ __('ui.out_of_stock') }}</span>
                     @endif
                 </li>
             @endforeach
@@ -37,7 +37,7 @@
             <div class="form-grid">
 
                 <div class="form-group">
-                    <label for="full_name">Имя и фамилия <span>*</span></label>
+                    <label for="full_name">{{ __('ui.full_name') }} <span>*</span></label>
                     <input
                         type="text"
                         id="full_name"
@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="phone">Телефон <span>*</span></label>
+                    <label for="phone">{{ __('ui.phone') }} <span>*</span></label>
                     <input
                         type="tel"
                         id="phone"
@@ -61,7 +61,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="address">Адрес <span>*</span></label>
+                    <label for="address">{{ __('ui.address') }} <span>*</span></label>
                     <input
                         type="text"
                         id="address"
@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="city">Город <span>*</span></label>
+                    <label for="city">{{ __('ui.city') }} <span>*</span></label>
                     <input
                         type="text"
                         id="city"
@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="country">Страна</label>
+                    <label for="country">{{ __('ui.country') }}</label>
                     <input
                         type="text"
                         id="country"
@@ -96,7 +96,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="postal_code">Почтовый индекс <span>*</span></label>
+                    <label for="postal_code">{{ __('ui.postal_code') }} <span>*</span></label>
                     <input
                         type="text"
                         id="postal_code"
@@ -108,14 +108,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="shipping_method_id">Способ доставки <span>*</span></label>
+                    <label for="shipping_method_id">{{ __('ui.shipping_method') }} <span>*</span></label>
                     <select
                         id="shipping_method_id"
                         name="shipping_method_id"
                         required
                     >
                         <option value="" disabled {{ old('shipping_method_id') ? '' : 'selected' }}>
-                            -- Выберите способ --
+                            {{ __('ui.select_method') }}
                         </option>
                         @foreach($shippingMethods as $method)
                             <option
@@ -132,26 +132,26 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="payment_method">Способ оплаты <span>*</span></label>
+                    <label for="payment_method">{{ __('ui.payment_method') }} <span>*</span></label>
                     <select
                         id="payment_method"
                         name="payment_method"
                         required
                     >
                         <option value="" disabled {{ old('payment_method') ? '' : 'selected' }}>
-                            -- Выберите способ --
+                            {{ __('ui.select_method') }}
                         </option>
                         <option
                             value="card"
                             {{ old('payment_method') == 'card' ? 'selected' : '' }}
                         >
-                            Картой онлайн
+                            {{ __('ui.pay_online_card') }}
                         </option>
                         <option
                             value="cash_on_delivery"
                             {{ old('payment_method') == 'cash_on_delivery' ? 'selected' : '' }}
                         >
-                            Наложенный платёж
+                            {{ __('ui.cash_on_delivery') }}
                         </option>
                     </select>
                     @error('payment_method')<div class="error">{{ $message }}</div>@enderror
@@ -161,7 +161,7 @@
 
             <div class="checkout-actions">
                 <button type="submit" class="submit-btn">
-                    Завершить оформление
+                    {{ __('ui.complete_checkout') }}
                     <svg xmlns="http://www.w3.org/2000/svg"
                          viewBox="0 0 24 24"
                          fill="none"

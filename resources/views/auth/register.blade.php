@@ -6,13 +6,13 @@
 
 @section('content')
     <div class="container auth-page">
-        <h1 class="auth-title">Регистрация</h1>
+        <h1 class="auth-title">{{ __('ui.registration') }}</h1>
 
         <form action="{{ route('register.perform') }}" method="POST" class="auth-form registration-form">
             @csrf
 
             <div class="form-group">
-                <label for="name" class="form-label">Имя</label>
+                <label for="name" class="form-label">{{ __('ui.name') }}</label>
                 <div class="input-with-icon">
                     <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -21,7 +21,7 @@
                     <input type="text" name="name" id="name" required
                            class="form-control with-icon"
                            value="{{ old('name') }}"
-                           placeholder="Ваше имя">
+                           placeholder="{{ __('ui.name') }}">
                 </div>
                 @error('name')
                 <div class="error-message">{{ $message }}</div>
@@ -46,7 +46,7 @@
             </div>
 
             <div class="form-group">
-                <label for="password" class="form-label">Пароль</label>
+                <label for="password" class="form-label">{{ __('ui.password') }}</label>
                 <div class="input-with-icon has-eye">
                     <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
@@ -68,7 +68,7 @@
             </div>
 
             <div class="form-group">
-                <label for="password_confirmation" class="form-label">Подтверждение пароля</label>
+                <label for="password_confirmation" class="form-label">{{ __('ui.password_confirmation') }}</label>
                 <div class="input-with-icon has-eye">
                     <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M5 13l4 4L19 7"></path>
@@ -92,11 +92,11 @@
                     <line x1="20" y1="8" x2="20" y2="14"></line>
                     <line x1="23" y1="11" x2="17" y2="11"></line>
                 </svg>
-                Зарегистрироваться
+                {{ __('ui.register_action') }}
             </button>
 
             <div class="auth-links">
-                <a href="{{ route('login') }}">Уже есть аккаунт? Войдите</a>
+                <a href="{{ route('login') }}">{{ __('ui.already_have_account') }}</a>
             </div>
         </form>
     </div>

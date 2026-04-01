@@ -28,7 +28,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                         </svg>
-                        Галерея товара
+                        {{ __('ui.product_gallery') }}
                     </div>
 
                     @if ($product->images->count() > 0)
@@ -36,7 +36,7 @@
                             @foreach ($product->images as $img)
                                 <div class="gallery-item {{ $loop->first ? 'active' : '' }}"
                                      data-image="{{ asset('storage/' . $img->path) }}">
-                                    <img src="{{ asset('storage/' . $img->path) }}" alt="Изображение {{ $loop->iteration }}">
+                                    <img src="{{ asset('storage/' . $img->path) }}" alt="{{ __('ui.image') }} {{ $loop->iteration }}">
                                 </div>
                             @endforeach
                         </div>
@@ -55,7 +55,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
                         </svg>
-                        Категория: {{ $product->category->name }}
+                        {{ __('ui.category') }}: {{ $product->category->name }}
                     </div>
 
                     <div class="meta-item">
@@ -63,7 +63,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M12 20l4-4-4-4m0 8V4" />
                         </svg>
-                        Средняя оценка:
+                        {{ __('ui.average_rating') }}:
                         {{ $product->averageRating() }} ★
                     </div>
 
@@ -72,14 +72,14 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        Доставка: 1-3 дня
+                        {{ __('ui.shipping') }}: {{ __('ui.shipping_days') }}
                     </div>
 
                 </div>
 
                 <div class="product-price-section">
                     <div class="product-price">
-                        {{ number_format($product->price, 2) }} <span class="price-currency">грн.</span>
+                        {{ number_format($product->price, 2) }} <span class="price-currency">{{ __('ui.currency_uah') }}</span>
                     </div>
 
                     <form action="{{ route('cart.add', $product->id) }}" method="POST">
@@ -93,7 +93,7 @@
                             </div>
 
                             <button type="submit" class="btn-add-to-cart" type="submit">
-                                <span>В корзину</span>
+                                <span>{{ __('ui.to_cart') }}</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="cart-icon" viewBox="0 0 24 24" fill="none"
                                      stroke="currentColor" stroke-width="2">
                                     <path d="M6 21L18 21C19.6569 21 21 19.6569 21 18L21 8C21 6.34315 19.6569 5 18 5L6 5C4.34315 5 3 6.34315 3 8L3 18C3 19.6569 4.34315 21 6 21Z"></path>
@@ -108,30 +108,30 @@
         </div>
 
         <div class="product-reviews">
-            <h2>Отзывы ({{ $product->reviews()->where('is_approved', true)->count() }})</h2>
+            <h2>{{ __('ui.reviews') }} ({{ $product->reviews()->where('is_approved', true)->count() }})</h2>
 
             @forelse($product->reviews()->where('is_approved', true)->with('user')->get() as $review)
                 <div class="review-item">
                     <strong>{{ $review->user->name }}</strong>
-                    <span> — Рейтинг: {{ $review->rating }} ★</span>
+                    <span> — {{ __('ui.rating') }}: {{ $review->rating }} ★</span>
                     <p>{{ $review->review }}</p>
                     <small>{{ $review->created_at->format('d.m.Y') }}</small>
                 </div>
             @empty
-                <p>Пока нет отзывов.</p>
+                <p>{{ __('ui.no_reviews_yet') }}</p>
             @endforelse
         </div>
 
         @auth
             <div class="review-form">
-                <h3>Оставить отзыв</h3>
+                <h3>{{ __('ui.leave_review') }}</h3>
 
                 <form action="{{ route('reviews.store', $product) }}" method="POST">
                     @csrf
 
-                    <label for="rating">Оценка:</label>
+                    <label for="rating">{{ __('ui.rating') }}:</label>
                     <select name="rating" id="rating" required>
-                        <option value="">Выберите оценку</option>
+                        <option value="">{{ __('ui.select_rating') }}</option>
                         @for ($i = 5; $i >= 1; $i--)
                             <option value="{{ $i }}" @selected(old('rating') == $i)>{{ $i }} ★</option>
                         @endfor
@@ -139,15 +139,15 @@
 
                     <br>
 
-                    <label for="review">Комментарий:</label><br>
-                    <textarea name="review" id="review" rows="4" placeholder="Ваш отзыв...">{{ old('review') }}</textarea>
+                    <label for="review">{{ __('ui.comment') }}:</label><br>
+                    <textarea name="review" id="review" rows="4" placeholder="{{ __('ui.your_review') }}">{{ old('review') }}</textarea>
 
                     <br>
-                    <button type="submit">Отправить</button>
+                    <button type="submit">{{ __('ui.send') }}</button>
                 </form>
             </div>
         @else
-            <p><a href="{{ route('login') }}">Войдите</a>, чтобы оставить отзыв.</p>
+            <p><a href="{{ route('login') }}">{{ __('ui.login') }}</a>, {{ __('ui.to_leave_review') }}</p>
         @endauth
 
     </div>

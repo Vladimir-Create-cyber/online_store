@@ -35,7 +35,7 @@ class User extends Authenticatable
         'is_blocked' => 'boolean',
     ];
 
-    protected $appends = ['unread_notifications_count', 'avatar_url'];
+    protected $appends = ['unread_notifications_count', 'avatar_url', 'display_name'];
 
     /**
      * Возвращает заказы пользователя.
@@ -119,5 +119,26 @@ class User extends Authenticatable
     public function hasAvatar(): bool
     {
         return !empty($this->avatar);
+    }
+
+    /**
+     * Возвращает локализованное отображаемое имя для системного администратора.
+     */
+    public function getDisplayNameAttribute(): string
+    {
+        $rawName = (string) $this->attributes['name'];
+        $normalized = mb_strtolower(trim($rawName));
+
+        $systemAdminAliases = [
+            'главный админ',
+            'головний адмін',
+            'main admin',
+        ];
+
+        if (in_array($normalized, $systemAdminAliases, true)) {
+            return __('ui.main_admin_name');
+        }
+
+        return $rawName;
     }
 }

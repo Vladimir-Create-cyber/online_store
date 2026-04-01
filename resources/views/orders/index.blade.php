@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'История заказов')
+@section('title', __('ui.order_history'))
 
 @section('content')
     <div class="orders-container">
@@ -12,36 +12,37 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Дата</th>
-                        <th>Сумма</th>
-                        <th>Статус</th>
-                        <th>Действия</th>
+                        <th>{{ __('ui.date') }}</th>
+                        <th>{{ __('ui.total') }}</th>
+                        <th>{{ __('ui.status') }}</th>
+                        <th>{{ __('ui.actions') }}</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($orders as $order)
                         <tr>
                             <td data-label="ID">#{{ $order->id }}</td>
-                            <td data-label="Дата">{{ $order->created_at->format('d.m.Y H:i') }}</td>
-                            <td data-label="Сумма">{{ number_format($order->total, 0, '', ' ') }} грн.</td>
-                            <td data-label="Статус">
+                            <td data-label="{{ __('ui.date') }}">{{ $order->created_at->format('d.m.Y H:i') }}</td>
+                            <td data-label="{{ __('ui.total') }}">{{ number_format($order->total, 0, '', ' ') }} {{ __('ui.currency_uah') }}</td>
+                            <td data-label="{{ __('ui.status') }}">
                                     <span class="status-badge status-{{ $order->status }}">
                                         @switch($order->status)
-                                            @case('pending') Ожидание @break
-                                            @case('processing') В обработке @break
-                                            @case('completed') Завершён @break
-                                            @case('cancelled') Отменён @break
+                                            @case('pending') {{ __('ui.order_status_pending') }} @break
+                                            @case('processing') {{ __('ui.order_status_processing') }} @break
+                                            @case('shipped') {{ __('ui.order_status_shipped') }} @break
+                                            @case('completed') {{ __('ui.order_status_completed') }} @break
+                                            @case('cancelled') {{ __('ui.order_status_cancelled') }} @break
                                             @default {{ $order->status }}
                                         @endswitch
                                     </span>
                             </td>
-                            <td data-label="Действия">
+                            <td data-label="{{ __('ui.actions') }}">
                                 <a href="{{ route('orders.show', $order->id) }}" class="action-link">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 20 20" fill="currentColor">
                                         <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                                         <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
                                     </svg>
-                                    Подробнее
+                                    {{ __('ui.details') }}
                                 </a>
                             </td>
                         </tr>
@@ -60,13 +61,13 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 9h16.5m-16.5 6.75h16.5" />
                 </svg>
-                <p>У вас пока нет заказов</p>
-                <a href="{{ route('products.index') }}" class="btn-primary">Начать покупки</a>
+                <p>{{ __('ui.no_orders_yet_user') }}</p>
+                <a href="{{ route('products.index') }}" class="btn-primary">{{ __('ui.start_shopping') }}</a>
             </div>
         @endif
 
         <div class="dashboard-section">
-            <h3 class="section-subtitle">Последние уведомления</h3>
+            <h3 class="section-subtitle">{{ __('ui.latest_notifications') }}</h3>
 
             <div class="notifications-list">
                 @php
@@ -95,7 +96,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="empty-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <p>Нет новых уведомлений</p>
+                        <p>{{ __('ui.no_new_notifications') }}</p>
                     </div>
                 @endforelse
             </div>

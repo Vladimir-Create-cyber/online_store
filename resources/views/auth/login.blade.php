@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="container auth-page">
-        <h1 class="auth-title">Вход в систему</h1>
+        <h1 class="auth-title">{{ __('ui.login_to_system') }}</h1>
 
         <form action="{{ route('login.perform') }}" method="POST" class="auth-form">
             @csrf
@@ -29,7 +29,7 @@
             </div>
 
             <div class="form-group">
-                <label for="password" class="form-label">Пароль</label>
+                <label for="password" class="form-label">{{ __('ui.password') }}</label>
                 <div class="input-with-icon has-eye">
                     <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
@@ -39,7 +39,7 @@
                            class="form-control with-icon"
                            placeholder="••••••••">
                     <span class="password-toggle"
-                          aria-label="Показать пароль"
+                          aria-label="{{ __('ui.password') }}"
                           role="button"
                           tabindex="0">
                         <svg class="eye-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -55,7 +55,7 @@
 
             <div class="form-group flex items-center mb-6">
                 <input type="checkbox" name="remember" id="remember" class="form-checkbox">
-                <label for="remember" class="ml-2 text-slate-600">Запомнить меня</label>
+                <label for="remember" class="ml-2 text-slate-600">{{ __('ui.remember_me') }}</label>
             </div>
 
             <button type="submit" class="btn-auth">
@@ -64,12 +64,12 @@
                     <polyline points="10 17 15 12 10 7"></polyline>
                     <line x1="15" y1="12" x2="3" y2="12"></line>
                 </svg>
-                Войти
+                {{ __('ui.login') }}
             </button>
 
             <div class="auth-links">
-                <a href="#">Забыли пароль?</a>
-                <a href="{{ route('register') }}">Ещё нет аккаунта? Зарегистрируйтесь</a>
+                <a href="#">{{ __('ui.forgot_password') }}</a>
+                <a href="{{ route('register') }}">{{ __('ui.no_account_register') }}</a>
             </div>
         </form>
     </div>

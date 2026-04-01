@@ -3,7 +3,7 @@
 @section('content')
     <div class="dashboard-container">
         <div class="dashboard-header mb-5">
-            <h1 class="dashboard-title">Панель управления</h1>
+            <h1 class="dashboard-title">{{ __('ui.admin_panel') }}</h1>
         </div>
 
         <div class="dashboard-stats mb-6">
@@ -14,7 +14,7 @@
                     </div>
                     <div class="stat-info">
                         <span class="stat-value">{{ number_format($totalOrders, 0, '', ' ') }}</span>
-                        <span class="stat-label">Заказов</span>
+                        <span class="stat-label">{{ __('ui.orders') }}</span>
                     </div>
                 </div>
 
@@ -24,7 +24,7 @@
                     </div>
                     <div class="stat-info">
                         <span class="stat-value">{{ number_format($totalUsers, 0, '', ' ') }}</span>
-                        <span class="stat-label">Пользователей</span>
+                        <span class="stat-label">{{ __('ui.users') }}</span>
                     </div>
                 </div>
 
@@ -34,7 +34,7 @@
                     </div>
                     <div class="stat-info">
                         <span class="stat-value">{{ number_format($totalProducts, 0, '', ' ') }}</span>
-                        <span class="stat-label">Товаров</span>
+                        <span class="stat-label">{{ __('ui.products') }}</span>
                     </div>
                 </div>
 
@@ -43,8 +43,8 @@
                         <i class="fas fa-wallet text-amber-600"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-value">{{ number_format($totalRevenue, 2, ',', ' ') }} грн</span>
-                        <span class="stat-label">Доход</span>
+                        <span class="stat-value">{{ number_format($totalRevenue, 2, ',', ' ') }} {{ __('ui.currency_uah') }}</span>
+                        <span class="stat-label">{{ __('ui.revenue') }}</span>
                     </div>
                 </div>
             </div>
@@ -53,13 +53,13 @@
         <div class="dashboard-content">
             <div class="dashboard-section mb-6">
                 <div class="section-header">
-                    <h2><i class="fas fa-chart-line mr-2"></i> Статистика продаж</h2>
+                    <h2><i class="fas fa-chart-line mr-2"></i> {{ __('ui.sales_statistics') }}</h2>
                 </div>
                 <form method="GET" action="{{ route('admin.dashboard') }}" class="chart-filters">
                     <label>
-                        Год:
+                        {{ __('ui.year') }}:
                         <select name="year">
-                            <option value="">Все</option>
+                            <option value="">{{ __('ui.all') }}</option>
                             @foreach($availableYears as $year)
                                 <option value="{{ $year }}" {{ (string)$selectedYear === (string)$year ? 'selected' : '' }}>
                                     {{ $year }}
@@ -68,9 +68,9 @@
                         </select>
                     </label>
                     <label>
-                        Месяц:
+                        {{ __('ui.month') }}:
                         <select name="month" {{ $selectedYear ? '' : 'disabled' }}>
-                            <option value="">Все</option>
+                            <option value="">{{ __('ui.all') }}</option>
                             @foreach($monthsMap as $monthNumber => $monthName)
                                 <option value="{{ $monthNumber }}"
                                     {{ (string)$selectedMonth === (string)$monthNumber ? 'selected' : '' }}
@@ -81,17 +81,17 @@
                         </select>
                     </label>
                     <label>
-                        Сортировка:
+                        {{ __('ui.sorting') }}:
                         <select name="sort">
-                            <option value="asc" {{ $sortDirection === 'asc' ? 'selected' : '' }}>По возрастанию</option>
-                            <option value="desc" {{ $sortDirection === 'desc' ? 'selected' : '' }}>По убыванию</option>
+                            <option value="asc" {{ $sortDirection === 'asc' ? 'selected' : '' }}>{{ __('ui.ascending') }}</option>
+                            <option value="desc" {{ $sortDirection === 'desc' ? 'selected' : '' }}>{{ __('ui.descending') }}</option>
                         </select>
                     </label>
-                    <button type="submit" class="btn-filter">Применить</button>
+                    <button type="submit" class="btn-filter">{{ __('ui.apply') }}</button>
                 </form>
                 @if($isFallbackDataUsed)
                     <p class="chart-fallback-note">
-                        По выбранным фильтрам данных нет. Показаны последние доступные продажи.
+                        {{ __('ui.dashboard_fallback_sales') }}
                     </p>
                 @endif
                 <div class="chart-container">
@@ -102,29 +102,29 @@
             <div class="dashboard-grid">
                 <div class="dashboard-section">
                     <div class="section-header">
-                        <h2><i class="fas fa-clock mr-2"></i> Последние заказы</h2>
+                        <h2><i class="fas fa-clock mr-2"></i> {{ __('ui.latest_orders') }}</h2>
                     </div>
                     <div class="order-list">
                         @forelse($latestOrders as $order)
                             <div class="order-item">
                                 <div class="order-info">
                                     <span class="order-id">#{{ $order->id }}</span>
-                                    <span class="order-customer">{{ optional($order->user)->name ?? 'Гость' }}</span>
+                                    <span class="order-customer">{{ optional($order->user)->name ?? __('ui.guest') }}</span>
                                 </div>
                                 <div class="order-details">
-                                    <span class="order-amount">{{ number_format($order->total, 2, ',', ' ') }} грн</span>
+                                    <span class="order-amount">{{ number_format($order->total, 2, ',', ' ') }} {{ __('ui.currency_uah') }}</span>
                                     <span class="order-status badge-{{ $order->status }}">{{ $order->status_text }}</span>
                                 </div>
                             </div>
                         @empty
-                            <p>Заказов пока нет.</p>
+                            <p>{{ __('ui.no_orders_yet') }}</p>
                         @endforelse
                     </div>
                 </div>
 
                 <div class="dashboard-section">
                     <div class="section-header">
-                        <h2><i class="fas fa-star mr-2"></i> Популярные товары</h2>
+                        <h2><i class="fas fa-star mr-2"></i> {{ __('ui.popular_products') }}</h2>
                     </div>
                     <div class="product-list">
                         @forelse($topProducts as $product)
@@ -138,11 +138,11 @@
                                 </div>
                                 <div class="product-info">
                                     <span class="product-name">{{ $product->name }}</span>
-                                    <span class="product-sales">{{ $product->total_sold }} продаж</span>
+                                    <span class="product-sales">{{ $product->total_sold }} {{ __('ui.sales_count') }}</span>
                                 </div>
                             </div>
                         @empty
-                            <p>Пока нет данных по продажам товаров.</p>
+                            <p>{{ __('ui.no_product_sales_data') }}</p>
                         @endforelse
                     </div>
                 </div>
@@ -160,7 +160,7 @@
             const chartData = {
                 labels: salesLabels,
                 datasets: [{
-                    label: 'Продажи (грн)',
+                    label: '{{ __('ui.sales_chart_label') }}',
                     data: salesData,
                     backgroundColor: 'rgba(59, 130, 246, 0.2)',
                     borderColor: 'rgba(59, 130, 246, 1)',

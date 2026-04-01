@@ -68,7 +68,11 @@ class ProductController extends Controller
         }
 
         $products = Product::with(['images', 'mainImage'])
-            ->where('name', 'like', '%' . $query . '%')
+            ->where(function ($builder) use ($query) {
+                $builder->where('name', 'like', '%' . $query . '%')
+                    ->orWhere('name_uk', 'like', '%' . $query . '%')
+                    ->orWhere('name_en', 'like', '%' . $query . '%');
+            })
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 

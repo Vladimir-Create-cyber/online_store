@@ -11,7 +11,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->append(\App\Http\Middleware\CheckIfUserIsBlocked::class);
+        $middleware->appendToGroup('web', \App\Http\Middleware\SetLocale::class);
+        $middleware->appendToGroup('web', \App\Http\Middleware\CheckIfUserIsBlocked::class);
+        $middleware->appendToGroup('web', \App\Http\Middleware\TranslateResponseContent::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

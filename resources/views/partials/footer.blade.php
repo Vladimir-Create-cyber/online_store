@@ -1,3 +1,3 @@
 <footer>
-    <p>© 2025 Мини Магазин. Все права защищены.</p>
+    <p>{{ __('ui.footer_rights', ['year' => date('Y')]) }}</p>
 </footer>

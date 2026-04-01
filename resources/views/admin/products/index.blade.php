@@ -3,16 +3,16 @@
 @section('content')
     <div class="dashboard-container">
         <div class="dashboard-header d-flex justify-content-between align-items-center">
-            <h1>Управление товарами</h1>
+            <h1>{{ __('ui.product_management') }}</h1>
             <a href="{{ route('admin.products.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus mr-2"></i> Добавить товар
+                <i class="fas fa-plus mr-2"></i> {{ __('ui.add_product') }}
             </a>
         </div>
 
         <div class="dashboard-content mt-4">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h2 class="mb-0">Список товаров</h2>
+                    <h2 class="mb-0">{{ __('ui.products_list') }}</h2>
                 </div>
 
                 <div class="card-body">
@@ -27,11 +27,11 @@
                             <thead class="table-dark">
                             <tr>
                                 <th>ID</th>
-                                <th>Название</th>
-                                <th>Цена</th>
-                                <th>Остаток</th>
-                                <th>Статус</th>
-                                <th>Действия</th>
+                                <th>{{ __('ui.product_name') }}</th>
+                                <th>{{ __('ui.price') }}</th>
+                                <th>{{ __('ui.stock') }}</th>
+                                <th>{{ __('ui.status') }}</th>
+                                <th>{{ __('ui.actions') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -39,11 +39,11 @@
                                 <tr>
                                     <td>{{ $product->id }}</td>
                                     <td>{{ $product->name }}</td>
-                                    <td>{{ number_format($product->price, 2) }} грн.</td>
+                                    <td>{{ number_format($product->price, 2) }} {{ __('ui.currency_uah') }}</td>
                                     <td>{{ $product->stock }}</td>
                                     <td>
                                             <span class="badge {{ $product->is_active ? 'badge-success' : 'badge-danger' }}">
-                                                {{ $product->is_active ? 'Активен' : 'Неактивен' }}
+                                                {{ $product->is_active ? __('ui.active') : __('ui.inactive') }}
                                             </span>
                                     </td>
                                     <td>
@@ -52,7 +52,7 @@
                                                 <i class="fas fa-edit"></i>
                                             </a>
 
-                                            <form action="{{ route('admin.products.destroy', $product) }}" method="POST" onsubmit="return confirm('Вы уверены, что хотите удалить этот товар?');">
+                                            <form action="{{ route('admin.products.destroy', $product) }}" method="POST" onsubmit="return confirm('{{ __('ui.confirm_delete_product') }}');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-icon btn-danger">

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Вход для администратора | {{ config('app.name') }}</title>
+        <title>{{ __('ui.admin_login_title') }} | {{ config('app.name') }}</title>
         @vite(['resources/css/app.css', 'resources/css/auth.css', 'resources/js/app.js'])
     </head>
     <body>
@@ -15,13 +15,13 @@
                     </svg>
                 </div>
 
-                <h1 class="auth-title">Панель управления</h1>
+                <h1 class="auth-title">{{ __('ui.admin_panel') }}</h1>
 
                 <form method="POST" action="{{ route('admin.login.submit') }}">
                     @csrf
 
                     <div class="form-group">
-                        <label for="email" class="form-label">Адрес электронной почты</label>
+                        <label for="email" class="form-label">{{ __('ui.email_address') }}</label>
                         <div class="input-with-icon">
                             <svg class="input-icon" viewBox="0 0 24 24" fill="#64748b">
                                 <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="password" class="form-label">Пароль</label>
+                        <label for="password" class="form-label">{{ __('ui.password') }}</label>
                         <div class="input-with-icon has-eye">
                             <svg class="input-icon" viewBox="0 0 24 24" fill="#64748b">
                                 <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
@@ -74,33 +74,33 @@
                             name="remember"
                             class="form-checkbox"
                         >
-                        <label for="remember">Запомнить меня</label>
+                        <label for="remember">{{ __('ui.remember_me') }}</label>
                     </div>
 
                     <button type="submit" class="btn-auth">
                         <svg class="btn-icon" viewBox="0 0 24 24" fill="white">
                             <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
                         </svg>
-                        Войти в систему
+                        {{ __('ui.system_login') }}
                     </button>
                 </form>
 
                 <div class="auth-footer">
-                    <p>© {{ date('Y') }} {{ config('app.name') }}. All rights reserved</p>
+                    <p>{{ __('ui.all_rights_reserved', ['year' => date('Y'), 'app' => config('app.name')]) }}</p>
 
                     <div class="auth-links">
                         <a href="#">
                             <svg class="link-icon" viewBox="0 0 24 24" fill="#3b82f6">
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
                             </svg>
-                            Забыли пароль?
+                            {{ __('ui.forgot_password') }}
                         </a>
 
                         <a href="{{ url('/') }}">
                             <svg class="link-icon" viewBox="0 0 24 24" fill="#3b82f6">
                                 <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
                             </svg>
-                            На главную
+                            {{ __('ui.to_home') }}
                         </a>
                     </div>
                 </div>

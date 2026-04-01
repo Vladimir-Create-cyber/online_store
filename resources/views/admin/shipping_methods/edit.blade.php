@@ -37,9 +37,29 @@
                         Название <span class="required-asterisk">*</span>
                     </label>
                     <input type="text" name="name" id="name" class="form-control"
-                           required value="{{ old('name', $shippingMethod->name) }}"
+                           required value="{{ old('name', $shippingMethod->getRawOriginal('name')) }}"
                            placeholder="Введите название способа доставки">
                     @error('name')
+                    <div class="form-error">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="name_uk" class="form-label">Название (UA)</label>
+                    <input type="text" name="name_uk" id="name_uk" class="form-control"
+                           value="{{ old('name_uk', $shippingMethod->getRawOriginal('name_uk')) }}"
+                           placeholder="Введіть назву способу доставки">
+                    @error('name_uk')
+                    <div class="form-error">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="name_en" class="form-label">Название (EN)</label>
+                    <input type="text" name="name_en" id="name_en" class="form-control"
+                           value="{{ old('name_en', $shippingMethod->getRawOriginal('name_en')) }}"
+                           placeholder="Enter shipping method name">
+                    @error('name_en')
                     <div class="form-error">{{ $message }}</div>
                     @enderror
                 </div>

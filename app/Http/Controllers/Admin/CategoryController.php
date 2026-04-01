@@ -33,7 +33,11 @@ class CategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:categories,name',
+            'name_uk' => 'nullable|string|max:255',
+            'name_en' => 'nullable|string|max:255',
             'description' => 'nullable|string',
+            'description_uk' => 'nullable|string',
+            'description_en' => 'nullable|string',
         ]);
 
         $validated['slug'] = Str::slug($validated['name']);
@@ -58,12 +62,20 @@ class CategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
+            'name_uk' => 'nullable|string|max:255',
+            'name_en' => 'nullable|string|max:255',
             'description' => 'nullable|string',
+            'description_uk' => 'nullable|string',
+            'description_en' => 'nullable|string',
         ]);
 
         $category->name = $validated['name'];
         $category->slug = Str::slug($validated['name']);
-        $category->description = $validated['description'];
+        $category->name_uk = $validated['name_uk'] ?? null;
+        $category->name_en = $validated['name_en'] ?? null;
+        $category->description = $validated['description'] ?? null;
+        $category->description_uk = $validated['description_uk'] ?? null;
+        $category->description_en = $validated['description_en'] ?? null;
         $category->save();
 
         return redirect()->route('admin.categories.index')->with('success', 'Категория обновлена!');

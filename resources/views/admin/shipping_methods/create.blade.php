@@ -28,6 +28,26 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="name_uk" class="form-label">Название (UA)</label>
+                    <input type="text" name="name_uk" id="name_uk" class="form-control"
+                           value="{{ old('name_uk') }}"
+                           placeholder="Введіть назву способу доставки">
+                    @error('name_uk')
+                    <div class="form-error">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="name_en" class="form-label">Название (EN)</label>
+                    <input type="text" name="name_en" id="name_en" class="form-control"
+                           value="{{ old('name_en') }}"
+                           placeholder="Enter shipping method name">
+                    @error('name_en')
+                    <div class="form-error">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
                     <div class="toggle-group">
                         <input type="checkbox" name="is_active" id="is_active"
                                class="toggle-input" {{ old('is_active', true) ? 'checked' : '' }}>

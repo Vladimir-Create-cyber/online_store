@@ -17,8 +17,12 @@ class Product extends Model
     protected $fillable = [
         'category_id',
         'name',
+        'name_uk',
+        'name_en',
         'slug',
         'description',
+        'description_uk',
+        'description_en',
         'price',
         'stock',
         'image',
@@ -143,6 +147,45 @@ class Product extends Model
     public function getFinalPriceAttribute(): float
     {
         return $this->sale_price ?: $this->price;
+    }
+
+    /**
+     * Локализованное название товара с fallback на базовое поле.
+     */
+    public function getNameAttribute(?string $value): ?string
+    {
+        return $this->resolveLocalizedAttribute('name', $value);
+    }
+
+    /**
+     * Локализованное описание товара с fallback на базовое поле.
+     */
+    public function getDescriptionAttribute(?string $value): ?string
+    {
+        return $this->resolveLocalizedAttribute('description', $value);
+    }
+
+    /**
+     * Определяет значение поля по текущей локали.
+     */
+    private function resolveLocalizedAttribute(string $baseKey, ?string $fallback): ?string
+    {
+        $locale = app()->getLocale();
+
+        $localizedKey = match ($locale) {
+            'uk' => $baseKey . '_uk',
+            'en' => $baseKey . '_en',
+            default => null,
+        };
+
+        if ($localizedKey) {
+            $localizedValue = $this->attributes[$localizedKey] ?? null;
+            if (is_string($localizedValue) && trim($localizedValue) !== '') {
+                return $localizedValue;
+            }
+        }
+
+        return $fallback;
     }
 
     /**

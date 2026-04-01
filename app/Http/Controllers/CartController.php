@@ -47,7 +47,7 @@ class CartController extends Controller
         $product = Product::findOrFail($productId);
 
         if ($quantity > $product->stock) {
-            return redirect()->back()->with('error', 'На складе недостаточно товара!');
+            return redirect()->back()->with('error', __('ui.not_enough_stock'));
         }
 
         $cart = session()->get('cart', []);
@@ -62,7 +62,7 @@ class CartController extends Controller
 
         session()->put('cart', $cart);
 
-        return redirect()->back()->with('success', 'Товар добавлен в корзину!');
+        return redirect()->back()->with('success', __('ui.product_added_to_cart'));
     }
 
 
@@ -79,7 +79,7 @@ class CartController extends Controller
             session()->put('cart', $cart);
         }
 
-        return redirect()->back()->with('success', 'Товар удалён из корзины!');
+        return redirect()->back()->with('success', __('ui.product_removed_from_cart'));
     }
 
     /**
@@ -90,7 +90,7 @@ class CartController extends Controller
         $cart = session('cart', []);
 
         if (empty($cart)) {
-            return redirect()->route('cart.index')->with('error', 'Ваша корзина пуста.');
+            return redirect()->route('cart.index')->with('error', __('ui.cart_empty'));
         }
 
         $shippingMethods = ShippingMethod::where('is_active', true)->get();
@@ -123,13 +123,13 @@ class CartController extends Controller
         $cart = session('cart', []);
 
         if (empty($cart)) {
-            return redirect()->route('cart.index')->with('error', 'Корзина пуста!');
+            return redirect()->route('cart.index')->with('error', __('ui.cart_empty'));
         }
 
         $shippingMethod = ShippingMethod::find($validated['shipping_method_id']);
 
         if (!$shippingMethod || !$shippingMethod->is_active) {
-            return redirect()->back()->withErrors(['shipping_method_id' => 'Выбран недопустимый способ доставки.']);
+            return redirect()->back()->withErrors(['shipping_method_id' => __('ui.invalid_shipping_method')]);
         }
 
         $order = null;
@@ -172,7 +172,7 @@ class CartController extends Controller
                 $product = $products->get((int) $productId);
 
                 if (!$product) {
-                    $messages[] = "Товар #{$productId} не найден и был пропущен.";
+                    $messages[] = __('ui.product_not_found_skipped', ['id' => $productId]);
                     continue;
                 }
 
@@ -180,13 +180,13 @@ class CartController extends Controller
                 $availableQty = (int) $product->stock;
 
                 if ($availableQty <= 0) {
-                    $messages[] = "«{$product->name}» нет в наличии и не был добавлен в заказ.";
+                    $messages[] = __('ui.product_out_of_stock_skipped', ['name' => $product->name]);
                     continue;
                 }
 
                 $finalQty = min($orderedQty, $availableQty);
                 if ($finalQty < $orderedQty) {
-                    $messages[] = "«{$product->name}»: заказано {$orderedQty}, добавлено {$finalQty}.";
+                    $messages[] = __('ui.product_qty_adjusted', ['name' => $product->name, 'ordered' => $orderedQty, 'added' => $finalQty]);
                 }
 
                 $unitPrice = (float) $product->final_price;
@@ -207,9 +207,9 @@ class CartController extends Controller
 
         session()->forget('cart');
 
-        $successMessage = 'Ваш заказ успешно оформлен!';
+        $successMessage = __('ui.order_successfully_created');
         if ($messages) {
-            $successMessage .= ' Обратите внимание: ' . implode(' ', $messages);
+            $successMessage .= ' ' . __('ui.please_note') . ': ' . implode(' ', $messages);
         }
 
         return redirect()->route('orders.show', $order->id)->with('success', $successMessage);

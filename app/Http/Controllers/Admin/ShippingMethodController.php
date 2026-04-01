@@ -32,10 +32,14 @@ class ShippingMethodController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'name_uk' => 'nullable|string|max:255',
+            'name_en' => 'nullable|string|max:255',
         ]);
 
         ShippingMethod::create([
             'name' => $validated['name'],
+            'name_uk' => $validated['name_uk'] ?? null,
+            'name_en' => $validated['name_en'] ?? null,
             'is_active' => $request->has('is_active'),
         ]);
 
@@ -58,10 +62,14 @@ class ShippingMethodController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'name_uk' => 'nullable|string|max:255',
+            'name_en' => 'nullable|string|max:255',
         ]);
 
         $shippingMethod->update([
             'name' => $validated['name'],
+            'name_uk' => $validated['name_uk'] ?? null,
+            'name_en' => $validated['name_en'] ?? null,
             'is_active' => $request->has('is_active'),
         ]);
 

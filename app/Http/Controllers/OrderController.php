@@ -42,7 +42,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Для оформления заказа необходимо войти.');
+            return redirect()->route('login')->with('error', __('ui.login_required_for_checkout'));
         }
 
         $validated = $request->validate([
@@ -61,12 +61,12 @@ class OrderController extends Controller
         $cartItems = CartItem::with('product')->where('user_id', $user->id)->get();
 
         if ($cartItems->isEmpty()) {
-            return redirect()->route('cart.index')->with('error', 'Корзина пуста.');
+            return redirect()->route('cart.index')->with('error', __('ui.cart_empty'));
         }
 
         $unavailable = $cartItems->filter(fn($item) => !$item->product || $item->product->stock < $item->quantity);
         if ($unavailable->isNotEmpty()) {
-            return redirect()->route('cart.index')->with('error', 'Некоторые товары недоступны.');
+            return redirect()->route('cart.index')->with('error', __('ui.some_products_unavailable'));
         }
 
         $total = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
@@ -108,10 +108,10 @@ class OrderController extends Controller
             });
 
             return redirect()->route('orders.show', $order->id)
-                ->with('success', 'Заказ успешно оформлен!');
+                ->with('success', __('ui.order_successfully_created'));
         } catch (\Throwable $e) {
             \Log::error('Ошибка при оформлении заказа: ' . $e->getMessage());
-            return back()->with('error', 'Ошибка при оформлении заказа. Попробуйте позже.');
+            return back()->with('error', __('ui.order_create_error_try_later'));
         }
     }
 
@@ -124,7 +124,7 @@ class OrderController extends Controller
             $order = Order::with('orderItems.product')->findOrFail($orderId);
 
             if ($order->user_id !== Auth::id()) {
-                return redirect()->route('orders.index')->with('error', 'Этот заказ не принадлежит вам.');
+                return redirect()->route('orders.index')->with('error', __('ui.order_not_belongs_to_user'));
             }
 
             return view('orders.show', [
@@ -132,7 +132,7 @@ class OrderController extends Controller
                 'unreadCount' => $this->getUnreadCount(),
             ]);
         } catch (ModelNotFoundException) {
-            return redirect()->route('orders.index')->with('error', 'Заказ не найден.');
+            return redirect()->route('orders.index')->with('error', __('ui.order_not_found'));
         }
     }
 
@@ -159,12 +159,12 @@ class OrderController extends Controller
                 ]);
             });
 
-            return redirect()->route('orders.index')->with('success', 'Заказ успешно отменён и товары возвращены на склад.');
+            return redirect()->route('orders.index')->with('success', __('ui.order_cancelled_and_stock_restored'));
         } catch (ModelNotFoundException) {
-            return redirect()->route('orders.index')->with('error', 'Заказ не найден или уже обработан.');
+            return redirect()->route('orders.index')->with('error', __('ui.order_not_found_or_processed'));
         } catch (\Throwable $e) {
             \Log::error('Ошибка при отмене заказа: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Произошла ошибка при отмене заказа. Попробуйте позже.');
+            return redirect()->back()->with('error', __('ui.order_cancel_error_try_later'));
         }
     }
 

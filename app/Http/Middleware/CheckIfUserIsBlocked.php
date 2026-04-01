@@ -14,7 +14,7 @@ class CheckIfUserIsBlocked
             auth()->logout();
 
             return redirect()->route('login')->withErrors([
-                'email' => 'Ваш аккаунт заблокирован администрацией.',
+                'email' => __('Ваш аккаунт заблокирован администрацией.'),
             ]);
         }
 

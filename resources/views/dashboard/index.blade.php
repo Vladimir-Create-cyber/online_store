@@ -84,7 +84,7 @@
                             <div class="order-header">
                                 <span class="order-id">Заказ #{{ $order->id }}</span>
                                 <span class="order-date">{{ $order->created_at->format('d.m.Y H:i') }}</span>
-                                <span class="order-status status-{{ $order->status }}">{{ $order->status_name }}</span>
+                                <span class="order-status status-{{ $order->status }}">{{ $order->status_text }}</span>
                             </div>
 
                             <div class="order-details">
@@ -98,7 +98,7 @@
                                 </div>
                                 <div class="detail-item">
                                     <strong>Оплата</strong>
-                                    <span>{{ $order->payment_method }}</span>
+                                    <span>{{ $order->payment_method_text }}</span>
                                 </div>
                             </div>
 

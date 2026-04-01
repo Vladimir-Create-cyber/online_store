@@ -14,6 +14,7 @@ class AdminSeeder extends Seeder
             'name' => 'Главный Админ',
             'email' => 'admin@store.local',
             'password' => Hash::make('SecurePassword123!'),
+            'is_super_admin' => true,
         ]);
 
         $this->command->info('✅ Главный администратор успешно создан!');

@@ -37,9 +37,13 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'name_uk' => 'nullable|string|max:255',
+            'name_en' => 'nullable|string|max:255',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
+            'description_uk' => 'nullable|string',
+            'description_en' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
@@ -83,9 +87,13 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'name_uk' => 'nullable|string|max:255',
+            'name_en' => 'nullable|string|max:255',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
+            'description_uk' => 'nullable|string',
+            'description_en' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'additional_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
@@ -93,9 +101,13 @@ class ProductController extends Controller
 
         $product->fill([
             'name' => $validated['name'],
+            'name_uk' => $validated['name_uk'] ?? null,
+            'name_en' => $validated['name_en'] ?? null,
             'price' => $validated['price'],
             'stock' => $validated['stock'],
             'description' => $validated['description'] ?? null,
+            'description_uk' => $validated['description_uk'] ?? null,
+            'description_en' => $validated['description_en'] ?? null,
             'category_id' => $validated['category_id'],
             'is_new' => $request->has('is_new'),
         ]);

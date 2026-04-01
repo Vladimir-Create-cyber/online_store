@@ -26,6 +26,26 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="name_uk">Название товара (UA)</label>
+                            <input type="text" name="name_uk" id="name_uk"
+                                   class="form-control @error('name_uk') is-invalid @enderror"
+                                   value="{{ old('name_uk') }}">
+                            @error('name_uk')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name_en">Название товара (EN)</label>
+                            <input type="text" name="name_en" id="name_en"
+                                   class="form-control @error('name_en') is-invalid @enderror"
+                                   value="{{ old('name_en') }}">
+                            @error('name_en')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
                             <label for="price" class="required-field">Цена</label>
                             <input type="number" name="price" id="price"
                                    class="form-control @error('price') is-invalid @enderror"
@@ -91,6 +111,26 @@
                                       class="form-control @error('description') is-invalid @enderror"
                                       rows="4" required>{{ old('description') }}</textarea>
                             @error('description')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description_uk">Описание (UA)</label>
+                            <textarea name="description_uk" id="description_uk"
+                                      class="form-control @error('description_uk') is-invalid @enderror"
+                                      rows="4">{{ old('description_uk') }}</textarea>
+                            @error('description_uk')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description_en">Описание (EN)</label>
+                            <textarea name="description_en" id="description_en"
+                                      class="form-control @error('description_en') is-invalid @enderror"
+                                      rows="4">{{ old('description_en') }}</textarea>
+                            @error('description_en')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

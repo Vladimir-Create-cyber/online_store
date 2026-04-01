@@ -211,6 +211,60 @@
     font-size: 0.95rem;
 }
 
+/* ======= ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА ======= */
+.admin-language-switcher {
+    position: relative;
+    margin-left: auto;
+    margin-right: 14px;
+}
+
+.admin-language-trigger {
+    border: 1px solid #cbd5e1;
+    background: #fff;
+    color: #1e293b;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.admin-language-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 150px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    padding: 8px;
+    display: none;
+    z-index: 1000;
+}
+
+.admin-language-switcher:focus-within .admin-language-dropdown {
+    display: block;
+}
+
+.admin-language-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: transparent;
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #1e293b;
+}
+
+.admin-language-option:hover,
+.admin-language-option.active {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
 /* ======= ДАШБОРД И СТАТИСТИКА ======= */
 .dashboard-container {
     max-width: 1400px;
