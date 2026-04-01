@@ -44,11 +44,9 @@ Route::post('/cart/remove/{productId}', [CartController::class, 'removeFromCart'
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth')->group(function () {
-    // GET  /cart/checkout  — просто показывает форму
     Route::get('/cart/checkout', [CartController::class, 'showCheckoutForm'])
         ->name('cart.checkout');
 
-    // POST /cart/complete  — обрабатывает и сохраняет заказ
     Route::post('/cart/complete', [CartController::class, 'completeOrder'])
         ->name('cart.complete');
 });

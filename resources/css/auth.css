@@ -1,14 +1,17 @@
+/* ======= БАЗОВЫЕ ПЕРЕМЕННЫЕ ФОРМ АВТОРИЗАЦИИ ======= */
 .auth-page .auth-form,
 .admin-auth-container .auth-card {
     --auth-input-left: 46px;
     --auth-input-right: 52px;
 }
 
+/* ======= КОНТЕЙНЕР ПОЛЯ С ИКОНКОЙ ======= */
 .auth-page .auth-form .input-with-icon,
 .admin-auth-container .input-with-icon {
     position: relative;
 }
 
+/* ======= ИКОНКА ВНУТРИ ПОЛЯ ВВОДА ======= */
 .auth-page .auth-form .input-with-icon .input-icon,
 .admin-auth-container .input-with-icon .input-icon {
     position: absolute;
@@ -22,6 +25,7 @@
     z-index: 3;
 }
 
+/* ======= ПОЛЯ ВВОДА С УЧЕТОМ ОТСТУПОВ ПОД ИКОНКИ ======= */
 .auth-page .auth-form input.form-control.with-icon,
 .auth-page .auth-form input.form-control,
 .admin-auth-container input.form-control.with-icon,
@@ -33,11 +37,13 @@
     box-sizing: border-box;
 }
 
+/* ======= ПРАВЫЙ ОТСТУП ПОЛЕЙ С КНОПКОЙ ГЛАЗА ======= */
 .auth-page .auth-form .input-with-icon.has-eye input.form-control,
 .admin-auth-container .input-with-icon.has-eye input.form-control {
     padding-right: var(--auth-input-right) !important;
 }
 
+/* ======= КНОПКА ПОКАЗА/СКРЫТИЯ ПАРОЛЯ ======= */
 .auth-page .auth-form .password-toggle,
 .admin-auth-container .password-toggle {
     position: absolute;
@@ -52,6 +58,7 @@
     z-index: 4;
 }
 
+/* ======= РАЗМЕР ИКОНКИ ГЛАЗА ======= */
 .auth-page .auth-form .password-toggle .eye-icon,
 .admin-auth-container .password-toggle .eye-icon {
     width: 18px;

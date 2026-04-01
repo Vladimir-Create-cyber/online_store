@@ -1,8 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* ====================== ГЛОБАЛЬНЫЕ НАСТРОЙКИ ====================== */
+/* ======= ГЛОБАЛЬНЫЕ НАСТРОЙКИ ======= */
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -16,7 +12,7 @@ body {
     line-height: 1.5;
 }
 
-/* ====================== ОСНОВНОЙ КОНТЕЙНЕР ====================== */
+/* ======= ОСНОВНОЙ КОНТЕЙНЕР ======= */
 .container {
     max-width: 1280px;
     margin: 0 auto;
@@ -29,7 +25,7 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ====================== ШАПКА САЙТА ====================== */
+/* ======= ШАПКА САЙТА ======= */
 header {
     position: fixed;
     top: 0;
@@ -89,7 +85,7 @@ header {
     width: 70%;
 }
 
-/* ====================== ПОИСКОВАЯ ФОРМА ====================== */
+/* ======= ПОИСКОВАЯ ФОРМА ======= */
 .search-form {
     max-width: 600px;
     width: 100%;
@@ -171,7 +167,7 @@ header {
     100% { transform: translateY(-50%) scale(1); opacity: 1; }
 }
 
-/* ====================== КНОПКИ АВТОРИЗАЦИИ ====================== */
+/* ======= КНОПКИ АВТОРИЗАЦИИ ======= */
 .header-right {
     justify-content: flex-end;
 }
@@ -216,7 +212,7 @@ header {
     transform: translateY(-2px);
 }
 
-/* ====================== КОНТЕНТ СТРАНИЦЫ ====================== */
+/* ======= КОНТЕНТ СТРАНИЦЫ ======= */
 .page-title {
     text-align: center;
     font-size: 2.8rem;
@@ -261,7 +257,7 @@ header {
     min-height: 100%;
 }
 
-/* Изображение товара */
+/* ======= ИЗОБРАЖЕНИЕ ТОВАРА ======= */
 .product-image {
     width: 100% !important;
     height: 200px !important;
@@ -308,7 +304,7 @@ header {
     width: 100%;
 }
 
-/* Кнопки */
+/* ======= КНОПКИ ======= */
 .btn-details,
 .btn-cart {
     flex: 1;
@@ -344,13 +340,13 @@ header {
     box-shadow: 0 6px 8px rgba(5, 150, 105, 0.3);
 }
 
-/* Анимация наведения всей карточки */
+/* ======= АНИМАЦИЯ НАВЕДЕНИЯ КАРТОЧКИ ======= */
 .product-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* Верхняя линия на карточке */
+/* ======= ВЕРХНЯЯ ЛИНИЯ КАРТОЧКИ ======= */
 .product-card::before {
     content: '';
     position: absolute;
@@ -361,7 +357,7 @@ header {
     background: linear-gradient(90deg, #3b82f6, #10b981);
 }
 
-/* Метка Новинка */
+/* ======= МЕТКА «НОВИНКА» ======= */
 .badge-new {
     position: absolute;
     top: 10px;
@@ -376,7 +372,7 @@ header {
     z-index: 1;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-/* ====================== ПАГИНАЦИЯ ====================== */
+/* ======= ПАГИНАЦИЯ ======= */
 .pagination {
     width: 100%;
     display: flex;
@@ -425,7 +421,7 @@ header {
     transform: translateY(-2px);
 }
 
-/* ====================== ПОДВАЛ ====================== */
+/* ======= ПОДВАЛ ======= */
 footer {
     text-align: center;
     padding: 30px 20px;
@@ -435,7 +431,7 @@ footer {
     border-top: 4px solid #3b82f6;
 }
 
-/* ====================== АДАПТИВНОСТЬ ====================== */
+/* ======= АДАПТИВНОСТЬ ======= */
 @media (max-width: 1024px) {
     .product-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -516,7 +512,7 @@ footer {
     }
 }
 
-/* ====================== КОРЗИНА ====================== */
+/* ======= КОРЗИНА ======= */
 .cart-container {
     max-width: 1200px;
     margin: 30px auto;
@@ -808,7 +804,7 @@ footer {
     font-weight: bold;
 }
 
-/* ====================== ФОРМЫ АУТЕНТИФИКАЦИИ ====================== */
+/* ======= ФОРМЫ АУТЕНТИФИКАЦИИ ======= */
 .auth-title {
     text-align: center;
     font-size: 2.3rem;
@@ -970,7 +966,7 @@ footer {
     text-decoration: underline;
 }
 
-/* ====================== ФОРМА РЕГИСТРАЦИИ ====================== */
+/* ======= ФОРМА РЕГИСТРАЦИИ ======= */
 .btn-register-form {
     width: 100%;
     padding: 12px 16px;
@@ -999,8 +995,8 @@ footer {
     height: 18px;
 }
 
-/* ====================== ИКОНКА ГЛАЗА ====================== */
-.password-toggle {
+/* ======= ИКОНКА ГЛАЗА ======= */
+.auth-card .password-toggle {
     position: absolute;
     right: 12px;
     top: 50%;
@@ -1016,7 +1012,7 @@ footer {
     transition: all 0.3s;
 }
 
-.password-toggle:hover {
+.auth-card .password-toggle:hover {
     color: #3b82f6;
     transform: translateY(-50%) scale(1.1);
 }
@@ -1035,7 +1031,7 @@ footer {
     padding-right: 45px;
 }
 
-/* ====================== АДАПТИВНОСТЬ ДЛЯ ФОРМ ====================== */
+/* ======= АДАПТИВНОСТЬ ДЛЯ ФОРМ ======= */
 @media (max-width: 768px) {
     .auth-form {
         padding: 25px;
@@ -1092,7 +1088,7 @@ footer {
     }
 }
 
-/* ====================== ВОССТАНОВЛЕНИЕ ХЕДЕРА ====================== */
+/* ======= ВОССТАНОВЛЕНИЕ ХЕДЕРА ======= */
 .header-right .btn-register {
     padding: 10px 20px;
     background: linear-gradient(135deg, #3b82f6, #6366f1);
@@ -1114,7 +1110,7 @@ footer {
     box-shadow: 0 6px 8px rgba(59, 130, 246, 0.3);
 }
 
-/* ====================== ОСНОВНЫЕ СТИЛИ ====================== */
+/* ======= ОСНОВНЫЕ СТИЛИ ======= */
 .profile-container {
     max-width: 800px;
     margin: 40px auto;
@@ -1145,7 +1141,7 @@ footer {
     border-radius: 3px;
 }
 
-/* ====================== ФОРМЫ ====================== */
+/* ======= ФОРМЫ ======= */
 .profile-form {
     display: grid;
     gap: 25px;
@@ -1177,7 +1173,7 @@ footer {
     outline: none;
 }
 
-/* ====================== АВАТАР ====================== */
+/* ======= АВАТАР ======= */
 .avatar-editor {
     display: flex;
     flex-direction: column;
@@ -1242,7 +1238,7 @@ footer {
     box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
 }
 
-/* ====================== КНОПКИ ====================== */
+/* ======= КНОПКИ ======= */
 .submit-btn {
     padding: 14px 30px;
     background: linear-gradient(135deg, #10b981, #059669);
@@ -1262,8 +1258,8 @@ footer {
     box-shadow: 0 8px 20px rgba(5, 150, 105, 0.4);
 }
 
-/* ====================== ЛИЧНЫЙ КАБИНЕТ ====================== */
-.dashboard-summary {
+/* ======= ЛИЧНЫЙ КАБИНЕТ ======= */
+.account-content .dashboard-summary {
     margin-bottom: 30px;
     padding: 25px;
     background: white;
@@ -1271,7 +1267,7 @@ footer {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.summary-text {
+.account-content .summary-text {
     font-size: 1.1rem;
     color: #475569;
     margin-bottom: 20px;
@@ -1324,7 +1320,7 @@ footer {
     border-bottom: 2px solid #e2e8f0;
 }
 
-/* ====================== ЗАКАЗЫ ====================== */
+/* ======= ЗАКАЗЫ ======= */
 .order-history {
     display: grid;
     gap: 20px;
@@ -1426,7 +1422,7 @@ footer {
     box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
 }
 
-/* ====================== УВЕДОМЛЕНИЯ ====================== */
+/* ======= УВЕДОМЛЕНИЯ ======= */
 .notifications-list {
     background: white;
     border-radius: 14px;
@@ -1481,7 +1477,7 @@ footer {
     color: #3b82f6;
 }
 
-/* ====================== ИКОНКИ ====================== */
+/* ======= ИКОНКИ ======= */
 .icon {
     width: 18px;
     height: 18px;
@@ -1502,7 +1498,7 @@ footer {
     margin-bottom: 15px;
 }
 
-/* ====================== ЭЛЕМЕНТЫ ИНТЕРФЕЙСА ====================== */
+/* ======= ЭЛЕМЕНТЫ ИНТЕРФЕЙСА ======= */
 .empty-section {
     text-align: center;
     padding: 40px 20px;
@@ -1527,7 +1523,7 @@ footer {
     margin-left: 8px;
 }
 
-/* ====================== АНИМАЦИИ ====================== */
+/* ======= АНИМАЦИИ ======= */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -1537,7 +1533,7 @@ footer {
     animation: fadeIn 0.4s ease-out;
 }
 
-/* ====================== АДАПТИВНОСТЬ ====================== */
+/* ======= АДАПТИВНОСТЬ ======= */
 @media (max-width: 768px) {
     .profile-container {
         padding: 20px;
@@ -1577,7 +1573,7 @@ footer {
         padding: 16px;
     }
 }
-/* ====================== ЛИЧНЫЙ КАБИНЕТ - ПРЕМИУМ ДИЗАЙН ====================== */
+/* ======= ЛИЧНЫЙ КАБИНЕТ — ПРЕМИУМ ДИЗАЙН ======= */
 .account-container {
     display: grid;
     grid-template-columns: 300px 1fr;
@@ -1588,13 +1584,13 @@ footer {
     animation: slideFadeIn 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* Анимация появления */
+/* ======= АНИМАЦИЯ ПОЯВЛЕНИЯ ======= */
 @keyframes slideFadeIn {
     0% { opacity: 0; transform: translateY(30px); }
     100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Боковая панель - изысканный стиль */
+/* ======= БОКОВАЯ ПАНЕЛЬ ======= */
 .account-sidebar {
     background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
     border-radius: 20px;
@@ -1616,7 +1612,7 @@ footer {
     transform: translateY(-7px);
 }
 
-/* Профиль пользователя */
+/* ======= ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ ======= */
 .user-profile {
     text-align: center;
     padding-bottom: 25px;
@@ -1689,7 +1685,7 @@ footer {
     box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
 }
 
-/* Меню - элегантное */
+/* ======= МЕНЮ ======= */
 .account-menu {
     list-style: none;
     padding: 0;
@@ -1787,7 +1783,7 @@ footer {
     100% { transform: scale(1); }
 }
 
-/* Основной контент - роскошный дизайн */
+/* ======= ОСНОВНОЙ КОНТЕНТ ======= */
 .account-content {
     background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
     border-radius: 24px;
@@ -1825,7 +1821,7 @@ footer {
     box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
-/* Статистика - элегантные карточки */
+/* ======= СТАТИСТИКА ======= */
 .dashboard-summary {
     margin-bottom: 45px;
     text-align: center;
@@ -1842,8 +1838,8 @@ footer {
     position: relative;
 }
 
-.summary-text::before,
-.summary-text::after {
+.account-content .summary-text::before,
+.account-content .summary-text::after {
     content: "❝";
     display: inline-block;
     font-size: 2rem;
@@ -1853,14 +1849,14 @@ footer {
     margin: 0 8px;
 }
 
-.stats-grid {
+.account-content .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 30px;
     margin-top: 40px;
 }
 
-.stat-card {
+.account-content .stat-card {
     background: rgba(255, 255, 255, 0.7);
     border-radius: 20px;
     padding: 30px 25px;
@@ -1873,7 +1869,7 @@ footer {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
 }
 
-.stat-card::before {
+.account-content .stat-card::before {
     content: '';
     position: absolute;
     top: 0;
@@ -1884,13 +1880,13 @@ footer {
     border-radius: 5px 5px 0 0;
 }
 
-.stat-card:hover {
+.account-content .stat-card:hover {
     transform: translateY(-12px) rotate(1deg);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
     border: 1px solid rgba(203, 213, 225, 0.2);
 }
 
-.stat-value {
+.account-content .stat-value {
     font-size: 3rem;
     font-weight: 800;
     color: #1e40af;
@@ -1904,21 +1900,21 @@ footer {
     text-shadow: 0 2px 4px rgba(30, 64, 175, 0.15);
 }
 
-.stat-label {
+.account-content .stat-label {
     font-size: 1.1rem;
     color: #64748b;
     font-weight: 600;
     letter-spacing: 0.5px;
 }
 
-/* Секции */
-.dashboard-section {
+/* ======= СЕКЦИИ ======= */
+.account-content .dashboard-section {
     margin-bottom: 50px;
     padding: 30px 0;
     border-top: 1px solid rgba(226, 232, 240, 0.5);
 }
 
-.section-subtitle {
+.account-content .section-subtitle {
     font-size: 1.6rem;
     color: #1e293b;
     margin-top: 0;
@@ -1931,7 +1927,7 @@ footer {
     gap: 15px;
 }
 
-.section-subtitle::before {
+.account-content .section-subtitle::before {
     content: '';
     display: block;
     width: 8px;
@@ -1940,13 +1936,13 @@ footer {
     border-radius: 4px;
 }
 
-/* Заказы - дизайн премиум класса */
-.order-history {
+/* ======= ЗАКАЗЫ (ПРЕМИУМ) ======= */
+.account-content .order-history {
     display: grid;
     gap: 30px;
 }
 
-.order-card {
+.account-content .order-card {
     background: rgba(255, 255, 255, 0.75);
     border-radius: 20px;
     padding: 30px;
@@ -1958,7 +1954,7 @@ footer {
     overflow: hidden;
 }
 
-.order-card::before {
+.account-content .order-card::before {
     content: '';
     position: absolute;
     top: 0;
@@ -1971,17 +1967,17 @@ footer {
     transform-origin: top;
 }
 
-.order-card:hover {
+.account-content .order-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(203, 213, 225, 0.2);
 }
 
-.order-card:hover::before {
+.account-content .order-card:hover::before {
     transform: scaleY(1);
 }
 
-.order-header {
+.account-content .order-header {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -1990,7 +1986,7 @@ footer {
     align-items: center;
 }
 
-.order-id {
+.account-content .order-id {
     font-weight: 800;
     color: #1e293b;
     font-size: 1.25rem;
@@ -1999,12 +1995,12 @@ footer {
     gap: 10px;
 }
 
-.order-id::before {
+.account-content .order-id::before {
     content: '🆔';
     font-size: 1.1em;
 }
 
-.order-date {
+.account-content .order-date {
     color: #64748b;
     font-size: 1rem;
     display: flex;
@@ -2012,11 +2008,11 @@ footer {
     gap: 8px;
 }
 
-.order-date::before {
+.account-content .order-date::before {
     content: '📅';
 }
 
-.order-status {
+.account-content .order-status {
     padding: 8px 20px;
     border-radius: 25px;
     font-weight: 700;
@@ -2040,14 +2036,14 @@ footer {
     color: #b91c1c;
 }
 
-.order-details {
+.account-content .order-details {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 30px;
     margin-top: 25px;
 }
 
-.detail-item {
+.account-content .detail-item {
     background: rgba(248, 250, 252, 0.5);
     border-radius: 15px;
     padding: 20px;
@@ -2056,13 +2052,13 @@ footer {
     transition: all 0.4s;
 }
 
-.detail-item:hover {
+.account-content .detail-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(203, 213, 225, 0.4);
 }
 
-.detail-item strong {
+.account-content .detail-item strong {
     display: block;
     color: #64748b;
     font-size: 1rem;
@@ -2070,13 +2066,13 @@ footer {
     font-weight: 600;
 }
 
-.detail-item span {
+.account-content .detail-item span {
     font-weight: 700;
     color: #1e293b;
     font-size: 1.15rem;
 }
 
-.btn-view-order {
+.account-content .btn-view-order {
     display: inline-flex;
     align-items: center;
     gap: 12px;
@@ -2097,7 +2093,7 @@ footer {
     z-index: 1;
 }
 
-.btn-view-order::before {
+.account-content .btn-view-order::before {
     content: '';
     position: absolute;
     top: 0;
@@ -2109,30 +2105,30 @@ footer {
     z-index: -1;
 }
 
-.btn-view-order:hover {
+.account-content .btn-view-order:hover {
     transform: translateY(-5px);
     box-shadow:
         0 10px 25px rgba(59, 130, 246, 0.4),
         0 0 0 1px rgba(37, 99, 235, 0.4);
 }
 
-.btn-view-order:hover::before {
+.account-content .btn-view-order:hover::before {
     width: 100%;
 }
 
-.btn-view-order .icon {
+.account-content .btn-view-order .icon {
     width: 20px;
     height: 20px;
     stroke-width: 2.5;
     transition: transform 0.4s;
 }
 
-.btn-view-order:hover .icon {
+.account-content .btn-view-order:hover .icon {
     transform: translateX(5px);
 }
 
-/* Уведомления - роскошный дизайн */
-.notifications-list {
+/* ======= УВЕДОМЛЕНИЯ (ПРЕМИУМ) ======= */
+.account-content .notifications-list {
     background: rgba(255, 255, 255, 0.7);
     border-radius: 20px;
     overflow: hidden;
@@ -2141,7 +2137,7 @@ footer {
     border: 1px solid rgba(226, 232, 240, 0.4);
 }
 
-.notification-item {
+.account-content .notification-item {
     display: flex;
     padding: 25px 35px;
     border-bottom: 1px solid rgba(241, 245, 249, 0.7);
@@ -2150,18 +2146,18 @@ footer {
     background: rgba(255, 255, 255, 0.5);
 }
 
-.notification-item:hover {
+.account-content .notification-item:hover {
     background: rgba(248, 250, 252, 0.8);
     transform: translateX(5px);
 }
 
-.notification-item.unread {
+.account-content .notification-item.unread {
     background: rgba(240, 249, 255, 0.7);
     border-left: 5px solid #3b82f6;
     position: relative;
 }
 
-.notification-item.unread::before {
+.account-content .notification-item.unread::before {
     content: '';
     position: absolute;
     top: 0;
@@ -2171,11 +2167,11 @@ footer {
     background: linear-gradient(180deg, #3b82f6, #60a5fa);
 }
 
-.notification-content {
+.account-content .notification-content {
     flex: 1;
 }
 
-.notification-message {
+.account-content .notification-message {
     margin: 0 0 12px 0;
     font-size: 1.15rem;
     color: #1e293b;
@@ -2184,7 +2180,7 @@ footer {
     padding-left: 25px;
 }
 
-.notification-message::before {
+.account-content .notification-message::before {
     content: '💬';
     position: absolute;
     left: 0;
@@ -2192,7 +2188,7 @@ footer {
     font-size: 1.2em;
 }
 
-.notification-time {
+.account-content .notification-time {
     color: #64748b;
     font-size: 0.95rem;
     display: flex;
@@ -2201,7 +2197,7 @@ footer {
     padding-left: 25px;
 }
 
-.mark-as-read {
+.account-content .mark-as-read {
     background: rgba(224, 242, 254, 0.5);
     border: none;
     cursor: pointer;
@@ -2215,20 +2211,20 @@ footer {
     box-shadow: 0 3px 10px rgba(59, 130, 246, 0.15);
 }
 
-.mark-as-read:hover {
+.account-content .mark-as-read:hover {
     background: #3b82f6;
     color: white;
     transform: scale(1.1) rotate(5deg);
     box-shadow: 0 5px 15px rgba(59, 130, 246, 0.25);
 }
 
-.mark-as-read .icon {
+.account-content .mark-as-read .icon {
     width: 24px;
     height: 24px;
 }
 
-/* Пустые состояния */
-.empty-section {
+/* ======= ПУСТЫЕ СОСТОЯНИЯ ======= */
+.account-content .empty-section {
     text-align: center;
     padding: 60px 40px;
     background: rgba(255, 255, 255, 0.7);
@@ -2241,7 +2237,7 @@ footer {
     border: 1px dashed #cbd5e1;
 }
 
-.empty-icon {
+.account-content .empty-icon {
     width: 80px;
     height: 80px;
     color: #cbd5e1;
@@ -2257,8 +2253,8 @@ footer {
     100% { transform: translateY(0); }
 }
 
-/* Анимации элементов */
-.order-card, .notification-item, .stat-card, .detail-item {
+/* ======= АНИМАЦИИ ЭЛЕМЕНТОВ ======= */
+.account-content .order-card, .account-content .notification-item, .account-content .stat-card, .account-content .detail-item {
     animation: fadeSlideIn 0.7s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -2267,7 +2263,7 @@ footer {
     100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Адаптивность */
+/* ======= АДАПТИВНОСТЬ ======= */
 @media (max-width: 1200px) {
     .account-container {
         grid-template-columns: 260px 1fr;
@@ -2363,7 +2359,7 @@ footer {
         padding: 14px 18px;
     }
 }
-/* ====================== СТРАНИЦА УВЕДОМЛЕНИЙ ====================== */
+/* ======= СТРАНИЦА УВЕДОМЛЕНИЙ ======= */
 .notifications-container {
     max-width: 900px;
     margin: 60px auto;
@@ -2436,7 +2432,7 @@ footer {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Список уведомлений */
+/* ======= СПИСОК УВЕДОМЛЕНИЙ ======= */
 .notifications-list {
     background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
     border-radius: 24px;
@@ -2533,7 +2529,7 @@ footer {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* Типы уведомлений */
+/* ======= ТИПЫ УВЕДОМЛЕНИЙ ======= */
 .notification-type-system .notification-icon {
     background: linear-gradient(135deg, #dbeafe, #e0f2fe);
     color: #1d4ed8;
@@ -2554,7 +2550,7 @@ footer {
     color: #b91c1c;
 }
 
-/* Пустое состояние */
+/* ======= ПУСТОЕ СОСТОЯНИЕ ======= */
 .notifications-empty {
     text-align: center;
     padding: 80px 40px;
@@ -2596,7 +2592,7 @@ footer {
     line-height: 1.7;
 }
 
-/* Анимации */
+/* ======= АНИМАЦИИ ======= */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -2606,7 +2602,7 @@ footer {
     animation: fadeIn 0.5s ease-out;
 }
 
-/* Адаптивность */
+/* ======= АДАПТИВНОСТЬ ======= */
 @media (max-width: 768px) {
     .notifications-container {
         margin: 40px auto;
@@ -2658,7 +2654,7 @@ footer {
         font-size: 1.6rem;
     }
 }
-/* ====================== ИСТОРИЯ ЗАКАЗОВ - ПРЕМИУМ ДИЗАЙН ====================== */
+/* ======= ИСТОРИЯ ЗАКАЗОВ — ПРЕМИУМ ДИЗАЙН ======= */
 .orders-container {
     max-width: 800px;
     margin: 50px auto;
@@ -2728,7 +2724,7 @@ footer {
         transform: translateY(0);
     }
 }
-/* ====================== ОБЩИЕ СТИЛИ ДЛЯ ЗАКАЗОВ ====================== */
+/* ======= ОБЩИЕ СТИЛИ ДЛЯ ЗАКАЗОВ ======= */
 .orders-container, .order-detail-container {
     max-width: 1200px;
     margin: 50px auto;
@@ -2749,7 +2745,7 @@ footer {
     border-bottom: 2px solid #e2e8f0;
 }
 
-/* ====================== ДЕТАЛИ ЗАКАЗА ====================== */
+/* ======= ДЕТАЛИ ЗАКАЗА ======= */
 .order-header {
     position: relative;
     text-align: center;
@@ -2788,7 +2784,7 @@ footer {
     margin-top: 15px;
 }
 
-/* Сетка с деталями заказа */
+/* ======= СЕТКА ДЕТАЛЕЙ ЗАКАЗА ======= */
 .order-detail-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -2837,7 +2833,7 @@ footer {
     font-weight: 500;
 }
 
-/* Товары в заказе */
+/* ======= ТОВАРЫ В ЗАКАЗЕ ======= */
 .order-items-card {
     background: #f8fafc;
     border-radius: 12px;
@@ -2931,7 +2927,7 @@ footer {
     margin-top: 5px;
 }
 
-/* Кнопки действий */
+/* ======= КНОПКИ ДЕЙСТВИЙ ======= */
 .order-actions {
     display: flex;
     justify-content: center;
@@ -2970,7 +2966,7 @@ footer {
     border-color: #fecaca;
 }
 
-/* ====================== АДАПТИВНОСТЬ ====================== */
+/* ======= АДАПТИВНОСТЬ ======= */
 @media (max-width: 768px) {
     .order-detail-container {
         padding: 20px;
@@ -3038,7 +3034,7 @@ footer {
     }
 }
 
-/* ====================== СТИЛИ СТАТУСОВ (ОБЩИЕ) ====================== */
+/* ======= СТИЛИ СТАТУСОВ (ОБЩИЕ) ======= */
 .status-badge, .order-status-badge {
     display: inline-block;
     padding: 6px 14px;
@@ -3070,7 +3066,7 @@ footer {
     color: #ef4444;
 }
 
-/* ====================== АНИМАЦИИ ====================== */
+/* ======= АНИМАЦИИ ======= */
 @keyframes slideFadeIn {
     0% { opacity: 0; transform: translateY(30px); }
     100% { opacity: 1; transform: translateY(0); }
@@ -3085,7 +3081,7 @@ footer {
 .status-updating {
     animation: pulseGlow 1.5s infinite;
 }
-/* ====================== ПРЕМИУМ ПАГИНАЦИЯ ====================== */
+/* ======= ПРЕМИУМ-ПАГИНАЦИЯ ======= */
 .pagination-wrapper {
     display: flex;
     justify-content: center;
@@ -3140,7 +3136,7 @@ footer {
     cursor: not-allowed;
 }
 
-/* Анимация активной кнопки */
+/* ======= АНИМАЦИЯ АКТИВНОЙ КНОПКИ ======= */
 @keyframes pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.05); }
@@ -3151,7 +3147,7 @@ footer {
     animation: pulse 0.5s ease;
 }
 
-/* ================= ADMIN AUTH FORM ================= */
+/* ======= ФОРМА ВХОДА АДМИНИСТРАТОРА ======= */
 .admin-auth-container {
     min-height: 100vh;
     display: flex;
@@ -3356,51 +3352,7 @@ footer {
     width: 16px;
     height: 16px;
 }
-/* ========== Показать/скрыть пароль ========== */
-.password-toggle {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #64748b;
-    transition: all 0.3s;
-    z-index: 10;
-    background: none;
-    border: none;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.password-toggle:hover {
-    color: #3b82f6;
-    transform: translateY(-50%) scale(1.1);
-}
-
-.password-toggle svg {
-    width: 20px;
-    height: 20px;
-}
-
-/* Анимация переключения */
-.password-toggle .eye-open {
-    display: block;
-}
-
-.password-toggle .eye-closed {
-    display: none;
-}
-
-.password-toggle.active .eye-open {
-    display: none;
-}
-
-.password-toggle.active .eye-closed {
-    display: block;
-}
-/* ========== Показать/скрыть пароль ========== */
+/* ======= ПОКАЗАТЬ/СКРЫТЬ ПАРОЛЬ ======= */
 .password-toggle {
     position: absolute;
     right: 15px;
@@ -3427,17 +3379,17 @@ footer {
     transform: translateY(-50%) scale(1.1);
 }
 
-.password-toggle.active {
+.auth-card .password-toggle.active {
     color: #3b82f6;
 }
 
-.password-toggle .eye-icon {
+.auth-card .password-toggle .eye-icon {
     width: 20px;
     height: 20px;
     transition: all 0.3s;
 }
 
-.password-toggle.active .eye-icon {
+.auth-card .password-toggle.active .eye-icon {
     animation: blink 0.5s ease;
 }
 
@@ -3446,11 +3398,11 @@ footer {
     50% { transform: scaleY(0.1); }
 }
 
-/* Для тёмной темы */
-.dark .password-toggle:hover {
+/* ======= ТЕМНАЯ ТЕМА ======= */
+.dark .auth-card .password-toggle:hover {
     background-color: #1e293b;
 }
-/* ========== ФОРМА ВЫХОДА ========== */
+/* ======= ФОРМА ВЫХОДА ======= */
 .logout-form {
     display: inline-block;
 }
@@ -3485,12 +3437,12 @@ footer {
     transform: translateX(3px);
 }
 
-/* Для темной темы */
+/* ======= ТЕМНАЯ ТЕМА ======= */
 .dark .logout-btn:hover {
     background: #334155;
 }
 
-/* ========== ФОРМА ВЫХОДА АНИМИРОВАННЫЙ ВЫХОД ========== */
+/* ======= ФОРМА ВЫХОДА (АНИМИРОВАННЫЙ ВЫХОД) ======= */
 .admin-body {
     transition: opacity 0.5s ease;
 }
@@ -3516,7 +3468,7 @@ footer {
     white-space: nowrap;
     font-size: 0.8rem;
 }
-/* ========== ИНФОРМАЦИЯ АДМИНИСТРАТОРА ========== */
+/* ======= ИНФОРМАЦИЯ АДМИНИСТРАТОРА ======= */
 .admin-info {
     display: flex;
     align-items: center;
@@ -3576,7 +3528,7 @@ footer {
     margin-top: 2px;
 }
 
-/* Анимация при наведении */
+/* ======= АНИМАЦИЯ ПРИ НАВЕДЕНИИ ======= */
 .admin-info:hover .admin-name {
     color: #3b82f6;
 }
@@ -3586,7 +3538,7 @@ footer {
     transition: transform 0.3s ease;
 }
 
-/* Индикатор онлайн статуса */
+/* ======= ИНДИКАТОР ОНЛАЙН-СТАТУСА ======= */
 .admin-avatar::after {
     content: '';
     position: absolute;
@@ -3600,7 +3552,7 @@ footer {
     box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.5);
 }
 
-/* Для темной темы */
+/* ======= ТЕМНАЯ ТЕМА ======= */
 .dark .admin-info:hover {
     background: #334155;
 }
@@ -3613,7 +3565,7 @@ footer {
     color: #94a3b8;
 }
 
-/* Адаптивность */
+/* ======= АДАПТИВНОСТЬ ======= */
 @media (max-width: 768px) {
     .admin-details {
         display: none;
@@ -3623,7 +3575,7 @@ footer {
         padding: 5px;
     }
 }
-/* ========== DASHBOARD STYLES ========== */
+/* ======= СТИЛИ ПАНЕЛИ УПРАВЛЕНИЯ ======= */
 .dashboard-container {
     max-width: 1400px;
     margin: 0 auto;
@@ -3831,7 +3783,7 @@ footer {
     align-items: center;
     gap: 5px;
 }
-/* ========== СТИЛЬ НОВИНКА ДЛЯ ДОБАВЛЕННОГО ТОВАРА ========== */
+/* ======= СТИЛЬ «НОВИНКА» ДЛЯ ДОБАВЛЕННОГО ТОВАРА ======= */
 .badge-new {
     position: absolute;
     top: 10px;
@@ -3844,7 +3796,7 @@ footer {
     border-radius: 4px;
     z-index: 1;
 }
-/* ====================== PREMIUM PRODUCT  SHOW PAGE ====================== */
+/* ======= СТРАНИЦА ТОВАРА (ПРЕМИУМ) ======= */
 .product-page {
     max-width: 1200px;
     margin: 0 auto;
@@ -3874,7 +3826,7 @@ footer {
     border-radius: 4px;
 }
 
-/* Контейнер для изображений */
+/* ======= КОНТЕЙНЕР ДЛЯ ИЗОБРАЖЕНИЙ ======= */
 .product-page .product-images {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -3882,7 +3834,7 @@ footer {
     margin-bottom: 40px;
 }
 
-/* Основное изображение */
+/* ======= ОСНОВНОЕ ИЗОБРАЖЕНИЕ ======= */
 .product-page .main-image-container {
     background: #f8fafc;
     border-radius: 16px;
@@ -3906,7 +3858,7 @@ footer {
     transform: scale(1.03);
 }
 
-/* Галерея */
+/* ======= ГАЛЕРЕЯ ======= */
 .product-page .product-gallery-container {
     background: #f1f5f9;
     border-radius: 16px;
@@ -3972,7 +3924,7 @@ footer {
     transform: translateY(-5px);
 }
 
-/* Информация о продукте */
+/* ======= ИНФОРМАЦИЯ О ТОВАРЕ ======= */
 .product-page .product-info {
     background: #f8fafc;
     border-radius: 16px;
@@ -4012,7 +3964,7 @@ footer {
     color: #3b82f6;
 }
 
-/* Цена и кнопка */
+/* ======= ЦЕНА И КНОПКА ======= */
 .product-page .product-price-section {
     display: flex;
     justify-content: space-between;
@@ -4083,7 +4035,7 @@ footer {
     background: white;
 }
 
-/* Большая кнопка добавления в корзину */
+/* ======= БОЛЬШАЯ КНОПКА «В КОРЗИНУ» ======= */
 .product-page .btn-add-to-cart {
     --blue-light: #3b82f6;
     --blue-dark: #2563eb;
@@ -4145,7 +4097,7 @@ footer {
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Анимации для иконки */
+/* ======= АНИМАЦИИ ДЛЯ ИКОНКИ ======= */
 @keyframes cartBounce {
     0% { transform: translateY(0); }
     30% { transform: translateY(-8px); }
@@ -4157,7 +4109,7 @@ footer {
     animation: cartBounce 0.6s ease;
 }
 
-/* Адаптивность */
+/* ======= АДАПТИВНОСТЬ ======= */
 @media (max-width: 1200px) {
     .product-page .main-image-container {
         height: 450px;
@@ -4251,7 +4203,7 @@ footer {
         padding: 15px;
     }
 }
-/* ====================== REVIEWS SECTION ====================== */
+/* ======= СЕКЦИЯ ОТЗЫВОВ ======= */
 .product-reviews {
     background: #f8fafc;
     border-radius: 16px;
@@ -4319,7 +4271,7 @@ footer {
     text-align: right;
 }
 
-/* Review form */
+/* ======= ФОРМА ОТЗЫВА ======= */
 .review-form {
     background: #f8fafc;
     border-radius: 16px;
@@ -4399,7 +4351,7 @@ footer {
         0 0 0 4px var(--green-light);
 }
 
-/* Messages */
+/* ======= СООБЩЕНИЯ ======= */
 .review-form > div {
     padding: 15px;
     border-radius: 10px;
@@ -4422,7 +4374,7 @@ footer {
     border: 1px solid #fecaca;
 }
 
-/* Login prompt */
+/* ======= БЛОК АВТОРИЗАЦИИ ======= */
 .product-page > p {
     text-align: center;
     margin-top: 30px;
@@ -4441,7 +4393,7 @@ footer {
     text-decoration: underline;
 }
 
-/* Responsive */
+/* ======= АДАПТИВНОСТЬ ======= */
 @media (max-width: 768px) {
     .product-reviews,
     .review-form {
@@ -4462,9 +4414,9 @@ footer {
         padding: 15px;
     }
 }
-/* ===== CART CHECKOUT STYLES ===== */
+/* ======= СТИЛИ ОФОРМЛЕНИЯ ЗАКАЗА ======= */
 :root {
-    /* Цветовая схема */
+    /* ======= ЦВЕТОВАЯ СХЕМА ======= */
     --primary: #4361ee;
     --primary-dark: #3a56d4;
     --secondary: #f72585;
@@ -4476,12 +4428,12 @@ footer {
     --light-gray: #e9ecef;
     --border: #dee2e6;
 
-    /* Тени */
+    /* ======= ТЕНИ ======= */
     --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
     --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
     --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
 
-    /* Переходы */
+    /* ======= ПЕРЕХОДЫ ======= */
     --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -4649,7 +4601,7 @@ footer {
     transform: translateY(-1px);
 }
 
-/* Адаптивность */
+/* ======= АДАПТИВНОСТЬ ======= */
 @media (max-width: 768px) {
     .premium-checkout {
         padding: 1.5rem;
@@ -4683,7 +4635,7 @@ footer {
     }
 }
 
-/* ====================== AUTH INPUT ICON FIX ====================== */
+/* ======= ИСПРАВЛЕНИЕ ИКОНОК В ПОЛЯХ АВТОРИЗАЦИИ ======= */
 .auth-form .input-with-icon {
     position: relative;
 }
@@ -4724,7 +4676,7 @@ footer {
     display: block;
 }
 
-/* Более строгий фикс для форм авторизации (frontend + admin) */
+/* ======= УСИЛЕННЫЙ ФИКС ДЛЯ ФОРМ АВТОРИЗАЦИИ (ФРОНТЕНД + АДМИНКА) ======= */
 .auth-form .input-with-icon > .form-control,
 .auth-card .input-with-icon > .form-control {
     padding-left: 46px !important;
@@ -4742,7 +4694,7 @@ footer {
     height: 18px !important;
 }
 
-/* Жесткая фиксация отступов именно для полей с with-icon */
+/* ======= ЖЕСТКАЯ ФИКСАЦИЯ ОТСТУПОВ ДЛЯ ПОЛЕЙ С ИКОНКОЙ ======= */
 .auth-form input.form-control.with-icon,
 .auth-card input.form-control.with-icon {
     padding: 12px 14px 12px 46px !important;

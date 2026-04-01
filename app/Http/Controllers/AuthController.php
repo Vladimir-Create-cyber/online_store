@@ -11,9 +11,7 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
     /**
-     * Показать форму входа в систему.
-     *
-     * @return \Illuminate\View\View
+     * Отображает форму входа.
      */
     public function showLoginForm()
     {
@@ -22,37 +20,29 @@ class AuthController extends Controller
     }
 
     /**
-     * Обработка отправки формы входа.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * Выполняет вход пользователя.
      */
     public function login(Request $request)
     {
-        // Валидация данных
         $credentials = $request->validate([
             'email'    => 'required|email',
             'password' => 'required',
         ]);
 
-        // Получаем пользователя по email
         $user = \App\Models\User::where('email', $credentials['email'])->first();
 
-        // Проверяем, заблокирован ли
         if ($user && $user->is_blocked) {
             return back()->withErrors([
                 'email' => 'Ваш аккаунт заблокирован администрацией.',
             ])->withInput();
         }
 
-        // Попытка входа
         if ($user && \Hash::check($credentials['password'], $user->password)) {
             Auth::login($user);
             $request->session()->regenerate();
             return redirect()->intended('/');
         }
 
-        // Ошибка аутентификации
         return back()->withErrors([
             'email' => 'Неверные данные для входа.',
         ])->withInput();
@@ -60,9 +50,7 @@ class AuthController extends Controller
 
 
     /**
-     * Показать форму регистрации пользователя.
-     *
-     * @return \Illuminate\View\View
+     * Отображает форму регистрации.
      */
     public function showRegisterForm()
     {
@@ -71,14 +59,10 @@ class AuthController extends Controller
     }
 
     /**
-     * Обработка регистрации нового пользователя.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * Регистрирует нового пользователя.
      */
     public function register(Request $request)
     {
-        // Валидация входных данных
         $validator = Validator::make($request->all(), [
             'name'     => 'required|string|max:255',
             'email'    => 'required|email|unique:users,email|max:255',
@@ -89,30 +73,24 @@ class AuthController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        // Создание пользователя
         $user = User::create([
             'name'     => $request->input('name'),
             'email'    => $request->input('email'),
             'password' => Hash::make($request->input('password')),
         ]);
 
-        // Автоматический вход
         Auth::login($user);
 
         return redirect()->intended('/');
     }
 
     /**
-     * Выход пользователя из системы.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * Выполняет выход пользователя.
      */
     public function logout(Request $request)
     {
         Auth::logout();
 
-        // Инвалидация сессии и защита от CSRF
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

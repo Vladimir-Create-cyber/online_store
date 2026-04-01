@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Order; // правильный импорт модели
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
+    /**
+     * Отображает список заказов с фильтрацией.
+     */
     public function index(Request $request)
     {
         $query = Order::query()->with('user');
@@ -46,12 +49,18 @@ class OrderController extends Controller
         return view('admin.orders.index', compact('orders'));
     }
 
+    /**
+     * Отображает подробную информацию по заказу.
+     */
     public function show(Order $order)
     {
         $order->load(['user', 'orderItems.product', 'shippingAddress', 'billingAddress']);
         return view('admin.orders.show', compact('order'));
     }
 
+    /**
+     * Обновляет статус заказа и синхронизирует остатки товаров.
+     */
     public function updateStatus(Request $request, Order $order)
     {
         $request->validate([
@@ -67,7 +76,6 @@ class OrderController extends Controller
 
         try {
             DB::transaction(function () use ($order, $oldStatus, $newStatus) {
-                // Возврат товара при отмене
                 if ($newStatus === 'cancelled' && $oldStatus !== 'cancelled') {
                     foreach ($order->orderItems as $item) {
                         if ($item->product) {
@@ -76,7 +84,6 @@ class OrderController extends Controller
                     }
                 }
 
-                // Повторное списание при смене из cancelled обратно
                 if ($oldStatus === 'cancelled' && $newStatus !== 'cancelled') {
                     foreach ($order->orderItems as $item) {
                         $product = $item->product;

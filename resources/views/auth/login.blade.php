@@ -46,7 +46,7 @@
                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                             <circle cx="12" cy="12" r="3"></circle>
                         </svg>
-                    </span> {{-- ✅ Закрывающий тег добавлен --}}
+                    </span>
                 </div>
                 @error('password')
                 <div class="error-message">{{ $message }}</div>

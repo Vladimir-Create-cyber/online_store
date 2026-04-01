@@ -24,7 +24,6 @@
             </div>
         </div>
 
-        {{-- Форма смены статуса --}}
         <div class="status-form-container">
             <form action="{{ route('admin.orders.updateStatus', $order) }}" method="POST" class="status-form">
                 @csrf
@@ -93,7 +92,6 @@
             </a>
         </div>
 
-        {{-- Вывод сообщений об успехе --}}
         @if(session('success'))
             <div class="alert alert-success">
                 <i class="alert-icon fas fa-check-circle"></i>

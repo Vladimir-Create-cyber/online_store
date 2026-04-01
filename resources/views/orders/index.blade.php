@@ -52,7 +52,7 @@
 
             @if($orders->hasPages())
                 <div class="pagination-wrapper">
-                    {{ $orders->links() }} <!-- Исправлено: удалён кастомный шаблон пагинации -->
+                    {{ $orders->links() }}
                 </div>
             @endif
         @else
@@ -65,13 +65,11 @@
             </div>
         @endif
 
-        <!-- Блок уведомлений -->
         <div class="dashboard-section">
             <h3 class="section-subtitle">Последние уведомления</h3>
 
             <div class="notifications-list">
                 @php
-                    // Если переменная $notifications не передана, используем пустую коллекцию
                     $notifications = $notifications ?? collect();
                 @endphp
 

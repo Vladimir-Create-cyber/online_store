@@ -17,7 +17,7 @@ class OrderController extends Controller
     use HandlesUnreadNotifications;
 
     /**
-     * Вывод списка заказов текущего пользователя.
+     * Отображает список заказов текущего пользователя.
      */
     public function index()
     {
@@ -37,7 +37,7 @@ class OrderController extends Controller
     }
 
     /**
-     * Создание нового заказа из корзины.
+     * Создаёт новый заказ на основе корзины пользователя.
      */
     public function store(Request $request)
     {
@@ -45,7 +45,6 @@ class OrderController extends Controller
             return redirect()->route('login')->with('error', 'Для оформления заказа необходимо войти.');
         }
 
-        // Валидация формы заказа
         $validated = $request->validate([
             'full_name'       => 'required|string|max:255',
             'phone'           => 'required|string|max:20',
@@ -59,26 +58,21 @@ class OrderController extends Controller
 
         $user = Auth::user();
 
-        // Получаем все товары в корзине пользователя
         $cartItems = CartItem::with('product')->where('user_id', $user->id)->get();
 
         if ($cartItems->isEmpty()) {
             return redirect()->route('cart.index')->with('error', 'Корзина пуста.');
         }
 
-        // Проверка наличия и достаточного количества товара
         $unavailable = $cartItems->filter(fn($item) => !$item->product || $item->product->stock < $item->quantity);
         if ($unavailable->isNotEmpty()) {
             return redirect()->route('cart.index')->with('error', 'Некоторые товары недоступны.');
         }
 
-        // Расчёт общей суммы заказа
         $total = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
 
         try {
-            // Транзакция сохранения заказа
             $order = DB::transaction(function () use ($user, $validated, $total, $cartItems) {
-                // Создание записи заказа
                 $order = Order::create([
                     'user_id'          => $user->id,
                     'total'            => $total,
@@ -93,7 +87,6 @@ class OrderController extends Controller
                     'status'           => 'pending',
                 ]);
 
-                // Сохранение товаров заказа
                 foreach ($cartItems as $item) {
                     OrderItem::create([
                         'order_id'   => $order->id,
@@ -105,10 +98,8 @@ class OrderController extends Controller
                     $item->product->decrement('stock', $item->quantity);
                 }
 
-                // Очистка корзины
                 CartItem::where('user_id', $user->id)->delete();
 
-                // Отправка уведомления (если включена)
                 if (class_exists(\App\Jobs\SendOrderNotification::class)) {
                     \App\Jobs\SendOrderNotification::dispatch($order);
                 }
@@ -125,7 +116,7 @@ class OrderController extends Controller
     }
 
     /**
-     * Просмотр одного заказа.
+     * Отображает детали конкретного заказа.
      */
     public function show($orderId)
     {
@@ -146,12 +137,11 @@ class OrderController extends Controller
     }
 
     /**
-     * Отмена заказа пользователем.
+     * Отменяет заказ пользователя, если это допустимо.
      */
     public function cancel($orderId)
     {
         try {
-            // Проверка: заказ должен быть создан этим пользователем и быть в ожидании
             $order = Order::where('id', $orderId)
                 ->where('user_id', Auth::id())
                 ->where('status', 'pending')

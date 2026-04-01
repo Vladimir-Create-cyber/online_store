@@ -45,7 +45,6 @@
                 @enderror
             </div>
 
-            {{-- Для поля пароля --}}
             <div class="form-group">
                 <label for="password" class="form-label">Пароль</label>
                 <div class="input-with-icon has-eye">
@@ -68,7 +67,6 @@
                 @enderror
             </div>
 
-            {{-- Для подтверждения пароля --}}
             <div class="form-group">
                 <label for="password_confirmation" class="form-label">Подтверждение пароля</label>
                 <div class="input-with-icon has-eye">

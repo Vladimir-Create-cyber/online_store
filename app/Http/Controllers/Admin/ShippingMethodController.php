@@ -9,7 +9,7 @@ use App\Models\ShippingMethod;
 class ShippingMethodController extends Controller
 {
     /**
-     * Показать список всех способов доставки.
+     * Отображает список способов доставки.
      */
     public function index()
     {
@@ -18,7 +18,7 @@ class ShippingMethodController extends Controller
     }
 
     /**
-     * Показать форму создания нового способа доставки.
+     * Отображает форму создания способа доставки.
      */
     public function create()
     {
@@ -26,7 +26,7 @@ class ShippingMethodController extends Controller
     }
 
     /**
-     * Сохранить новый способ доставки в базе данных.
+     * Создаёт новый способ доставки.
      */
     public function store(Request $request)
     {
@@ -43,9 +43,8 @@ class ShippingMethodController extends Controller
             ->with('success', 'Способ доставки добавлен.');
     }
 
-
     /**
-     * Показать форму редактирования способа доставки.
+     * Отображает форму редактирования способа доставки.
      */
     public function edit(ShippingMethod $shippingMethod)
     {
@@ -53,7 +52,7 @@ class ShippingMethodController extends Controller
     }
 
     /**
-     * Обновить способ доставки в базе данных.
+     * Обновляет существующий способ доставки.
      */
     public function update(Request $request, ShippingMethod $shippingMethod)
     {
@@ -70,9 +69,8 @@ class ShippingMethodController extends Controller
             ->with('success', 'Способ доставки обновлён.');
     }
 
-
     /**
-     * Удалить способ доставки из базы данных.
+     * Удаляет способ доставки.
      */
     public function destroy(ShippingMethod $shippingMethod)
     {

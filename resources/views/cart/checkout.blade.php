@@ -1,5 +1,3 @@
-{{-- resources/views/cart/checkout.blade.php --}}
-
 @extends('layouts.app')
 
 @section('title', 'Оформление заказа')
@@ -18,7 +16,6 @@
             </div>
         @endif
 
-        {{-- Ваш заказ --}}
         <h2>Ваш заказ</h2>
         <ul>
             @foreach($cart as $item)
@@ -34,7 +31,6 @@
             @endforeach
         </ul>
 
-        {{-- Форма оформления заказа --}}
         <form action="{{ route('cart.complete') }}" method="POST" class="checkout-form">
             @csrf
 

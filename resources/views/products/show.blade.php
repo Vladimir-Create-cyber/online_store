@@ -3,7 +3,6 @@
 @section('content')
     <div class="product-page">
 
-        {{-- Сообщения об успехе или ошибке --}}
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
@@ -154,7 +153,6 @@
     </div>
 
     <script>
-        // Переключение изображений галереи
         document.querySelectorAll('.gallery-item').forEach(item => {
             item.addEventListener('click', function () {
                 document.querySelectorAll('.gallery-item').forEach(el => el.classList.remove('active'));
@@ -164,7 +162,6 @@
             });
         });
 
-        // Управление количеством товара
         const minusBtn = document.querySelector('.quantity-btn.minus');
         const plusBtn = document.querySelector('.quantity-btn.plus');
         const quantityInput = document.querySelector('.quantity-input');

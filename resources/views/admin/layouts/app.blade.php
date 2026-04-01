@@ -3,11 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- Добавлен CSRF-токен -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Панель управления | {{ config('app.name') }}</title>
 
         @vite(['resources/css/admin.css'])
-        <!-- Подключаем только необходимые иконки для оптимизации -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/solid.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css">
 
@@ -16,7 +15,6 @@
     </head>
     <body class="admin-body @if(config('app.debug')) debug @endif">
         <div class="admin-layout">
-            <!-- Сайдбар -->
             <aside class="admin-sidebar">
                 <div class="admin-brand">
                     <i class="fas fa-cogs"></i>
@@ -24,7 +22,6 @@
                 </div>
 
                 <nav class="admin-menu">
-                    <!-- Используем route() для безопасного формирования URL -->
                     <a href="{{ route('admin.dashboard') }}" class="menu-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                         <i class="fas fa-home"></i>
                         <span>Главная</span>
@@ -62,9 +59,6 @@
 
 
 
-                    <!-- Заглушки для будущих разделов -->
-
-
                     <a href="#" class="menu-item disabled">
                         <i class="fas fa-chart-bar"></i>
                         <span>Аналитика</span>
@@ -76,9 +70,7 @@
                 </nav>
             </aside>
 
-            <!-- Контент -->
             <div class="admin-content">
-                <!-- Шапка -->
                 <header class="admin-header">
                     <div class="admin-header-content">
                         <div class="admin-info">
@@ -116,7 +108,6 @@
                     </div>
                 </header>
 
-                <!-- Основная часть -->
                 <main class="admin-main">
                     @yield('content')
                 </main>
@@ -125,7 +116,6 @@
 
         @stack('scripts')
 
-        <!-- Подключаем Chart.js только если он нужен на странице -->
         @stack('chart-scripts')
         @if(request()->routeIs('admin.dashboard'))
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

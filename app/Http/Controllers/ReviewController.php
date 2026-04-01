@@ -9,11 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
+    /**
+     * Создаёт отзыв пользователя для товара.
+     */
     public function store(Request $request, Product $product)
     {
         $user = Auth::user();
 
-        // Проверка: уже оставлял отзыв?
         if ($product->reviews()->where('user_id', $user->id)->exists()) {
             return back()->with('error', 'Вы уже оставили отзыв для этого товара.');
         }
@@ -27,7 +29,7 @@ class ReviewController extends Controller
             'user_id' => $user->id,
             'rating' => $validated['rating'],
             'review' => $validated['review'],
-            'is_approved' => false, // ожидает модерации
+            'is_approved' => false,
         ]);
 
         return back()->with('success', 'Спасибо за отзыв! Он будет опубликован после проверки.');

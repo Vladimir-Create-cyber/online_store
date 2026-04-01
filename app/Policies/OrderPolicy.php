@@ -12,16 +12,14 @@ class OrderPolicy
     use HandlesAuthorization;
 
     /**
-     * Проверка просмотра заказа
+     * Определяет, может ли пользователь просматривать заказ.
      */
     public function view(User $user, Order $order): Response
     {
-        // Проверяем принадлежность заказа пользователю
         if ($user->id === $order->user_id) {
             return Response::allow();
         }
 
-        // Для администраторов разрешаем просмотр любых заказов
         if ($user->isAdmin()) {
             return Response::allow();
         }
@@ -30,16 +28,14 @@ class OrderPolicy
     }
 
     /**
-     * Проверка изменения заказа
+     * Определяет, может ли пользователь изменять заказ.
      */
     public function update(User $user, Order $order): Response
     {
-        // Администраторы могут изменять любые заказы
         if ($user->isAdmin()) {
             return Response::allow();
         }
 
-        // Менеджеры могут изменять только заказы в обработке
         if ($user->hasRole('manager') && $order->status === 'processing') {
             return Response::allow();
         }
@@ -48,16 +44,14 @@ class OrderPolicy
     }
 
     /**
-     * Проверка отмены заказа
+     * Определяет, может ли пользователь отменять заказ.
      */
     public function cancel(User $user, Order $order): Response
     {
-        // Пользователь может отменить только свой заказ в статусе "ожидание"
         if ($user->id === $order->user_id && $order->status === 'pending') {
             return Response::allow();
         }
 
-        // Администраторы и менеджеры могут отменять любые заказы
         if ($user->isAdmin() || $user->hasRole('manager')) {
             return Response::allow();
         }

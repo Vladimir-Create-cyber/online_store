@@ -10,7 +10,6 @@
         <div class="admin-auth-container">
             <div class="auth-card">
                 <div class="auth-logo">
-                    <!-- Замените на путь к вашему лого -->
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3b82f6" width="60" height="60">
                         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
                     </svg>
@@ -21,7 +20,6 @@
                 <form method="POST" action="{{ route('admin.login.submit') }}">
                     @csrf
 
-                    <!-- Email -->
                     <div class="form-group">
                         <label for="email" class="form-label">Адрес электронной почты</label>
                         <div class="input-with-icon">
@@ -43,7 +41,6 @@
                         @enderror
                     </div>
 
-                    <!-- Password -->
                     <div class="form-group">
                         <label for="password" class="form-label">Пароль</label>
                         <div class="input-with-icon has-eye">
@@ -58,7 +55,6 @@
                                 placeholder="••••••••"
                                 required
                             >
-                            <!-- Кнопка показать/скрыть пароль -->
                             <button type="button" class="password-toggle">
                                 <svg class="eye-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -71,7 +67,6 @@
                         @enderror
                     </div>
 
-                    <!-- Remember Me -->
                     <div class="remember-group">
                         <input
                             type="checkbox"
@@ -82,7 +77,6 @@
                         <label for="remember">Запомнить меня</label>
                     </div>
 
-                    <!-- Submit Button -->
                     <button type="submit" class="btn-auth">
                         <svg class="btn-icon" viewBox="0 0 24 24" fill="white">
                             <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
@@ -91,7 +85,6 @@
                     </button>
                 </form>
 
-                <!-- Footer Links -->
                 <div class="auth-footer">
                     <p>© {{ date('Y') }} {{ config('app.name') }}. All rights reserved</p>
 

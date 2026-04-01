@@ -15,7 +15,6 @@
                     <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
-                        {{-- Название --}}
                         <div class="form-group">
                             <label for="name" class="required-field">Название товара</label>
                             <input type="text" name="name" id="name"
@@ -26,7 +25,6 @@
                             @enderror
                         </div>
 
-                        {{-- Цена --}}
                         <div class="form-group">
                             <label for="price" class="required-field">Цена</label>
                             <input type="number" name="price" id="price"
@@ -37,7 +35,6 @@
                             @enderror
                         </div>
 
-                        {{-- Остаток --}}
                         <div class="form-group">
                             <label for="stock" class="required-field">Остаток</label>
                             <input type="number" name="stock" id="stock"
@@ -48,7 +45,6 @@
                             @enderror
                         </div>
 
-                        {{-- Категория --}}
                         <div class="form-group">
                             <label for="category_id" class="required-field">Категория</label>
                             <select name="category_id" id="category_id"
@@ -65,7 +61,6 @@
                             @enderror
                         </div>
 
-                        {{-- Главное изображение --}}
                         <div class="form-group">
                             <label for="image">Главное изображение</label>
                             <input type="file" name="image" id="image"
@@ -78,7 +73,6 @@
                             </small>
                         </div>
 
-                        {{-- Дополнительные изображения --}}
                         <div class="form-group">
                             <label for="images">Дополнительные изображения</label>
                             <input type="file" name="images[]" id="images" multiple
@@ -91,7 +85,6 @@
                             </small>
                         </div>
 
-                        {{-- Описание --}}
                         <div class="form-group">
                             <label for="description" class="required-field">Описание</label>
                             <textarea name="description" id="description"
@@ -102,7 +95,6 @@
                             @enderror
                         </div>
 
-                        {{-- Новинка --}}
                         <div class="form-check mb-3">
                             <input type="checkbox" class="form-check-input" name="is_new" id="is_new" value="1"
                                 {{ old('is_new') ? 'checked' : '' }}>

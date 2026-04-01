@@ -5,7 +5,6 @@
 @section('content')
     <div class="order-detail-container">
 
-        {{-- Кнопка "Назад" и заголовок --}}
         <div class="order-header">
             <a href="{{ route('orders.index') }}" class="back-link">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 20 20" fill="currentColor">
@@ -15,7 +14,6 @@
             </a>
             <h1>Детали заказа #{{ $order->id }}</h1>
 
-            {{-- Статус заказа --}}
             <div class="order-status-badge status-{{ $order->status }}">
                 @switch($order->status)
                     @case('pending') Ожидание оплаты @break
@@ -27,9 +25,7 @@
             </div>
         </div>
 
-        {{-- Информация о заказе и доставке --}}
         <div class="order-detail-grid">
-            {{-- Блок: информация о заказе --}}
             <div class="order-info-card">
                 <h2 class="info-card-title">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 20 20" fill="currentColor">
@@ -52,7 +48,6 @@
                 </div>
             </div>
 
-            {{-- Блок: адрес доставки --}}
             <div class="order-info-card">
                 <h2 class="info-card-title">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 20 20" fill="currentColor">
@@ -80,7 +75,6 @@
             </div>
         </div>
 
-        {{-- Товары в заказе --}}
         <div class="order-items-card">
             <h2 class="info-card-title">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 20 20" fill="currentColor">

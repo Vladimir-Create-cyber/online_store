@@ -9,6 +9,9 @@ class Role extends Model
 {
     protected $fillable = ['name', 'description'];
 
+    /**
+     * Возвращает пользователей с данной ролью.
+     */
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)->withTimestamps();

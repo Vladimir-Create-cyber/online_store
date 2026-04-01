@@ -13,6 +13,9 @@ class Notification extends Model
         'is_read'
     ];
 
+    /**
+     * Возвращает пользователя, которому принадлежит уведомление.
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

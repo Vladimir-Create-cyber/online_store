@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+    /**
+     * Отображает дашборд администратора с ключевой статистикой.
+     */
     public function index(Request $request)
     {
         $totalOrders = Order::count();
@@ -73,7 +76,6 @@ class DashboardController extends Controller
             $selectedMonth = null;
         }
 
-        // Месяц применяется только когда выбран год, чтобы избежать "пустых" непонятных выборок.
         if (! $selectedYear) {
             $selectedMonth = null;
         }

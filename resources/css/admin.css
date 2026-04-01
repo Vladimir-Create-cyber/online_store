@@ -1,4 +1,4 @@
-/* ================= ADMIN STYLES ================= */
+/* ======= СТИЛИ АДМИНКИ ======= */
 :root {
     --sidebar-width: 250px;
     --header-height: 70px;
@@ -431,7 +431,7 @@
 .btn-icon.btn-danger:hover {
     background: #fecaca;
 }
-/* ======= PRODUCTS MANAGEMENT PAGE ======= */
+/* ======= СТРАНИЦА УПРАВЛЕНИЯ ТОВАРАМИ ======= */
 .dashboard-container {
     padding: 20px;
     max-width: 1400px;
@@ -610,7 +610,7 @@
     color: white;
     border-color: var(--primary);
 }
-/* ======= PRODUCT EDIT PAGE ======= */
+/* ======= СТРАНИЦА РЕДАКТИРОВАНИЯ ТОВАРА ======= */
 .dashboard-header {
     display: flex;
     justify-content: space-between;
@@ -722,7 +722,7 @@ select.form-control {
     box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
 }
 
-/* Current image styles */
+/* ======= СТИЛИ ТЕКУЩИХ ИЗОБРАЖЕНИЙ ======= */
 hr {
     margin: 30px 0;
     border: 0;
@@ -745,7 +745,7 @@ hr {
     display: block;
 }
 
-/* Responsive adjustments */
+/* ======= АДАПТИВНЫЕ КОРРЕКТИРОВКИ ======= */
 @media (max-width: 768px) {
     .dashboard-header {
         flex-direction: column;
@@ -761,7 +761,7 @@ hr {
     }
 }
 
-/* Error states */
+/* ======= СОСТОЯНИЯ ОШИБОК ======= */
 .form-control.is-invalid {
     border-color: var(--danger);
 }
@@ -776,7 +776,7 @@ hr {
     color: var(--danger);
     font-size: 0.85rem;
 }
-/* ======= ADDITIONAL STYLES FOR VALIDATION ======= */
+/* ======= ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ВАЛИДАЦИИ ======= */
 .form-text.text-muted {
     display: block;
     margin-top: 8px;
@@ -793,7 +793,7 @@ hr {
     margin-bottom: 15px;
 }
 
-/* Улучшенные стили для кнопки удаления изображения */
+/* ======= УЛУЧШЕННЫЕ СТИЛИ КНОПКИ УДАЛЕНИЯ ИЗОБРАЖЕНИЯ ======= */
 .btn-danger {
     display: inline-flex;
     align-items: center;
@@ -808,7 +808,7 @@ hr {
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
 }
-/* ======= PRODUCT CREATE PAGE ======= */
+/* ======= СТРАНИЦА СОЗДАНИЯ ТОВАРА ======= */
 .dashboard-header {
     display: flex;
     justify-content: space-between;
@@ -922,7 +922,7 @@ select.form-control {
     box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
 }
 
-/* Стили для валидации */
+/* ======= СТИЛИ ВАЛИДАЦИИ ======= */
 .form-control.is-invalid {
     border-color: var(--danger);
 }
@@ -938,13 +938,13 @@ select.form-control {
     font-size: 0.85rem;
 }
 
-/* Индикатор обязательных полей */
+/* ======= ИНДИКАТОР ОБЯЗАТЕЛЬНЫХ ПОЛЕЙ ======= */
 .required-field::after {
     content: "*";
     color: var(--danger);
 }
 
-/* Стили для подсказок */
+/* ======= СТИЛИ ПОДСКАЗОК ======= */
 .form-text {
     display: block;
     margin-top: 8px;
@@ -952,7 +952,7 @@ select.form-control {
     color: var(--gray);
 }
 
-/* Адаптивность */
+/* ======= АДАПТИВНОСТЬ ======= */
 @media (max-width: 768px) {
     .card-body {
         padding: 20px;
@@ -967,7 +967,7 @@ select.form-control {
         align-items: flex-start;
     }
 }
-/* ======= ADMIN DASHBOARD ======= */
+/* ======= ПАНЕЛЬ УПРАВЛЕНИЯ АДМИНКИ ======= */
 .dashboard-container {
     padding: 30px;
     max-width: 1400px;
@@ -999,7 +999,7 @@ select.form-control {
     border-radius: 4px;
 }
 
-/* Stats section */
+/* ======= СЕКЦИЯ СТАТИСТИКИ ======= */
 .dashboard-stats {
     margin-bottom: 40px;
 }
@@ -1053,7 +1053,7 @@ select.form-control {
     color: var(--gray);
 }
 
-/* Dashboard sections */
+/* ======= РАЗДЕЛЫ ПАНЕЛИ ======= */
 .dashboard-section {
     background: white;
     border-radius: 16px;
@@ -1086,14 +1086,14 @@ select.form-control {
     position: relative;
 }
 
-/* Dashboard grid */
+/* ======= СЕТКА ПАНЕЛИ ======= */
 .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 30px;
 }
 
-/* Order list styles */
+/* ======= СТИЛИ СПИСКА ЗАКАЗОВ ======= */
 .order-list {
     display: flex;
     flex-direction: column;
@@ -1165,7 +1165,7 @@ select.form-control {
     color: #d97706;
 }
 
-/* Product list styles */
+/* ======= СТИЛИ СПИСКА ТОВАРОВ ======= */
 .product-list {
     display: flex;
     flex-direction: column;
@@ -1222,7 +1222,7 @@ select.form-control {
     color: var(--gray);
 }
 
-/* Dark theme */
+/* ======= ТЕМНАЯ ТЕМА ======= */
 [data-theme="dark"] .dashboard-title {
     color: #e2e8f0;
 }
@@ -1268,7 +1268,7 @@ select.form-control {
     color: #fed7aa;
 }
 
-/* Responsive */
+/* ======= АДАПТИВНОСТЬ ======= */
 @media (max-width: 992px) {
     .dashboard-grid {
         grid-template-columns: 1fr;
@@ -1320,7 +1320,8 @@ select.form-control {
     .chart-container {
         height: 250px;
     }
-}/* ======= ADMIN HEADER STYLES ======= */
+}
+/* ======= СТИЛИ ШАПКИ АДМИНКИ ======= */
 .admin-header {
     height: var(--header-height);
     background: white;
@@ -1418,13 +1419,13 @@ select.form-control {
     min-height: calc(100vh - var(--header-height));
 }
 
-/* Неактивные пункты меню */
+/* ======= НЕАКТИВНЫЕ ПУНКТЫ МЕНЮ ======= */
 .menu-item.disabled {
     opacity: 0.5;
     pointer-events: none;
 }
 
-/* Адаптивность шапки */
+/* ======= АДАПТИВНОСТЬ ШАПКИ ======= */
 @media (max-width: 768px) {
     .logout-text {
         display: none;
@@ -1434,7 +1435,7 @@ select.form-control {
         display: none;
     }
 }
-/* ======= CATEGORIES INDEX PAGE ======= */
+/* ======= СТРАНИЦА СПИСКА КАТЕГОРИЙ ======= */
 .categories-index .container {
     padding: 30px;
     max-width: 1200px;
@@ -1495,7 +1496,7 @@ select.form-control {
     box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
 }
 
-/* Alerts */
+/* ======= ОПОВЕЩЕНИЯ ======= */
 .categories-index .alert {
     padding: 18px 24px;
     border-radius: 12px;
@@ -1522,7 +1523,7 @@ select.form-control {
     color: #b91c1c;
 }
 
-/* Table styles */
+/* ======= СТИЛИ ТАБЛИЦЫ ======= */
 .categories-index .table-container {
     overflow-x: auto;
     border-radius: 14px;
@@ -1587,7 +1588,7 @@ select.form-control {
     color: var(--primary-dark);
 }
 
-/* Actions */
+/* ======= ДЕЙСТВИЯ ======= */
 .categories-index .actions-cell {
     display: flex;
     gap: 12px;
@@ -1630,7 +1631,7 @@ select.form-control {
     box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
 }
 
-/* Pagination */
+/* ======= ПАГИНАЦИЯ ======= */
 .categories-index .pagination-wrapper {
     display: flex;
     justify-content: center;
@@ -1676,7 +1677,7 @@ select.form-control {
     transform: translateY(-2px);
 }
 
-/* Mobile card view */
+/* ======= МОБИЛЬНЫЙ КАРТОЧНЫЙ ВИД ======= */
 @media (max-width: 768px) {
     .categories-index .header-section {
         flex-direction: column;
@@ -1747,7 +1748,7 @@ select.form-control {
     }
 }
 
-/* Dark theme support */
+/* ======= ПОДДЕРЖКА ТЕМНОЙ ТЕМЫ ======= */
 [data-theme="dark"] .categories-index h1,
 [data-theme="dark"] .categories-index td {
     color: #e2e8f0;
@@ -1800,7 +1801,7 @@ select.form-control {
     color: white;
 }
 
-/* Animations */
+/* ======= АНИМАЦИИ ======= */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -1810,7 +1811,7 @@ select.form-control {
     from { opacity: 0; transform: translateX(-20px); }
     to { opacity: 1; transform: translateX(0); }
 }
-/* ======= CATEGORY EDIT PAGE ======= */
+/* ======= СТРАНИЦА РЕДАКТИРОВАНИЯ КАТЕГОРИИ ======= */
 .category-edit .container {
     max-width: 800px;
     margin: 0 auto;
@@ -1950,7 +1951,7 @@ select.form-control {
     margin-top: 25px;
 }
 
-/* Dark theme support */
+/* ======= ПОДДЕРЖКА ТЕМНОЙ ТЕМЫ ======= */
 [data-theme="dark"] .category-edit h1,
 [data-theme="dark"] .category-edit .form-label {
     color: #e2e8f0;
@@ -1975,13 +1976,13 @@ select.form-control {
     background: var(--primary);
 }
 
-/* Анимации */
+/* ======= АНИМАЦИИ ======= */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Адаптивность */
+/* ======= АДАПТИВНОСТЬ ======= */
 @media (max-width: 768px) {
     .category-edit .container {
         padding: 20px;
@@ -2006,7 +2007,7 @@ select.form-control {
         justify-content: center;
     }
 }
-/* ======= CATEGORY CREATE PAGE ======= */
+/* ======= СТРАНИЦА СОЗДАНИЯ КАТЕГОРИИ ======= */
 .category-create .container {
     max-width: 800px;
     margin: 0 auto;
@@ -2146,7 +2147,7 @@ select.form-control {
     margin-top: 25px;
 }
 
-/* Dark theme support */
+/* ======= ПОДДЕРЖКА ТЕМНОЙ ТЕМЫ ======= */
 [data-theme="dark"] .category-create h1,
 [data-theme="dark"] .category-create .form-label {
     color: #e2e8f0;
@@ -2171,13 +2172,13 @@ select.form-control {
     background: var(--success);
 }
 
-/* Анимации */
+/* ======= АНИМАЦИИ ======= */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Адаптивность */
+/* ======= АДАПТИВНОСТЬ ======= */
 @media (max-width: 768px) {
     .category-create .container {
         padding: 20px;
@@ -2202,8 +2203,8 @@ select.form-control {
         justify-content: center;
     }
 }
-/* ========== ORDERS INDEX STYLES ========== */
-/* ========== ORDERS CONTAINER ========== */
+/* ======= СТИЛИ СТРАНИЦЫ СПИСКА ЗАКАЗОВ ======= */
+/* ======= КОНТЕЙНЕР ЗАКАЗОВ ======= */
 .orders-container {
     padding: 2rem;
     max-width: 1400px;
@@ -2211,14 +2212,14 @@ select.form-control {
     animation: fadeIn 0.5s ease;
 }
 
-.section-header {
+.orders-container .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
 }
 
-.section-title {
+.orders-container .section-title {
     font-size: 1.8rem;
     font-weight: 700;
     color: var(--dark);
@@ -2226,7 +2227,7 @@ select.form-control {
     padding-left: 18px;
 }
 
-.section-title::before {
+.orders-container .section-title::before {
     content: '';
     position: absolute;
     left: 0;
@@ -2238,8 +2239,8 @@ select.form-control {
     border-radius: 3px;
 }
 
-/* ========== FILTERS FORM ========== */
-.filters-form {
+/* ======= ФОРМА ФИЛЬТРОВ ======= */
+.orders-container .filters-form {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1.2rem;
@@ -2252,30 +2253,30 @@ select.form-control {
     align-items: flex-end;
 }
 
-.form-group {
+.orders-container .form-group {
     margin-bottom: 0;
 }
 
-.date-group {
+.orders-container .date-group {
     display: flex;
     flex-direction: column;
 }
 
-.date-label {
+.orders-container .date-label {
     font-size: 0.85rem;
     color: var(--gray);
     margin-bottom: 6px;
     font-weight: 500;
 }
 
-/* Убираем снежинки обязательности */
+/* ======= НАСТРОЙКА ВИДЖЕТА ПОЛЯ ДАТЫ ======= */
 input[type="date"]::-webkit-inner-spin-button,
 input[type="date"]::-webkit-calendar-picker-indicator {
     opacity: 1; /* Просто делаем видимым обычный виджет */
     color: var(--gray); /* Цвет как у обычного текста */
 }
 
-.form-control {
+.orders-container .form-control {
     width: 100%;
     padding: 12px 16px;
     border: 1px solid #cbd5e1;
@@ -2286,14 +2287,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-.form-control:focus {
+.orders-container .form-control:focus {
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
     outline: none;
 }
 
-/* ========== BUTTONS ========== */
-.form-actions {
+/* ======= КНОПКИ ======= */
+.orders-container .form-actions {
     grid-column: 1 / -1;
     display: flex;
     gap: 1rem;
@@ -2303,7 +2304,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     justify-content: center; /* Центрируем кнопки */
 }
 
-.btn {
+.orders-container .btn {
     padding: 12px 24px;
     border-radius: 10px;
     font-weight: 500;
@@ -2319,30 +2320,30 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     min-width: 140px; /* Одинаковая ширина */
 }
 
-.btn-primary {
+.orders-container .btn-primary {
     background: var(--primary);
     color: white;
 }
 
-.btn-primary:hover {
+.orders-container .btn-primary:hover {
     background: var(--primary-dark);
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35);
 }
 
-.btn-reset {
+.orders-container .btn-reset {
     background: #e2e8f0;
     color: var(--dark);
-    /* Теперь полностью идентичен btn-primary по геометрии */
+    /* ======= КНОПКА СБРОСА ИДЕНТИЧНА ПО ГЕОМЕТРИИ btn-primary ======= */
 }
 
-.btn-reset:hover {
+.orders-container .btn-reset:hover {
     background: #cbd5e1;
     transform: translateY(-3px); /* Такая же анимация */
 }
 
-/* ========== ALERTS ========== */
-.alert {
+/* ======= ОПОВЕЩЕНИЯ ======= */
+.orders-container .alert {
     padding: 1.2rem 1.5rem;
     border-radius: 12px;
     margin: 0 auto 1.8rem auto; /* Центрируем */
@@ -2353,18 +2354,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     max-width: calc(100% - 2rem);
 }
 
-.alert-success {
+.orders-container .alert-success {
     background-color: #dcfce7;
     color: #166534;
     border: 1px solid #bbf7d0;
 }
 
-.alert-icon {
+.orders-container .alert-icon {
     font-size: 1.4rem;
 }
 
-/* ========== TABLE ========== */
-.table-responsive {
+/* ======= ТАБЛИЦА ======= */
+.orders-container .table-responsive {
     overflow-x: auto;
     border-radius: 14px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
@@ -2408,8 +2409,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-color: #f8fafc;
 }
 
-/* ========== BADGES ========== */
-.badge {
+/* ======= БЕЙДЖИ ======= */
+.orders-container .badge {
     display: inline-block;
     padding: 8px 16px;
     border-radius: 20px;
@@ -2442,7 +2443,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: #b91c1c;
 }
 
-/* ========== ACTIONS ========== */
+/* ======= ДЕЙСТВИЯ ======= */
 .btn-action {
     display: inline-flex;
     align-items: center;
@@ -2461,7 +2462,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     transform: translateX(3px);
 }
 
-/* ========== RESPONSIVE ========== */
+/* ======= АДАПТИВНОСТЬ ======= */
 @media (max-width: 1200px) {
     .filters-form {
         max-width: 100%;
@@ -2500,7 +2501,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         font-size: 0.9rem;
     }
 
-    /* Table adaptation */
+    /* ======= АДАПТАЦИЯ ТАБЛИЦЫ ======= */
     .table-responsive {
         max-width: 100%;
     }
@@ -2542,19 +2543,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 }
 
-/* ========== DARK THEME ========== */
+/* ======= ТЕМНАЯ ТЕМА ======= */
 [data-theme="dark"] .orders-container {
     background: var(--dark);
 }
 
-[data-theme="dark"] .filters-form,
-[data-theme="dark"] .orders-table,
-[data-theme="dark"] .alert {
+[data-theme="dark"] .orders-container .filters-form,
+[data-theme="dark"] .orders-container .orders-table,
+[data-theme="dark"] .orders-container .alert {
     background: var(--light);
     border: 1px solid #2d3748;
 }
 
-[data-theme="dark"] .table-dark th {
+[data-theme="dark"] .orders-container .table-dark th {
     background: #0f172a;
 }
 
@@ -2562,29 +2563,29 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-color: #1a243a;
 }
 
-[data-theme="dark"] .form-control {
+[data-theme="dark"] .orders-container .form-control {
     background-color: #1e293b;
     border-color: #2d3748;
     color: #cbd5e1;
 }
 
-[data-theme="dark"] .btn-reset {
+[data-theme="dark"] .orders-container .btn-reset {
     background: #334155;
     color: #cbd5e1;
 }
 
-[data-theme="dark"] .btn-reset:hover {
+[data-theme="dark"] .orders-container .btn-reset:hover {
     background: #475569;
 }
 
-[data-theme="dark"] .view-btn {
+[data-theme="dark"] .orders-container .view-btn {
     color: #93c5fd;
 }
 
-[data-theme="dark"] .view-btn:hover {
+[data-theme="dark"] .orders-container .view-btn:hover {
     color: #bfdbfe;
 }
-/* ========== ORDER DETAILS SHOW STYLES ========== */
+/* ======= СТИЛИ СТРАНИЦЫ ДЕТАЛЕЙ ЗАКАЗА ======= */
 .order-details-container {
     padding: 2rem;
     max-width: 1400px;
@@ -2592,14 +2593,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     animation: fadeIn 0.5s ease;
 }
 
-.section-header {
+.order-details-container .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
 }
 
-.section-title {
+.order-details-container .section-title {
     font-size: 1.8rem;
     font-weight: 700;
     color: var(--dark);
@@ -2607,7 +2608,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     padding-left: 18px;
 }
 
-.section-title::before {
+.order-details-container .section-title::before {
     content: '';
     position: absolute;
     left: 0;
@@ -2619,7 +2620,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border-radius: 3px;
 }
 
-.section-subtitle {
+.order-details-container .section-subtitle {
     font-size: 1.3rem;
     font-weight: 600;
     margin-bottom: 1rem;
@@ -2628,34 +2629,34 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border-bottom: 2px solid var(--primary);
 }
 
-/* Order info grid */
-.order-info-grid {
+/* ======= СЕТКА ИНФОРМАЦИИ О ЗАКАЗЕ ======= */
+.order-details-container .order-info-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
     margin-bottom: 2rem;
 }
 
-.info-block {
+.order-details-container .info-block {
     background: white;
     border-radius: 16px;
     padding: 1.5rem;
     box-shadow: 0 5px 20px rgba(0,0,0,0.05);
 }
 
-.info-title {
+.order-details-container .info-title {
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 1rem;
     color: var(--primary-dark);
 }
 
-/* Status form */
-.status-form-container {
+/* ======= ФОРМА СТАТУСА ======= */
+.order-details-container .status-form-container {
     margin-bottom: 2rem;
 }
 
-.status-form {
+.order-details-container .status-form {
     display: flex;
     align-items: flex-end;
     gap: 1rem;
@@ -2665,11 +2666,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     box-shadow: 0 5px 20px rgba(0,0,0,0.05);
 }
 
-.form-group {
+.order-details-container .form-group {
     flex: 1;
 }
 
-.form-label {
+.order-details-container .form-label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 500;
@@ -2677,11 +2678,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 0.95rem;
 }
 
-.form-select-wrapper {
+.order-details-container .form-select-wrapper {
     position: relative;
 }
 
-.form-select-wrapper .select-icon {
+.order-details-container .form-select-wrapper .select-icon {
     position: absolute;
     right: 16px;
     top: 50%;
@@ -2690,8 +2691,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     pointer-events: none;
 }
 
-/* Order content grid */
-.order-content-grid {
+/* ======= СЕТКА СОДЕРЖИМОГО ЗАКАЗА ======= */
+.order-details-container .order-content-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
@@ -2704,21 +2705,21 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 }
 
-/* Products section */
-.products-section {
+/* ======= СЕКЦИЯ ТОВАРОВ ======= */
+.order-details-container .products-section {
     background: white;
     border-radius: 16px;
     padding: 1.5rem;
     box-shadow: 0 5px 20px rgba(0,0,0,0.05);
 }
 
-.product-list {
+.order-details-container .product-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.product-item {
+.order-details-container .product-item {
     padding: 1rem 0;
     border-bottom: 1px solid #e2e8f0;
 }
@@ -2727,46 +2728,46 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border-bottom: none;
 }
 
-.product-info h4 {
+.order-details-container .product-info h4 {
     margin: 0 0 0.3rem 0;
     font-weight: 600;
 }
 
-.stock-info {
+.order-details-container .stock-info {
     font-size: 0.9rem;
     color: var(--gray);
     margin-top: 0.3rem;
 }
 
-/* Addresses */
-.addresses-grid {
+/* ======= АДРЕСА ======= */
+.order-details-container .addresses-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.5rem;
 }
 
-.address-section {
+.order-details-container .address-section {
     background: white;
     border-radius: 16px;
     padding: 1.5rem;
     box-shadow: 0 5px 20px rgba(0,0,0,0.05);
 }
 
-.address-card {
+.order-details-container .address-card {
     background: #f8fafc;
     border-radius: 12px;
     padding: 1.2rem;
     border-left: 3px solid var(--primary);
 }
 
-/* Action bar */
-.action-bar {
+/* ======= ПАНЕЛЬ ДЕЙСТВИЙ ======= */
+.order-details-container .action-bar {
     display: flex;
     justify-content: center;
     margin-top: 2rem;
 }
 
-.btn-back {
+.order-details-container .btn-back {
     background: #e2e8f0;
     color: var(--dark);
     padding: 12px 24px;
@@ -2783,13 +2784,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-decoration: none;
 }
 
-.btn-back:hover {
+.order-details-container .btn-back:hover {
     background: #cbd5e1;
     transform: translateY(-2px);
 }
 
-/* Badges */
-.badge {
+/* ======= БЕЙДЖИ ======= */
+.order-details-container .badge {
     display: inline-block;
     padding: 8px 16px;
     border-radius: 20px;
@@ -2822,8 +2823,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: #b91c1c;
 }
 
-/* Alerts */
-.alert {
+/* ======= ОПОВЕЩЕНИЯ ======= */
+.order-details-container .alert {
     padding: 1.2rem 1.5rem;
     border-radius: 12px;
     margin-bottom: 1.8rem;
@@ -2833,17 +2834,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-weight: 500;
 }
 
-.alert-success {
+.order-details-container .alert-success {
     background-color: #dcfce7;
     color: #166534;
     border: 1px solid #bbf7d0;
 }
 
-.alert-icon {
+.order-details-container .alert-icon {
     font-size: 1.4rem;
 }
 
-/* Dark theme */
+/* ======= ТЕМНАЯ ТЕМА ======= */
 [data-theme="dark"] .order-details-container {
     background: var(--dark);
 }
@@ -2858,35 +2859,35 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     box-shadow: none;
 }
 
-[data-theme="dark"] .address-card {
+[data-theme="dark"] .order-details-container .address-card {
     background: #1e293b;
     border-left: 3px solid var(--primary);
 }
 
-[data-theme="dark"] .section-title,
-[data-theme="dark"] .section-subtitle,
-[data-theme="dark"] .info-title {
+[data-theme="dark"] .order-details-container .section-title,
+[data-theme="dark"] .order-details-container .section-subtitle,
+[data-theme="dark"] .order-details-container .info-title {
     color: #e2e8f0;
 }
 
-[data-theme="dark"] .btn-back {
+[data-theme="dark"] .order-details-container .btn-back {
     background: #334155;
     color: #cbd5e1;
 }
 
-[data-theme="dark"] .btn-back:hover {
+[data-theme="dark"] .order-details-container .btn-back:hover {
     background: #475569;
 }
 
-[data-theme="dark"] .form-label {
+[data-theme="dark"] .order-details-container .form-label {
     color: #cbd5e1;
 }
 
-[data-theme="dark"] .stock-info {
+[data-theme="dark"] .order-details-container .stock-info {
     color: #94a3b8;
 }
 
-/* Responsive */
+/* ======= АДАПТИВНОСТЬ ======= */
 @media (max-width: 768px) {
     .status-form {
         flex-direction: column;
@@ -2907,7 +2908,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         grid-template-columns: 1fr;
     }
 }
-/* ========== SHIPPING METHODS STYLES INDEX ========== */
+/* ======= СТИЛИ СТРАНИЦЫ СПОСОБОВ ДОСТАВКИ ======= */
 .shipping-methods-container {
     padding: 2rem;
     max-width: 1400px;
@@ -2915,7 +2916,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     animation: fadeIn 0.5s ease;
 }
 
-.section-header {
+.shipping-methods-container .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -2924,7 +2925,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     gap: 1rem;
 }
 
-.section-title {
+.shipping-methods-container .section-title {
     font-size: 1.8rem;
     font-weight: 700;
     color: var(--dark);
@@ -2932,7 +2933,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     padding-left: 18px;
 }
 
-.section-title::before {
+.shipping-methods-container .section-title::before {
     content: '';
     position: absolute;
     left: 0;
@@ -2944,8 +2945,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border-radius: 3px;
 }
 
-/* Table */
-.table-responsive {
+/* ======= ТАБЛИЦА ======= */
+.shipping-methods-container .table-responsive {
     overflow-x: auto;
     border-radius: 14px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
@@ -2988,8 +2989,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-color: #f8fafc;
 }
 
-/* Badges */
-.badge {
+/* ======= БЕЙДЖИ ======= */
+.shipping-methods-container .badge {
     display: inline-block;
     padding: 8px 16px;
     border-radius: 20px;
@@ -3007,14 +3008,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: #b91c1c;
 }
 
-/* Actions */
-.actions-group {
+/* ======= ДЕЙСТВИЯ ======= */
+.shipping-methods-container .actions-group {
     display: flex;
     gap: 0.8rem;
     flex-wrap: wrap;
 }
 
-.btn-action {
+.shipping-methods-container .btn-action {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -3052,8 +3053,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-align: center;
 }
 
-/* Alerts */
-.alert {
+/* ======= ОПОВЕЩЕНИЯ ======= */
+.shipping-methods-container .alert {
     padding: 1.2rem 1.5rem;
     border-radius: 12px;
     margin-bottom: 1.8rem;
@@ -3063,17 +3064,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-weight: 500;
 }
 
-.alert-success {
+.shipping-methods-container .alert-success {
     background-color: #dcfce7;
     color: #166534;
     border: 1px solid #bbf7d0;
 }
 
-.alert-icon {
+.shipping-methods-container .alert-icon {
     font-size: 1.4rem;
 }
 
-/* Dark theme */
+/* ======= ТЕМНАЯ ТЕМА ======= */
 [data-theme="dark"] .shipping-methods-container {
     background: var(--dark);
 }
@@ -3110,7 +3111,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background: #991b1b;
 }
 
-/* Responsive */
+/* ======= АДАПТИВНОСТЬ ======= */
 @media (max-width: 768px) {
     .section-header {
         flex-direction: column;
@@ -3118,7 +3119,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         gap: 1.2rem;
     }
 
-    /* Table adaptation */
+    /* ======= АДАПТАЦИЯ ТАБЛИЦЫ ======= */
     .methods-table thead {
         display: none;
     }
@@ -3161,13 +3162,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         justify-content: center;
     }
 }
-/* ========== SHIPPING FORM STYLES CREATE========== */
+/* ======= СТИЛИ ФОРМЫ СОЗДАНИЯ ДОСТАВКИ ======= */
 .shipping-form {
     max-width: 800px;
     margin: 0 auto;
 }
 
-.form-card {
+.shipping-methods-container .form-card {
     background: white;
     border-radius: 16px;
     padding: 2rem;
@@ -3175,11 +3176,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin-bottom: 2rem;
 }
 
-.form-group {
+.shipping-methods-container .form-group {
     margin-bottom: 1.8rem;
 }
 
-.form-label {
+.shipping-methods-container .form-label {
     display: block;
     margin-bottom: 0.7rem;
     font-weight: 500;
@@ -3191,7 +3192,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: var(--danger);
 }
 
-.form-control {
+.shipping-methods-container .form-control {
     width: 100%;
     padding: 14px 18px;
     border: 1px solid #cbd5e1;
@@ -3202,13 +3203,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-.form-control:focus {
+.shipping-methods-container .form-control:focus {
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
     outline: none;
 }
 
-.form-error {
+.shipping-methods-container .form-error {
     color: var(--danger);
     margin-top: 0.5rem;
     font-size: 0.9rem;
@@ -3217,12 +3218,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     gap: 0.5rem;
 }
 
-.form-error::before {
+.shipping-methods-container .form-error::before {
     content: "⚠";
     font-size: 1.1rem;
 }
 
-/* Toggle switch */
+/* ======= ПЕРЕКЛЮЧАТЕЛЬ ======= */
 .toggle-group {
     display: flex;
     align-items: center;
@@ -3269,14 +3270,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     transform: translateX(30px);
 }
 
-/* Form actions */
-.form-actions {
+/* ======= ДЕЙСТВИЯ ФОРМЫ ======= */
+.shipping-methods-container .form-actions {
     display: flex;
     gap: 1rem;
     justify-content: flex-end;
 }
 
-.btn {
+.shipping-methods-container .btn {
     padding: 12px 24px;
     border-radius: 10px;
     font-weight: 500;
@@ -3290,28 +3291,28 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-.btn-primary {
+.shipping-methods-container .btn-primary {
     background: var(--primary);
     color: white;
 }
 
-.btn-primary:hover {
+.shipping-methods-container .btn-primary:hover {
     background: var(--primary-dark);
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35);
 }
 
-.btn-reset {
+.shipping-methods-container .btn-reset {
     background: #e2e8f0;
     color: var(--dark);
 }
 
-.btn-reset:hover {
+.shipping-methods-container .btn-reset:hover {
     background: #cbd5e1;
     transform: translateY(-3px);
 }
 
-.btn-back {
+.shipping-methods-container .btn-back {
     background: #e2e8f0;
     color: var(--dark);
     padding: 10px 20px;
@@ -3328,58 +3329,58 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-decoration: none;
 }
 
-.btn-back:hover {
+.shipping-methods-container .btn-back:hover {
     background: #cbd5e1;
     transform: translateY(-2px);
 }
 
-/* Dark theme */
+/* ======= ТЕМНАЯ ТЕМА ======= */
 [data-theme="dark"] .shipping-methods-container {
     background: var(--dark);
 }
 
-[data-theme="dark"] .form-card {
+[data-theme="dark"] .shipping-methods-container .form-card {
     background: var(--light);
     border: 1px solid #2d3748;
 }
 
-[data-theme="dark"] .form-label {
+[data-theme="dark"] .shipping-methods-container .form-label {
     color: #e2e8f0;
 }
 
-[data-theme="dark"] .form-control {
+[data-theme="dark"] .shipping-methods-container .form-control {
     background-color: #1e293b;
     border-color: #2d3748;
     color: #cbd5e1;
 }
 
-[data-theme="dark"] .toggle-label {
+[data-theme="dark"] .shipping-methods-container .toggle-label {
     background: #475569;
 }
 
-[data-theme="dark"] .toggle-text {
+[data-theme="dark"] .shipping-methods-container .toggle-text {
     color: #cbd5e1;
 }
 
-[data-theme="dark"] .btn-reset {
+[data-theme="dark"] .shipping-methods-container .btn-reset {
     background: #334155;
     color: #cbd5e1;
 }
 
-[data-theme="dark"] .btn-reset:hover {
+[data-theme="dark"] .shipping-methods-container .btn-reset:hover {
     background: #475569;
 }
 
-[data-theme="dark"] .btn-back {
+[data-theme="dark"] .shipping-methods-container .btn-back {
     background: #334155;
     color: #cbd5e1;
 }
 
-[data-theme="dark"] .btn-back:hover {
+[data-theme="dark"] .shipping-methods-container .btn-back:hover {
     background: #475569;
 }
 
-/* Responsive */
+/* ======= АДАПТИВНОСТЬ ======= */
 @media (max-width: 768px) {
     .section-header {
         flex-direction: column;
@@ -3396,8 +3397,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         justify-content: center;
     }
 }
-/* ========== ALERT STYLES EDIT========== */
-.alert {
+/* ======= СТИЛИ ОПОВЕЩЕНИЙ РЕДАКТИРОВАНИЯ ======= */
+.shipping-methods-container .alert {
     padding: 1.2rem 1.5rem;
     border-radius: 12px;
     margin-bottom: 1.8rem;
@@ -3407,13 +3408,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-weight: 500;
 }
 
-.alert-danger {
+.shipping-methods-container .alert-danger {
     background-color: #fef2f2;
     color: #b91c1c;
     border: 1px solid #fecaca;
 }
 
-.alert-icon {
+.shipping-methods-container .alert-icon {
     font-size: 1.6rem;
     margin-top: 2px;
 }
@@ -3433,13 +3434,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin-bottom: 0.3rem;
 }
 
-/* Dark theme for alerts */
-[data-theme="dark"] .alert-danger {
+/* ======= ТЕМНАЯ ТЕМА ДЛЯ ОПОВЕЩЕНИЙ ======= */
+[data-theme="dark"] .shipping-methods-container .alert-danger {
     background-color: #7f1d1d;
     color: #fecaca;
     border-color: #991b1b;
 }
-/* ===== REVIEWS MANAGEMENT SYSTEM ===== */
+/* ======= СИСТЕМА УПРАВЛЕНИЯ ОТЗЫВАМИ ======= */
 .reviews-container {
     padding: 2rem;
     max-width: 1400px;
@@ -3447,7 +3448,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     animation: fadeIn 0.5s ease;
 }
 
-.section-header {
+.reviews-container .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -3456,7 +3457,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     gap: 1rem;
 }
 
-.section-title {
+.reviews-container .section-title {
     font-size: 1.8rem;
     font-weight: 700;
     color: var(--dark);
@@ -3464,7 +3465,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     padding-left: 18px;
 }
 
-.section-title::before {
+.reviews-container .section-title::before {
     content: '';
     position: absolute;
     left: 0;
@@ -3476,8 +3477,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border-radius: 3px;
 }
 
-/* Table */
-.table-responsive {
+/* ======= ТАБЛИЦА ======= */
+.reviews-container .table-responsive {
     overflow-x: auto;
     border-radius: 14px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
@@ -3520,8 +3521,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-color: #f8fafc;
 }
 
-/* Badges */
-.badge {
+/* ======= БЕЙДЖИ ======= */
+.reviews-container .badge {
     display: inline-block;
     padding: 8px 16px;
     border-radius: 20px;
@@ -3539,14 +3540,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: #92400e;
 }
 
-/* Actions */
-.actions-group {
+/* ======= ДЕЙСТВИЯ ======= */
+.reviews-container .actions-group {
     display: flex;
     gap: 0.8rem;
     flex-wrap: wrap;
 }
 
-.btn-action {
+.reviews-container .btn-action {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -3580,8 +3581,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     transform: translateY(-2px);
 }
 
-/* Alerts */
-.alert {
+/* ======= ОПОВЕЩЕНИЯ ======= */
+.reviews-container .alert {
     padding: 1.2rem 1.5rem;
     border-radius: 12px;
     margin-bottom: 1.8rem;
@@ -3591,18 +3592,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-weight: 500;
 }
 
-.alert-success {
+.reviews-container .alert-success {
     background-color: #dcfce7;
     color: #166534;
     border: 1px solid #bbf7d0;
 }
 
-.alert-icon {
+.reviews-container .alert-icon {
     font-size: 1.4rem;
 }
 
-/* Empty state */
-.empty-state {
+/* ======= ПУСТОЕ СОСТОЯНИЕ ======= */
+.reviews-container .empty-state {
     padding: 3rem;
     text-align: center;
     background: white;
@@ -3612,23 +3613,23 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 1.1rem;
 }
 
-/* Dark theme */
+/* ======= ТЕМНАЯ ТЕМА ======= */
 [data-theme="dark"] .reviews-container {
     background: var(--dark);
 }
 
-[data-theme="dark"] .section-title {
+[data-theme="dark"] .reviews-container .section-title {
     color: #f1f5f9;
 }
 
-[data-theme="dark"] .reviews-table,
-[data-theme="dark"] .alert,
-[data-theme="dark"] .empty-state {
+[data-theme="dark"] .reviews-container .reviews-table,
+[data-theme="dark"] .reviews-container .alert,
+[data-theme="dark"] .reviews-container .empty-state {
     background: var(--light);
     border: 1px solid #2d3748;
 }
 
-[data-theme="dark"] .table-dark th {
+[data-theme="dark"] .reviews-container .table-dark th {
     background: #0f172a;
 }
 
@@ -3664,7 +3665,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: #fef3c7;
 }
 
-/* Responsive */
+/* ======= АДАПТИВНОСТЬ ======= */
 @media (max-width: 768px) {
     .section-header {
         flex-direction: column;
@@ -3676,7 +3677,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         padding: 1.5rem;
     }
 
-    /* Table adaptation */
+    /* ======= АДАПТАЦИЯ ТАБЛИЦЫ ======= */
     .reviews-table thead {
         display: none;
     }

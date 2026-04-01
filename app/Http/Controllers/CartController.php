@@ -14,7 +14,7 @@ use App\Models\ShippingMethod;
 class CartController extends Controller
 {
     /**
-     * Отображение корзины с товарами.
+     * Отображает корзину пользователя.
      */
     public function viewCart()
     {
@@ -29,23 +29,21 @@ class CartController extends Controller
         return view('cart.index', [
             'cart' => $cart,
             'unreadCount' => $unreadCount,
-            'total' => $total, // передаём сумму
+            'total' => $total,
         ]);
     }
 
     /**
-     * Добавление товара в корзину по ID.
+     * Добавляет товар в корзину.
      */
     public function addToCart(Request $request, $productId)
     {
-        // Валидация quantity
         $validated = $request->validate([
             'quantity' => 'required|integer|min:1',
         ]);
 
         $quantity = $validated['quantity'];
 
-        // Поиск товара
         $product = Product::findOrFail($productId);
 
         if ($quantity > $product->stock) {
@@ -54,7 +52,6 @@ class CartController extends Controller
 
         $cart = session()->get('cart', []);
 
-        // Заменяем количество, а не прибавляем
         $cart[$productId] = [
             'product_id' => $productId,
             'name' => $product->name,
@@ -71,7 +68,7 @@ class CartController extends Controller
 
 
     /**
-     * Удаление товара из корзины.
+     * Удаляет товар из корзины.
      */
     public function removeFromCart($productId)
     {
@@ -86,7 +83,7 @@ class CartController extends Controller
     }
 
     /**
-     * Шаг 1: Отображение формы оформления заказа.
+     * Отображает форму оформления заказа.
      */
     public function showCheckoutForm()
     {
@@ -108,7 +105,7 @@ class CartController extends Controller
 
 
     /**
-     * Шаг 2: Завершение оформления заказа и сохранение данных.
+     * Создаёт заказ из содержимого корзины.
      */
     public function completeOrder(Request $request)
     {
@@ -129,7 +126,6 @@ class CartController extends Controller
             return redirect()->route('cart.index')->with('error', 'Корзина пуста!');
         }
 
-        // Получаем объект способа доставки
         $shippingMethod = ShippingMethod::find($validated['shipping_method_id']);
 
         if (!$shippingMethod || !$shippingMethod->is_active) {

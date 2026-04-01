@@ -21,7 +21,7 @@ class Product extends Model
         'description',
         'price',
         'stock',
-        'image', // для одиночного "старого" изображения
+        'image',
         'rating',
         'is_active',
         'sale_price',
@@ -126,17 +126,14 @@ class Product extends Model
      */
     public function getImageUrlAttribute(): string
     {
-        // если есть загруженное отношение mainImage
         if ($this->relationLoaded('mainImage') && $this->mainImage) {
             return Storage::url($this->mainImage->path);
         }
 
-        // если есть просто поле image (старое)
         if ($this->image) {
             return Storage::url($this->image);
         }
 
-        // fallback изображение
         return asset('images/default-product.png');
     }
 

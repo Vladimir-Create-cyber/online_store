@@ -4,21 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Review;
 
 class ProductController extends Controller
 {
     /**
-     * Отображение каталога товаров на главной странице.
-     *
-     * @return \Illuminate\View\View
+     * Отображает каталог товаров.
      */
     public function index()
     {
-        $products = Product::with(['images', 'mainImage']) // Загрузка изображений
-        ->orderBy('created_at', 'desc') // Сортировка: сначала новинки
-        ->paginate(12);
+        $products = Product::with(['images', 'mainImage'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(12);
 
         $unreadCount = $this->getUnreadCount();
 
@@ -35,7 +31,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         $product->load(['images', 'category', 'reviews.user' => function ($q) {
-            $q->select('id', 'name'); // подгружаем только имя пользователя
+            $q->select('id', 'name');
         }]);
 
         $reviews = $product->reviews()
@@ -58,10 +54,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Поиск товаров по названию.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     * Выполняет поиск товаров по названию.
      */
     public function search(Request $request)
     {

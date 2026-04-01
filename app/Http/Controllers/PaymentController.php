@@ -11,12 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class PaymentController extends Controller
 {
     /**
-     * Обрабатывает оплату заказа через Google Pay + Stripe.
-     *
-     * Получает payment_token от клиента, создаёт платёж в Stripe и обновляет статус заказа.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * Обрабатывает оплату заказа через Stripe.
      */
     public function processPayment(Request $request)
     {
@@ -27,13 +22,11 @@ class PaymentController extends Controller
             ], 401);
         }
 
-        // Валидация входящих данных
         $request->validate([
             'order_id' => 'required|exists:orders,id',
             'payment_token' => 'required|string',
         ]);
 
-        // Получаем заказ
         $order = Order::findOrFail($request->order_id);
 
         if ((int) $order->user_id !== (int) Auth::id()) {
@@ -50,17 +43,15 @@ class PaymentController extends Controller
             ], 422);
         }
 
-        // Инициализируем Stripe с секретным ключом
         $stripe = new StripeClient(config('services.stripe.secret'));
 
         try {
-            // Создаём платежное намерение (Payment Intent) в Stripe
             $paymentIntent = $stripe->paymentIntents->create([
-                'amount' => intval($order->total * 100), // Сумма в копейках (или центах)
-                'currency' => 'uah',                     // Валюта
+                'amount' => intval($order->total * 100),
+                'currency' => 'uah',
                 'payment_method_data' => [
                     'type' => 'card',
-                    'token' => $request->payment_token,  // Токен из Google Pay
+                    'token' => $request->payment_token,
                 ],
                 'confirmation_method' => 'automatic',
                 'confirm' => true,
@@ -69,13 +60,11 @@ class PaymentController extends Controller
                 ],
             ]);
 
-            // Если оплата успешна, обновляем статус заказа
             if ($paymentIntent->status === 'succeeded') {
                 $order->update(['status' => 'paid']);
 
                 return response()->json(['success' => true]);
             } else {
-                // Если статус не успешен — возвращаем ошибку
                 return response()->json([
                     'success' => false,
                     'message' => 'Оплата не была подтверждена. Статус: ' . $paymentIntent->status,
@@ -83,7 +72,6 @@ class PaymentController extends Controller
             }
 
         } catch (\Exception $e) {
-            // Логируем ошибку для отладки
             Log::error('Payment error: ' . $e->getMessage());
 
             return response()->json([

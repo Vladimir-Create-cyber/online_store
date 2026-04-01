@@ -7,7 +7,10 @@ use App\Models\Notification;
 
 trait HandlesUnreadNotifications
 {
-    protected function getUnreadCount()
+    /**
+     * Возвращает количество непрочитанных уведомлений текущего пользователя.
+     */
+    protected function getUnreadCount(): int
     {
         if (!Auth::check()) {
             return 0;

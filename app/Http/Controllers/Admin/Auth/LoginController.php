@@ -9,11 +9,17 @@ use Illuminate\Support\Facades\RateLimiter;
 
 class LoginController extends Controller
 {
+    /**
+     * Отображает форму входа администратора.
+     */
     public function showLoginForm()
     {
         return view('admin.auth.login');
     }
 
+    /**
+     * Выполняет аутентификацию администратора.
+     */
     public function login(Request $request)
     {
         $request->validate([
@@ -42,6 +48,9 @@ class LoginController extends Controller
         return back()->withErrors(['email' => 'Неверные учетные данные']);
     }
 
+    /**
+     * Завершает сессию администратора.
+     */
     public function logout(Request $request)
     {
         Auth::guard('admin')->logout();
@@ -49,6 +58,9 @@ class LoginController extends Controller
         return redirect('/admin/login');
     }
 
+    /**
+     * Возвращает поле логина для аутентификации.
+     */
     protected function username()
     {
         return 'email';

@@ -16,7 +16,6 @@
                         @csrf
                         @method('PUT')
 
-                        {{-- Название --}}
                         <div class="form-group">
                             <label for="name">Название товара *</label>
                             <input type="text" id="name" name="name"
@@ -27,7 +26,6 @@
                             @enderror
                         </div>
 
-                        {{-- Цена --}}
                         <div class="form-group">
                             <label for="price">Цена *</label>
                             <input type="number" id="price" name="price" step="0.01"
@@ -38,7 +36,6 @@
                             @enderror
                         </div>
 
-                        {{-- Кол-во --}}
                         <div class="form-group">
                             <label for="stock">Количество на складе *</label>
                             <input type="number" id="stock" name="stock"
@@ -49,7 +46,6 @@
                             @enderror
                         </div>
 
-                        {{-- Категория --}}
                         <div class="form-group">
                             <label for="category_id">Категория *</label>
                             <select name="category_id" id="category_id"
@@ -66,7 +62,6 @@
                             @enderror
                         </div>
 
-                        {{-- Описание --}}
                         <div class="form-group">
                             <label for="description">Описание *</label>
                             <textarea id="description" name="description"
@@ -77,14 +72,12 @@
                             @enderror
                         </div>
 
-                        {{-- Чекбокс "Новинка" --}}
                         <div class="form-check mb-3">
                             <input type="checkbox" class="form-check-input" name="is_new" id="is_new" value="1"
                                 {{ old('is_new', $product->is_new) ? 'checked' : '' }}>
                             <label for="is_new" class="form-check-label">Отметить как новинку</label>
                         </div>
 
-                        {{-- Главное изображение --}}
                         <div class="form-group">
                             <label for="image">Главное изображение</label>
                             <input type="file" name="image" id="image"
@@ -97,7 +90,6 @@
                             </small>
                         </div>
 
-                        {{-- Дополнительные изображения --}}
                         <div class="form-group">
                             <label for="additional_images">Дополнительные изображения</label>
                             <input type="file" name="additional_images[]" id="additional_images"
@@ -114,7 +106,6 @@
                         <button type="submit" class="btn btn-primary">Сохранить изменения</button>
                     </form>
 
-                    {{-- Текущее главное изображение --}}
                     @if($product->image)
                         <hr>
                         <div class="form-group mt-4">
@@ -134,7 +125,6 @@
                         </div>
                     @endif
 
-                    {{-- Текущие дополнительные изображения --}}
                     @if ($product->images && $product->images->count())
                         <hr>
                         <div class="form-group mt-4">

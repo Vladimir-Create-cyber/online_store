@@ -32,7 +32,6 @@
                                 <a href="{{ route('orders.show', $order->id) }}" class="text-blue-500 hover:underline">Подробнее</a>
                             </td>
                         </tr>
-                        <!-- Вывод товаров внутри заказа -->
                         <tr>
                             <td colspan="5" class="px-6 py-4">
                                 <h4 class="text-lg font-semibold mt-2">Товары в заказе:</h4>

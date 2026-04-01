@@ -15,14 +15,19 @@ class LogoutUserSessionJob implements ShouldQueue
 
     public $userId;
 
+    /**
+     * Создаёт задание для завершения пользовательских сессий.
+     */
     public function __construct($userId)
     {
         $this->userId = $userId;
     }
 
+    /**
+     * Удаляет все активные сессии пользователя из таблицы `sessions`.
+     */
     public function handle()
     {
-        // если используется SESSION_DRIVER=database
         DB::table('sessions')->where('user_id', $this->userId)->delete();
     }
 }

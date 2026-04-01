@@ -2,12 +2,10 @@
 
 @section('content')
     <div class="dashboard-container">
-        <!-- Заголовок панели управления -->
         <div class="dashboard-header mb-5">
             <h1 class="dashboard-title">Панель управления</h1>
         </div>
 
-        <!-- Статистика -->
         <div class="dashboard-stats mb-6">
             <div class="stats-grid">
                 <div class="stat-card">
@@ -52,9 +50,7 @@
             </div>
         </div>
 
-        <!-- Основной контент -->
         <div class="dashboard-content">
-            <!-- График продаж -->
             <div class="dashboard-section mb-6">
                 <div class="section-header">
                     <h2><i class="fas fa-chart-line mr-2"></i> Статистика продаж</h2>
@@ -103,9 +99,7 @@
                 </div>
             </div>
 
-            <!-- Нижняя часть с заказами и товарами -->
             <div class="dashboard-grid">
-                <!-- Последние заказы -->
                 <div class="dashboard-section">
                     <div class="section-header">
                         <h2><i class="fas fa-clock mr-2"></i> Последние заказы</h2>
@@ -128,7 +122,6 @@
                     </div>
                 </div>
 
-                <!-- Популярные товары -->
                 <div class="dashboard-section">
                     <div class="section-header">
                         <h2><i class="fas fa-star mr-2"></i> Популярные товары</h2>

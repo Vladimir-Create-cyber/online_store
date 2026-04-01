@@ -48,15 +48,12 @@ class ProductController extends Controller
         $validated['slug'] = Str::slug($validated['name']) . '-' . Str::random(5);
         $validated['is_new'] = $request->has('is_new');
 
-        // Загрузка главного изображения
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('products', 'public');
         }
 
-        // Создание товара
         $product = Product::create($validated);
 
-        // Загрузка дополнительных изображений
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $imageFile) {
                 $path = $imageFile->store('product_images', 'public');
@@ -94,7 +91,6 @@ class ProductController extends Controller
             'additional_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
-        // Обновляем поля товара
         $product->fill([
             'name' => $validated['name'],
             'price' => $validated['price'],
@@ -104,7 +100,6 @@ class ProductController extends Controller
             'is_new' => $request->has('is_new'),
         ]);
 
-        // Обновление главного изображения
         if ($request->hasFile('image')) {
             if ($product->image && Storage::disk('public')->exists($product->image)) {
                 Storage::disk('public')->delete($product->image);
@@ -114,7 +109,6 @@ class ProductController extends Controller
 
         $product->save();
 
-        // Сохраняем дополнительные изображения
         if ($request->hasFile('additional_images')) {
             foreach ($request->file('additional_images') as $file) {
                 $path = $file->store('product_images', 'public');
@@ -134,12 +128,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        // Удаление главного изображения
         if ($product->image && Storage::disk('public')->exists($product->image)) {
             Storage::disk('public')->delete($product->image);
         }
 
-        // Удаление дополнительных изображений
         foreach ($product->images as $image) {
             if (Storage::disk('public')->exists($image->path)) {
                 Storage::disk('public')->delete($image->path);

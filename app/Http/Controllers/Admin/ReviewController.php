@@ -13,7 +13,7 @@ class ReviewController extends Controller
      */
     public function index(Request $request)
     {
-        $status = $request->input('status'); // approved | pending
+        $status = $request->input('status');
 
         $reviews = Review::with(['product', 'user'])
             ->when($status === 'approved', fn($q) => $q->where('is_approved', true))
@@ -31,7 +31,6 @@ class ReviewController extends Controller
     {
         $review->update(['is_approved' => true]);
 
-        // Возврат JSON, если AJAX-запрос
         if ($request->ajax()) {
             return response()->json(['success' => true]);
         }
@@ -46,7 +45,6 @@ class ReviewController extends Controller
     {
         $review->delete();
 
-        // Возврат JSON, если AJAX-запрос
         if ($request->ajax()) {
             return response()->json(['success' => true]);
         }

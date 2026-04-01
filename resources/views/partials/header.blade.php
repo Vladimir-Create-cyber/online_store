@@ -1,12 +1,10 @@
 <header>
     <nav class="header-nav">
-        <!-- Левая часть: Главная и Корзина -->
         <div class="header-left">
             <a href="{{ route('home') }}">Главная</a>
             <a href="{{ route('cart.index') }}">Корзина</a>
         </div>
 
-        <!-- Средняя часть: Поиск с ИСПРАВЛЕННОЙ иконкой -->
         <div class="search-form">
             <form
                 action="{{ route('product.search') }}"
@@ -19,7 +17,6 @@
             </form>
         </div>
 
-        <!-- Правая часть: Аутентификация -->
         <div class="header-right">
             @guest
                 <a href="{{ route('login') }}" class="auth-btn btn-login">Вход</a>

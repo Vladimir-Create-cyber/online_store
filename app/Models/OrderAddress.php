@@ -18,6 +18,9 @@ class OrderAddress extends Model
         'postal_code',
     ];
 
+    /**
+     * Возвращает заказ, к которому относится адрес.
+     */
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);

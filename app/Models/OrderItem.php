@@ -14,11 +14,17 @@ class OrderItem extends Model
         'price'
     ];
 
+    /**
+     * Возвращает заказ позиции.
+     */
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
     }
 
+    /**
+     * Возвращает товар позиции заказа.
+     */
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);

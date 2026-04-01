@@ -5,7 +5,6 @@
         <div class="section-header">
             <h1 class="section-title">Отзывы пользователей</h1>
 
-            <!-- Фильтр -->
             <div class="filter-bar">
                 <form method="GET" action="{{ route('admin.reviews.index') }}" class="filter-form">
                     <label for="status">Фильтр:</label>
@@ -18,7 +17,6 @@
             </div>
         </div>
 
-        <!-- Уведомления -->
         @if (session('success'))
             <div class="alert alert-success">
                 <i class="alert-icon">✓</i>
@@ -26,7 +24,6 @@
             </div>
         @endif
 
-        <!-- Таблица отзывов -->
         @if ($reviews->isEmpty())
             <div class="empty-state">
                 <p>Отзывов пока нет.</p>
@@ -92,7 +89,6 @@
                 </table>
             </div>
 
-            <!-- Пагинация -->
             <div class="mt-4">
                 {{ $reviews->appends(['status' => $status])->links() }}
             </div>
@@ -103,7 +99,6 @@
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Одобрение отзыва
             document.querySelectorAll('.approve-btn').forEach(button => {
                 button.addEventListener('click', function () {
                     if (!confirm('Одобрить отзыв?')) return;
@@ -120,18 +115,15 @@
                             const row = this.closest('tr');
                             const statusCell = row.querySelector('.badge');
 
-                            // Обновляем статус
                             statusCell.textContent = 'Одобрен';
                             statusCell.className = 'badge badge-success';
 
-                            // Удаляем кнопку одобрения
                             this.remove();
                         })
                         .catch(() => alert('Ошибка при одобрении отзыва.'));
                 });
             });
 
-            // Удаление отзыва
             document.querySelectorAll('.delete-btn').forEach(button => {
                 button.addEventListener('click', function () {
                     if (!confirm('Удалить отзыв?')) return;

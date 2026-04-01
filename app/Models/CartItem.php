@@ -8,13 +8,17 @@ class CartItem extends Model
 {
     protected $fillable = ['user_id', 'product_id', 'quantity'];
 
-    // Связь с таблицей Products
+    /**
+     * Возвращает товар в позиции корзины.
+     */
     public function product()
     {
         return $this->belongsTo(Product::class);
     }
 
-    // Связь с таблицей Users
+    /**
+     * Возвращает пользователя, которому принадлежит позиция корзины.
+     */
     public function user()
     {
         return $this->belongsTo(User::class);

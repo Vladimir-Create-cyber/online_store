@@ -31,26 +31,34 @@ class Order extends Model
         'shipping_cost' => 'float',
     ];
 
-    // Отношение к пользователю
+    /**
+     * Возвращает пользователя, которому принадлежит заказ.
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    // Элементы заказа (переименовано из items в orderItems)
+    /**
+     * Возвращает позиции заказа.
+     */
     public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
     }
 
-    // Адрес доставки (если используется отдельная модель)
+    /**
+     * Возвращает адрес доставки.
+     */
     public function shippingAddress(): HasOne
     {
         return $this->hasOne(OrderAddress::class)
             ->where('type', 'shipping');
     }
 
-    // Статус заказа с преобразованием
+    /**
+     * Возвращает локализованное название статуса заказа.
+     */
     public function getStatusTextAttribute(): string
     {
         return match ($this->status) {
@@ -62,13 +70,17 @@ class Order extends Model
         };
     }
 
-    // Форматированная сумма заказа
+    /**
+     * Возвращает отформатированную сумму заказа.
+     */
     public function getFormattedTotalAttribute(): string
     {
         return number_format($this->total, 0, '', ' ') . ' ₽';
     }
 
-    // Дата заказа в удобном формате
+    /**
+     * Возвращает дату заказа в удобном формате.
+     */
     public function getFormattedDateAttribute(): string
     {
         return $this->created_at->format('d.m.Y H:i');

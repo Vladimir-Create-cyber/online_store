@@ -1,5 +1,3 @@
-{{-- resources/views/cart/index.blade.php --}}
-
 @extends('layouts.app')
 
 @section('title', 'Корзина')
@@ -8,7 +6,6 @@
     <div class="cart-container">
         <h1 class="cart-title">Корзина</h1>
 
-        {{-- Флеш-сообщения --}}
         @if(session('success'))
             <div class="cart-alert alert-success">
                 {{ session('success') }}
@@ -21,7 +18,6 @@
             </div>
         @endif
 
-        {{-- Список товаров --}}
         <div class="cart-items">
             @forelse($cart as $id => $item)
                 <div class="cart-item">
@@ -58,7 +54,6 @@
             @endforelse
         </div>
 
-        {{-- Кнопка “Оформить заказ” --}}
         @if(count($cart) > 0)
             <div class="cart-total">
                 <p>

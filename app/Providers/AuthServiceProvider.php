@@ -29,7 +29,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
     }
 
     /**
@@ -39,7 +38,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        // Правила доступа
         Gate::define('admin-access', function ($user) {
             return $user->isAdmin();
         });
@@ -56,7 +54,6 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole(['admin', 'manager', 'content-manager']);
         });
 
-        // Глобальное правило для администраторов
         Gate::before(function ($user, $ability) {
             if ($user->isAdmin()) {
                 return true;

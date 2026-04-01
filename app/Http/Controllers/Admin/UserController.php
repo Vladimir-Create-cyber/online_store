@@ -11,7 +11,7 @@ use App\Jobs\LogoutUserSessionJob;
 class UserController extends Controller
 {
     /**
-     * Отображение списка пользователей.
+     * Отображает список пользователей.
      */
     public function index(Request $request)
     {
@@ -29,7 +29,7 @@ class UserController extends Controller
                 $query->where(function ($q) use ($search) {
                     $q->where('name', 'like', "%{$search}%")
                         ->orWhere('email', 'like', "%{$search}%")
-                        ->orWhere('phone', 'like', "%{$search}%"); // 👈 добавили поиск по телефону
+                        ->orWhere('phone', 'like', "%{$search}%");
                 });
             })
             ->orderBy($sort, $direction);
@@ -39,17 +39,18 @@ class UserController extends Controller
 
         return view('admin.users.index', compact('users', 'roles'));
     }
-
-
-
-
-
+    /**
+     * Отображает форму редактирования пользователя.
+     */
     public function edit(User $user)
     {
         $roles = Role::all();
         return view('admin.users.edit', compact('user', 'roles'));
     }
 
+    /**
+     * Обновляет данные пользователя и его роли.
+     */
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
@@ -72,16 +73,21 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'Пользователь обновлён');
     }
 
+    /**
+     * Отображает карточку пользователя.
+     */
     public function show(User $user)
     {
-        $orders = $user->orders()->latest()->limit(5)->get(); // последние 5 заказов
+        $orders = $user->orders()->latest()->limit(5)->get();
 
         return view('admin.users.show', compact('user', 'orders'));
     }
 
+    /**
+     * Удаляет пользователя.
+     */
     public function destroy(User $user)
     {
-        // Предотвращаем удаление самого себя
         if (auth()->id() === $user->id) {
             return back()->with('error', 'Нельзя удалить самого себя.');
         }
@@ -91,12 +97,18 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'Пользователь удалён.');
     }
 
+    /**
+     * Отображает форму создания пользователя.
+     */
     public function create()
     {
         $roles = Role::all();
         return view('admin.users.create', compact('roles'));
     }
 
+    /**
+     * Создаёт нового пользователя.
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -122,6 +134,9 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'Пользователь создан');
     }
 
+    /**
+     * Переключает статус блокировки пользователя.
+     */
     public function toggleBlock(User $user)
     {
         $user->is_blocked = ! $user->is_blocked;
@@ -134,8 +149,6 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')
             ->with('success', 'Статус пользователя обновлён');
     }
-
-
 }
 
 
